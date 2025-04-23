@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { TrashIcon } from "@/components/icons/trash-icon";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -51,7 +52,8 @@ export const EmployeeList = () => {
     { label: "Служител", value: "2" },
   ];
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: { email: string; accessLevel: string }) => {
+    console.log("data : ", data);
     const newEmployee = {
       id: Date.now(),
       email: data.email,
@@ -131,17 +133,27 @@ export const EmployeeList = () => {
               {employees.map((employee) => (
                 <li
                   key={employee.id}
-                  className="flex justify-between items-center p-2 bg-gray-50 rounded"
+                  className="flex justify-between items-center py-[10px] bg-[#2038B612] rounded"
                 >
-                  <div>
-                    <span className="mr-2">{employee.email}</span>
-                    <span className="text-sm text-gray-500">
-                      {employee.accessLevel.label}
-                    </span>
+                  <div className="flex items-center">
+                    <div className="w-[62px] flex items-center justify-center">
+                      <EmailIcon size={24} />
+                    </div>
+                    <div>
+                      <h3 className="text-[#0C2134] text-[14px] font-semibold">
+                        {employee.email}
+                      </h3>
+                      <p className="text-[#0C213473] text-[13px] font-light">
+                        {employee.accessLevel.label}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <span onClick={() => handleRemoveEmployee(employee.id)}>
-                      Delete
+                  <div className="w-[62px] flex items-center justify-center">
+                    <span
+                      onClick={() => handleRemoveEmployee(employee.id)}
+                      className="transition-all hover:text-red-500 cursor-pointer transition-all"
+                    >
+                      <TrashIcon size={24} />
                     </span>
                   </div>
                 </li>
