@@ -1,0 +1,37 @@
+{
+  "register": {
+    "company": {
+      "form": {
+        "name": {
+          "placeholder": "Company name",
+          "label": "Name"
+        },
+        "logo": {
+          "placeholder": "Logo",
+          "label": "Logo"
+        },
+        "uic": {
+          "placeholder": "Unique company UIC",
+          "label": "UIC"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Employee name"
+        },
+        "accessLevel": {
+          "label": "Access level",
+          "options": {
+            "admin": "Administrator",
+            "employee": "Employee"
+          },
+          "button": "Add"
+        },
+        "section": {
+          "title": "Employees"
+        },
+        "submit": "Complete"
+      }
+    },
+    "user": {}
+  }
+}

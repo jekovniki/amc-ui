@@ -1,0 +1,37 @@
+{
+  "register": {
+    "company": {
+      "form": {
+        "name": {
+          "placeholder": "Името на компанията",
+          "label": "Име"
+        },
+        "logo": {
+          "placeholder": "Лого",
+          "label": "Лого"
+        },
+        "uic": {
+          "placeholder": "ЕИК на дружеството",
+          "label": "ЕИК"
+        },
+        "email": {
+          "label": "Имейл",
+          "placeholder": "Имейл на служителя"
+        },
+        "accessLevel": {
+          "label": "Ниво на достъп",
+          "options": {
+            "admin": "Администратор",
+            "employee": "Служител"
+          },
+          "button": "Добави"
+        },
+        "section": {
+          "title": "Служители"
+        },
+        "submit": "Завърши"
+      }
+    },
+    "user": {}
+  }
+}
