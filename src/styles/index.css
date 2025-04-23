@@ -132,6 +132,15 @@
   background: linear-gradient(259.31deg, #2038b6 0%, #2038b6 96.68%);
 }
 
+.select-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.select-custom-trigger-position span[data-slot="select-value"] {
+  margin-bottom: -10px;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
