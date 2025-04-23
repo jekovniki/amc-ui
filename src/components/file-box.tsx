@@ -17,7 +17,7 @@ export const FileBox = ({
 }: InputBoxProps) => {
   return (
     <div className="relative">
-      <div className="absolute t-0 l-0 h-full w-full flex flex-col items-center justify-center border-dashed border-[1px] cursor-pointer">
+      <div className="absolute t-0 l-0 h-full w-full flex flex-col items-center justify-center bg-[#2038B612] border-dashed border-[2px] cursor-pointer">
         {logo}
         <span className="text-sm text-[#0C2134]">{label}</span>
         <span className="text-[#0C213473] text-normal mt-2">
