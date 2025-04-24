@@ -10,26 +10,21 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { TrashIcon } from "@/components/icons/trash-icon";
+import { useGetRoles } from "@/features/auth/api/use-get-roles";
+import { UserRole } from "@/features/auth/types/role";
+import { EmployeeListProps } from "@/features/auth/types/role";
+import { getTranslatedRoleName } from "@/features/auth/utils/role";
 
-export const EmployeeList = () => {
-  const [employees, setEmployees] = useState<
-    Array<{
-      id: number;
-      email: string;
-      accessLevel: {
-        value: string;
-        label: string;
-      };
-    }>
-  >([]);
-
-  const { t } = useTranslation();
+export const AddCompanyEmployeeList = ({
+  employees,
+  setEmployees,
+}: EmployeeListProps) => {
+  const { t, i18n } = useTranslation();
   const formSchema = z.object({
     email: z.string().email({
       message: t("errors.email"),
@@ -38,6 +33,10 @@ export const EmployeeList = () => {
       message: t("errors.accessLevel"),
     }),
   });
+
+  const { data } = useGetRoles();
+  const accessLevelOptions = data?.data || [];
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,19 +45,19 @@ export const EmployeeList = () => {
     },
   });
 
-  const accessLevelOptions = [
-    { label: "Администратор", value: "1" },
-    { label: "Служител", value: "2" },
-  ];
-
   const onSubmit = (data: { email: string; accessLevel: string }) => {
-    console.log("data : ", data);
+    const accessLevel = (accessLevelOptions as UserRole[]).find(
+      (opt) => opt.id === Number(data.accessLevel)
+    );
+    if (!accessLevel) {
+      console.error("Access level could not be find");
+      return;
+    }
+
     const newEmployee = {
       id: Date.now(),
       email: data.email,
-      accessLevel: accessLevelOptions.find(
-        (opt) => opt.value === data.accessLevel
-      ) || { label: "", value: "" },
+      accessLevel,
     };
 
     setEmployees([...employees, newEmployee]);
@@ -109,7 +108,12 @@ export const EmployeeList = () => {
                     <FormControl>
                       <SelectBox
                         logo={<CompanyIcon className="select-icon" />}
-                        options={accessLevelOptions}
+                        options={(accessLevelOptions as UserRole[]).map(
+                          (item) => ({
+                            label: item.name,
+                            value: item.id.toString(),
+                          })
+                        )}
                         defaultPlaceholder="Изберете ниво на достъп"
                         error={!!fieldState.error}
                         {...field}
@@ -144,7 +148,10 @@ export const EmployeeList = () => {
                         {employee.email}
                       </h3>
                       <p className="text-[#0C213473] text-[13px] font-light">
-                        {employee.accessLevel.label}
+                        {getTranslatedRoleName(
+                          employee.accessLevel.name,
+                          i18n.language
+                        )}
                       </p>
                     </div>
                   </div>

@@ -5,10 +5,14 @@ import { ImageIcon } from "@/components/icons/image-icon";
 import { InputBox } from "@/components/input-box";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
-import { EmployeeList } from "./components/employee-list";
+import { useState } from "react";
+import { RegisterEmployeeData } from "@/features/auth/types/role";
+import { AddCompanyEmployeeList } from "@/features/auth/components/add-company-employee-list";
 
-const RegisterCompany = () => {
+const RegisterCompanyPage = () => {
   const { t } = useTranslation();
+  const [employees, setEmployees] = useState<RegisterEmployeeData[]>([]);
+
   return (
     <div className="flex items-center justify-around h-screen">
       <div className="bg-white shadow-xl max-w-[768px] w-full mx-10">
@@ -36,7 +40,10 @@ const RegisterCompany = () => {
               />
             </div>
           </div>
-          <EmployeeList />
+          <AddCompanyEmployeeList
+            employees={employees}
+            setEmployees={setEmployees}
+          />
         </div>
         <div className="p-8 flex justify-end">
           <Button variant="default" size="lg">
@@ -48,4 +55,4 @@ const RegisterCompany = () => {
   );
 };
 
-export default RegisterCompany;
+export default RegisterCompanyPage;

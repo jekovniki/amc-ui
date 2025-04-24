@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import RegisterCompany from "./register/company";
+import RegisterCompanyPage from "./register/company";
 
 type AppRoute = {
   name: string;
@@ -15,7 +15,7 @@ export const publicRoutes: AppRoute[] = [
   },
   {
     name: "Регистрирай дружество",
-    element: <RegisterCompany />,
+    element: <RegisterCompanyPage />,
     path: "register/company",
   },
   {
