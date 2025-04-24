@@ -18,6 +18,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { EmailIcon } from "@/components/icons/email-icon";
 
 const RegisterCompanyPage = () => {
   const { t } = useTranslation();
@@ -29,6 +30,9 @@ const RegisterCompanyPage = () => {
     }),
     uic: z.string().min(1, {
       message: t("errors.uic"),
+    }),
+    email: z.string().email({
+      message: t("errors.email"),
     }),
   });
 
@@ -50,12 +54,12 @@ const RegisterCompanyPage = () => {
         <div className="p-8 border-b-[1px]">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="flex gap-4">
+              <div className="flex gap-4 mb-4">
                 <div>
                   <FileBox
                     logo={<ImageIcon />}
                     label={t("register.company.form.logo.label")}
-                    className="w-[135px] h-[135px]"
+                    className="w-[132px] h-[132px]"
                     logoPlaceholder="150 x 150"
                   />
                 </div>
@@ -76,7 +80,7 @@ const RegisterCompanyPage = () => {
                             {...field}
                           />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="mt-[-5px] mb-[10px]" />
                       </FormItem>
                     )}
                   ></FormField>
@@ -95,12 +99,36 @@ const RegisterCompanyPage = () => {
                             {...field}
                           />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="mt-[-5px] mb-[10px]" />
                       </FormItem>
                     )}
                   ></FormField>
                 </div>
               </div>
+              <div className="mt-6 mb-2">
+                <span className="text-[#0C213473]">
+                  {t("register.company.form.section.ownerTitle")}
+                </span>
+              </div>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <InputBox
+                        label={t("register.company.form.owner.label")}
+                        logo={<EmailIcon />}
+                        placeholder={t(
+                          "register.company.form.owner.placeholder"
+                        )}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage className="mt-[-5px] mb-[10px]" />
+                  </FormItem>
+                )}
+              ></FormField>
               <div className="flex justify-between absolute bottom-[28px] right-[28px]">
                 <div></div>
                 <Button variant="default" size="lg" type="submit">

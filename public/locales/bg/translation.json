@@ -14,6 +14,10 @@
           "placeholder": "ЕИК на дружеството",
           "label": "ЕИК"
         },
+        "owner": {
+          "label": "Имейл",
+          "placeholder": "Основен акаунт"
+        },
         "email": {
           "label": "Имейл",
           "placeholder": "Имейл на служителя"
@@ -27,6 +31,7 @@
           "button": "Добави"
         },
         "section": {
+          "ownerTitle": "Основен имейл адрес",
           "title": "Служители"
         },
         "submit": "Завърши"
