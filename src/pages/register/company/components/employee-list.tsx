@@ -17,15 +17,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { TrashIcon } from "@/components/icons/trash-icon";
 
-const formSchema = z.object({
-  email: z.string().email({
-    message: "Please provide a valid email",
-  }),
-  accessLevel: z.string().min(1, {
-    message: "Please select access level",
-  }),
-});
-
 export const EmployeeList = () => {
   const [employees, setEmployees] = useState<
     Array<{
@@ -39,6 +30,14 @@ export const EmployeeList = () => {
   >([]);
 
   const { t } = useTranslation();
+  const formSchema = z.object({
+    email: z.string().email({
+      message: t("errors.email"),
+    }),
+    accessLevel: z.string().min(1, {
+      message: t("errors.accessLevel"),
+    }),
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -105,13 +104,14 @@ export const EmployeeList = () => {
               <FormField
                 control={form.control}
                 name="accessLevel"
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <FormItem>
                     <FormControl>
                       <SelectBox
                         logo={<CompanyIcon className="select-icon" />}
                         options={accessLevelOptions}
                         defaultPlaceholder="Изберете ниво на достъп"
+                        error={!!fieldState.error}
                         {...field}
                       />
                     </FormControl>
