@@ -151,7 +151,7 @@ export const EmployeeList = () => {
                   <div className="w-[62px] flex items-center justify-center">
                     <span
                       onClick={() => handleRemoveEmployee(employee.id)}
-                      className="transition-all hover:text-red-500 cursor-pointer transition-all"
+                      className="transition-all cursor-pointer transition-all"
                     >
                       <TrashIcon size={24} />
                     </span>
