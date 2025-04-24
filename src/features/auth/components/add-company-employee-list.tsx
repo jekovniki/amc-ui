@@ -110,7 +110,10 @@ export const AddCompanyEmployeeList = ({
                         logo={<CompanyIcon className="select-icon" />}
                         options={(accessLevelOptions as UserRole[]).map(
                           (item) => ({
-                            label: item.name,
+                            label: getTranslatedRoleName(
+                              item.name,
+                              i18n.language
+                            ),
                             value: item.id.toString(),
                           })
                         )}

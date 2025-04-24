@@ -36,6 +36,8 @@
   },
   "errors": {
     "email": "Please enter a valid email",
-    "accessLevel": "Please select access level"
+    "accessLevel": "Please select access level",
+    "uic": "Please enter a valid UIC",
+    "name": "Please enter company name"
   }
 }
