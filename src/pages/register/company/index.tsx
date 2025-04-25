@@ -130,7 +130,10 @@ const RegisterCompanyPage = () => {
               )}
               <div className="text-[14px]">{loaderMessage}</div>
               {loaderMessage === t("register.company.form.loading.steps.3") && (
-                <Link to={PublicRoutePath.Login}>
+                <Link
+                  to={PublicRoutePath.Login}
+                  className="text-primary hover:underline"
+                >
                   {t("register.company.form.loading.button")}
                 </Link>
               )}
