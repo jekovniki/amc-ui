@@ -11,6 +11,7 @@ function App() {
         <Route path="/" element={<PublicLayout />}>
           {publicRoutes.map((route) => (
             <Route
+              key={route.key}
               element={route.element}
               index={route.path === "/"}
               path={route.path === "/" ? undefined : route.path}
@@ -20,6 +21,7 @@ function App() {
         <Route path="/dashboard" element={<DashboardLayout />}>
           {dahsboardRoutes.map((route) => (
             <Route
+              key={route.key}
               element={route.element}
               index={route.path === "/"}
               path={route.path === "/" ? undefined : route.path}

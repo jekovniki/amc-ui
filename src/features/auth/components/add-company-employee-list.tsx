@@ -136,7 +136,7 @@ export const AddCompanyEmployeeList = ({
       <div className="mt-4">
         {employees.length > 0 && (
           <div>
-            <ul className="space-y-2">
+            <ul className="space-y-2 h-full max-h-[300px] overflow-auto">
               {employees.map((employee) => (
                 <li
                   key={employee.id}
