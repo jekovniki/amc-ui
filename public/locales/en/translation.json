@@ -44,18 +44,65 @@
             "2": "Adding users",
             "3": "Successfully created company. Message has been sent to your emails with link for the users to complete their registration. If the message has not arrived in 5 minutes or is not in folder 'SPAM', please contact us."
           },
-          "button": "Go back to login"
+          "button": "Go to login page"
         }
       }
     },
-    "user": {}
+    "user": {
+      "title": "Register employee",
+      "description": {
+        "1": "Please fill in the form, so you can register your account.",
+        "2": "Information",
+        "3": "Company",
+        "5": "Employee email"
+      },
+      "form": {
+        "firstName": {
+          "label": "First name",
+          "placeholder": "Your first name"
+        },
+        "lastName": {
+          "label": "Family name",
+          "placeholder": "Your family name"
+        },
+        "position": {
+          "label": "Position",
+          "placeholder": "Position in the company"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter your password"
+        },
+        "repeatPassword": {
+          "label": "Repeat password",
+          "placeholder": "Please repeat the password"
+        },
+        "submit": "Complete registration",
+        "loading": {
+          "steps": {
+            "1": "Creating a user profile",
+            "2": "We successfully created your profile. You can now use your email and password to enter the system"
+          },
+          "button": "Go to login page"
+        }
+      }
+    }
   },
   "errors": {
     "email": "Please enter a valid email",
     "accessLevel": "Please select access level",
     "uic": "Please enter a valid UIC",
     "name": "Please enter company name",
-    "unknown": "Unknown error occurred"
+    "unknown": "Unknown error occurred",
+    "required": "Field is required",
+    "password": {
+      "length": "The password should be at least 8 symbols long",
+      "uppercase": "The password should contain a capital letter",
+      "lowercase": "The password should contain a lowercase letter",
+      "number": "The password should contain a number",
+      "special": "The password should contain at least one special symbol",
+      "match": "The repeated password does not match the initial one"
+    }
   },
   "api": {
     "response": {

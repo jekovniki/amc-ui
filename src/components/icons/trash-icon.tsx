@@ -3,7 +3,7 @@ import { useState } from "react";
 export const TrashIcon = ({
   width = 24,
   height = 24,
-  color = "#0C2134",
+  color = "currentColor",
   opacity = 0.45,
   ...props
 }) => {
