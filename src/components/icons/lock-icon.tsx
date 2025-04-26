@@ -1,5 +1,5 @@
 export const LockIcon = ({
-  color = "#0C2134",
+  color = "currentColor",
   size = 24,
   className = "",
   ...props
