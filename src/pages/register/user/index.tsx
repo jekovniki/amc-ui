@@ -97,7 +97,9 @@ const RegisterUserPage = () => {
         registrationToken: registerToken || "",
       },
       {
-        onSuccess: () => {},
+        onSuccess: () => {
+          setLoaderMessage(t("register.user.form.loading.steps.2"));
+        },
         onError: (error) =>
           apiErrorHandler(error, setLoader, setError, setLoaderMessage, t),
       }
@@ -114,7 +116,7 @@ const RegisterUserPage = () => {
             }
           >
             <div className="text-[14px]">{loaderMessage}</div>
-            {loaderMessage === t("register.company.form.loading.steps.2") && (
+            {loaderMessage === t("register.user.form.loading.steps.2") && (
               <Link
                 to={PublicRoutePath.Login}
                 className="text-primary hover:underline"
