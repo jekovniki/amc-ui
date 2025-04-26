@@ -88,6 +88,25 @@
       }
     }
   },
+  "login": {
+    "title": "Вход",
+    "form": {
+      "email": {
+        "label": "Имейл",
+        "placeholder": "Вашият имейл адрес"
+      },
+      "password": {
+        "label": "Парола",
+        "placeholder": "Вашата парола"
+      },
+      "submit": "Вход",
+      "links": {
+        "regiter": "Създай акаунт",
+        "forgotPassword": "Забравена парола?"
+      },
+      "loading": "Моля изчакайте"
+    }
+  },
   "errors": {
     "email": "Моля въведете валиден имейл",
     "accessLevel": "Моля изберете ниво на достъп",
