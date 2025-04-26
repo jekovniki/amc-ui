@@ -103,7 +103,8 @@
       "links": {
         "regiter": "Create account",
         "forgotPassword": "Forgot password?"
-      }
+      },
+      "loading": "Please wait"
     }
   },
   "errors": {

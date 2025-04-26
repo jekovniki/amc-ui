@@ -14,12 +14,19 @@ import { EmailIcon } from "@/components/icons/email-icon";
 import { LockIcon } from "@/components/icons/lock-icon";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { PublicRoutePath } from "../routes";
-import { Link } from "react-router-dom";
+import { PrivateRoutePath, PublicRoutePath } from "../routes";
+import { Link, useNavigate } from "react-router-dom";
+import { useSignIn } from "@/features/auth/api/use-sign-in";
+import { apiErrorHandler } from "@/utils/errors";
+import LoadingOverlay from "@/containers/loading-overlay";
 
 const LoginPage = () => {
   const { t } = useTranslation();
   const [error, setError] = useState<string>("");
+  const [loader, setLoader] = useState<boolean>(false);
+  const [loaderMessage, setLoaderMessage] = useState<string>("");
+  const navigate = useNavigate();
+  const signIn = useSignIn();
   const formSchema = z.object({
     email: z.string().email({
       message: t("errors.email"),
@@ -38,12 +45,26 @@ const LoginPage = () => {
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log("data : ", data);
+    setLoader(true);
+    setLoaderMessage(t("login.form.loading"));
+    setError("");
+    signIn.mutate(data, {
+      onSuccess: () => {
+        navigate(PrivateRoutePath.Dashboard);
+      },
+      onError: (error) =>
+        apiErrorHandler(error, setLoader, setError, setLoaderMessage, t),
+    });
   };
 
   return (
     <div className="flex items-center justify-around h-screen">
       <div className="relative bg-white shadow-xl max-w-[430px] w-full mx-10 relative">
+        {loader && (
+          <LoadingOverlay showLoader={loader}>
+            <div className="text-[14px]">{loaderMessage}</div>
+          </LoadingOverlay>
+        )}
         <div className="p-8">
           <h1 className="mb-4 font-light text-[24px] ">{t("login.title")}</h1>
           <Form {...form}>

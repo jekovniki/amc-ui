@@ -17,6 +17,10 @@ export enum PublicRoutePath {
   ForgotPassword = "forgot-password",
 }
 
+export enum PrivateRoutePath {
+  Dashboard = "dashboard/home",
+}
+
 export const publicRoutes: AppRoute[] = [
   {
     name: "Влез",
