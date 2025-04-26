@@ -48,7 +48,38 @@
         }
       }
     },
-    "user": {}
+    "user": {
+      "title": "Register employee",
+      "description": {
+        "1": "Please fill in the form, so you can register your account.",
+        "2": "Information",
+        "3": "Company",
+        "5": "Employee email"
+      },
+      "form": {
+        "firstName": {
+          "label": "First name",
+          "placeholder": "Your first name"
+        },
+        "lastName": {
+          "label": "Family name",
+          "placeholder": "Your family name"
+        },
+        "position": {
+          "label": "Position",
+          "placeholder": "Position in the company"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter your password"
+        },
+        "repeatPassword": {
+          "label": "Repeat password",
+          "placeholder": "Please repeat the password"
+        },
+        "submit": "Complete registration"
+      }
+    }
   },
   "errors": {
     "email": "Please enter a valid email",
