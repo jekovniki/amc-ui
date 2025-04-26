@@ -87,7 +87,7 @@ const RegisterUserPage = () => {
   }: z.infer<typeof formSchema>) => {
     setLoader(true);
     setError("");
-    setLoaderMessage("");
+    setLoaderMessage(t("register.user.form.loading.steps.1"));
     signUp.mutate(
       {
         firstName,
@@ -110,16 +110,16 @@ const RegisterUserPage = () => {
         {loader && (
           <LoadingOverlay
             showLoader={
-              loaderMessage !== t("register.company.form.loading.steps.3")
+              loaderMessage !== t("register.user.form.loading.steps.2")
             }
           >
             <div className="text-[14px]">{loaderMessage}</div>
-            {loaderMessage === t("register.company.form.loading.steps.3") && (
+            {loaderMessage === t("register.company.form.loading.steps.2") && (
               <Link
                 to={PublicRoutePath.Login}
                 className="text-primary hover:underline"
               >
-                {t("register.company.form.loading.button")}
+                {t("register.user.form.loading.button")}
               </Link>
             )}
           </LoadingOverlay>

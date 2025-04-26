@@ -44,7 +44,7 @@
             "2": "Adding users",
             "3": "Successfully created company. Message has been sent to your emails with link for the users to complete their registration. If the message has not arrived in 5 minutes or is not in folder 'SPAM', please contact us."
           },
-          "button": "Go back to login"
+          "button": "Go to login page"
         }
       }
     },
@@ -77,7 +77,14 @@
           "label": "Repeat password",
           "placeholder": "Please repeat the password"
         },
-        "submit": "Complete registration"
+        "submit": "Complete registration",
+        "loading": {
+          "steps": {
+            "1": "Creating a user profile",
+            "2": "We successfully created your profile. You can now use your email and password to enter the system"
+          },
+          "button": "Go to login page"
+        }
       }
     }
   },
