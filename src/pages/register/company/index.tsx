@@ -20,12 +20,12 @@ import {
 } from "@/components/ui/form";
 import { EmailIcon } from "@/components/icons/email-icon";
 import { getDuplicatesFromArrayByKey } from "@/utils/array";
-import { Loader } from "@/components/loader";
 import { useAddCompany } from "@/features/company/api/use-add-company";
 import { useAddUserToCompany } from "@/features/user/api/use-add-user-to-company";
 import { Link } from "react-router-dom";
 import { PublicRoutePath } from "@/pages/routes";
 import { apiErrorHandler } from "@/utils/errors";
+import LoadingOverlay from "@/containers/loading-overlay";
 
 const RegisterCompanyPage = () => {
   const { t } = useTranslation();
@@ -58,7 +58,7 @@ const RegisterCompanyPage = () => {
     },
   });
 
-  const onSubmit = (data: { name: string; uic: string; email: string }) => {
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
     setError("");
     setLoaderMessage("");
     const allUsers = [
@@ -123,22 +123,21 @@ const RegisterCompanyPage = () => {
     <div className="flex items-center justify-around h-screen">
       <div className="relative bg-white shadow-xl max-w-[768px] w-full mx-10 relative">
         {loader && (
-          <div className="w-full h-full bg-[rgba(0,0,0,0.33)] z-[1] absolute top-[0] flex items-center justify-center">
-            <div className="bg-white shadow-md text-center mx-4 transition-all rounded-sm p-10 flex gap-4 items-center justify-center flex-col">
-              {loaderMessage !== t("register.company.form.loading.steps.3") && (
-                <Loader />
-              )}
-              <div className="text-[14px]">{loaderMessage}</div>
-              {loaderMessage === t("register.company.form.loading.steps.3") && (
-                <Link
-                  to={PublicRoutePath.Login}
-                  className="text-primary hover:underline"
-                >
-                  {t("register.company.form.loading.button")}
-                </Link>
-              )}
-            </div>
-          </div>
+          <LoadingOverlay
+            showLoader={
+              loaderMessage !== t("register.company.form.loading.steps.3")
+            }
+          >
+            <div className="text-[14px]">{loaderMessage}</div>
+            {loaderMessage === t("register.company.form.loading.steps.3") && (
+              <Link
+                to={PublicRoutePath.Login}
+                className="text-primary hover:underline"
+              >
+                {t("register.company.form.loading.button")}
+              </Link>
+            )}
+          </LoadingOverlay>
         )}
 
         <div className="p-8 border-b-[1px]">

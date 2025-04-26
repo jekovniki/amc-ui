@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -15,10 +15,19 @@ import { AutographIcon } from "@/components/icons/autograph-icon";
 import { CompanyIcon } from "@/components/icons/company-icon";
 import { LockIcon } from "@/components/icons/lock-icon";
 import { Button } from "@/components/ui/button";
+import { useSignUp } from "@/features/auth/api/use-sign-up";
+import { useState } from "react";
+import { apiErrorHandler } from "@/utils/errors";
+import LoadingOverlay from "@/containers/loading-overlay";
+import { PublicRoutePath } from "@/pages/routes";
 
 const RegisterUserPage = () => {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
+  const signUp = useSignUp();
+  const [error, setError] = useState<string>("");
+  const [loader, setLoader] = useState<boolean>(false);
+  const [loaderMessage, setLoaderMessage] = useState<string>("");
 
   const email = searchParams.get("email");
   const companyName = searchParams.get("companyName");
@@ -53,7 +62,6 @@ const RegisterUserPage = () => {
       confirmPassword: z.string().min(1, {
         message: t("errors.required"),
       }),
-      registrationToken: z.string().min(8),
     })
     .refine((data) => data.password === data.confirmPassword, {
       message: t("errors.password.match"),
@@ -68,18 +76,54 @@ const RegisterUserPage = () => {
       job: "",
       password: "",
       confirmPassword: "",
-      registrationToken: registerToken || "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Handle form submission
-    console.log(values);
+  const onSubmit = ({
+    firstName,
+    lastName,
+    job,
+    password,
+  }: z.infer<typeof formSchema>) => {
+    setLoader(true);
+    setError("");
+    setLoaderMessage("");
+    signUp.mutate(
+      {
+        firstName,
+        lastName,
+        job,
+        password,
+        registrationToken: registerToken || "",
+      },
+      {
+        onSuccess: () => {},
+        onError: (error) =>
+          apiErrorHandler(error, setLoader, setError, setLoaderMessage, t),
+      }
+    );
   };
 
   return (
     <div className="flex items-center justify-around h-screen">
       <div className="relative bg-white shadow-xl max-w-[768px] w-full mx-10 relative">
+        {loader && (
+          <LoadingOverlay
+            showLoader={
+              loaderMessage !== t("register.company.form.loading.steps.3")
+            }
+          >
+            <div className="text-[14px]">{loaderMessage}</div>
+            {loaderMessage === t("register.company.form.loading.steps.3") && (
+              <Link
+                to={PublicRoutePath.Login}
+                className="text-primary hover:underline"
+              >
+                {t("register.company.form.loading.button")}
+              </Link>
+            )}
+          </LoadingOverlay>
+        )}
         <div className="p-8 border-b-[1px]">
           <h2 className="text-[#0c2134] text-[24px] mb-2">
             {t("register.user.title")}
@@ -196,7 +240,8 @@ const RegisterUserPage = () => {
                 )}
               />
             </div>
-            <div className="p-8 flex justify-end">
+            <div className="p-8 flex items-center justify-between">
+              <div className="text-red-500 text-[14px]">{error}</div>
               <Button variant="default" size="lg" type="submit">
                 {t("register.user.form.submit")}
               </Button>
