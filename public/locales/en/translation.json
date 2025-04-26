@@ -86,7 +86,16 @@
     "accessLevel": "Please select access level",
     "uic": "Please enter a valid UIC",
     "name": "Please enter company name",
-    "unknown": "Unknown error occurred"
+    "unknown": "Unknown error occurred",
+    "required": "Field is required",
+    "password": {
+      "length": "The password should be at least 8 symbols long",
+      "uppercase": "The password should contain a capital letter",
+      "lowercase": "The password should contain a lowercase letter",
+      "number": "The password should contain a number",
+      "special": "The password should contain at least one special symbol",
+      "match": "The repeated password does not match the initial one"
+    }
   },
   "api": {
     "response": {

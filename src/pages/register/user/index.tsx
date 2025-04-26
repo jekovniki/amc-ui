@@ -27,13 +27,13 @@ const RegisterUserPage = () => {
   const formSchema = z
     .object({
       firstName: z.string().min(1, {
-        message: t("errors.firstName"),
+        message: t("errors.required"),
       }),
       lastName: z.string().min(1, {
-        message: t("errors.lastName"),
+        message: t("errors.required"),
       }),
       job: z.string().min(1, {
-        message: t("errors.job"),
+        message: t("errors.required"),
       }),
       password: z
         .string()
@@ -50,7 +50,9 @@ const RegisterUserPage = () => {
         .refine((password) => /[^A-Za-z0-9]/.test(password), {
           message: t("errors.password.special"),
         }),
-      confirmPassword: z.string(),
+      confirmPassword: z.string().min(1, {
+        message: t("errors.required"),
+      }),
       registrationToken: z.string().min(8),
     })
     .refine((data) => data.password === data.confirmPassword, {
@@ -111,7 +113,7 @@ const RegisterUserPage = () => {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="mt-[-5px]" />
                   </FormItem>
                 )}
               />
@@ -130,7 +132,7 @@ const RegisterUserPage = () => {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="mt-[-5px]" />
                   </FormItem>
                 )}
               />
@@ -149,7 +151,7 @@ const RegisterUserPage = () => {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="mt-[-5px]" />
                   </FormItem>
                 )}
               />
@@ -164,11 +166,12 @@ const RegisterUserPage = () => {
                         placeholder={t(
                           "register.user.form.password.placeholder"
                         )}
+                        type="password"
                         logo={<LockIcon size={24} />}
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="mt-[-5px]" />
                   </FormItem>
                 )}
               />
@@ -183,11 +186,12 @@ const RegisterUserPage = () => {
                         placeholder={t(
                           "register.user.form.repeatPassword.placeholder"
                         )}
+                        type="password"
                         logo={<LockIcon size={24} />}
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="mt-[-5px]" />
                   </FormItem>
                 )}
               />

@@ -1,5 +1,7 @@
-import { ComponentProps, ReactNode } from "react";
+import { ComponentProps, ReactNode, useState } from "react";
 import { cn } from "@/lib/utils";
+import { EyeOffIcon } from "./icons/eye-off-icon";
+import { EyeIcon } from "./icons/eye-icon";
 
 interface InputBoxProps
   extends Omit<ComponentProps<"input">, "logo" | "label"> {
@@ -9,11 +11,15 @@ interface InputBoxProps
 
 export const InputBox = ({
   className,
-  type,
+  type: initialType,
   logo,
   label,
   ...props
 }: InputBoxProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const isPassword = initialType === "password";
+  const type = isPassword ? (showPassword ? "text" : "password") : initialType;
+
   return (
     <div className="relative">
       <div className="absolute t-0 l-0 h-full w-[62px] flex items-center justify-center">
@@ -32,6 +38,16 @@ export const InputBox = ({
         )}
         {...props}
       />
+      {isPassword && (
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="absolute right-[0px] top-[15px] h-full w-[60px] flex items-center justify-center transform -translate-y-1/4 cursor-pointer text-gray-500 hover:text-gray-700 focus:outline-none"
+          tabIndex={-1}
+        >
+          {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+        </button>
+      )}
     </div>
   );
 };
