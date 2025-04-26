@@ -1,0 +1,65 @@
+{
+  "register": {
+    "company": {
+      "form": {
+        "name": {
+          "placeholder": "Company name",
+          "label": "Name"
+        },
+        "logo": {
+          "placeholder": "Logo",
+          "label": "Logo"
+        },
+        "uic": {
+          "placeholder": "Unique company UIC",
+          "label": "UIC"
+        },
+        "owner": {
+          "label": "Email",
+          "placeholder": "Main email account"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Employee name"
+        },
+        "accessLevel": {
+          "label": "Access level",
+          "options": {
+            "admin": "Administrator",
+            "employee": "Employee"
+          },
+          "button": "Add"
+        },
+        "section": {
+          "ownerTitle": "Main email",
+          "title": "Employees"
+        },
+        "submit": "Complete",
+        "errors": {
+          "duplicateUsers": "There are duplicate users, please remove so only unique users are left: "
+        },
+        "loading": {
+          "steps": {
+            "1": "Creating company",
+            "2": "Adding users",
+            "3": "Successfully created company. Message has been sent to your emails with link for the users to complete their registration. If the message has not arrived in 5 minutes or is not in folder 'SPAM', please contact us."
+          },
+          "button": "Go back to login"
+        }
+      }
+    },
+    "user": {}
+  },
+  "errors": {
+    "email": "Please enter a valid email",
+    "accessLevel": "Please select access level",
+    "uic": "Please enter a valid UIC",
+    "name": "Please enter company name",
+    "unknown": "Unknown error occurred"
+  },
+  "api": {
+    "response": {
+      "errors": {}
+    }
+  }
+}

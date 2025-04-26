@@ -1,32 +1,44 @@
 import { ReactElement } from "react";
+import RegisterCompanyPage from "./register/company";
 
 type AppRoute = {
   name: string;
+  key: string;
   element: ReactElement;
   path: string;
 };
 
+export enum PublicRoutePath {
+  Login = "/",
+  RegisterCompany = "register/company",
+  RegisterUser = "register/user",
+}
+
 export const publicRoutes: AppRoute[] = [
   {
     name: "Влез",
+    key: "login",
     element: <div>Login</div>,
-    path: "/",
+    path: PublicRoutePath.Login,
   },
   {
     name: "Регистрирай дружество",
-    element: <div>Register company</div>,
-    path: "register/company",
+    key: "registerCompany",
+    element: <RegisterCompanyPage />,
+    path: PublicRoutePath.RegisterCompany,
   },
   {
     name: "Регистрирай служител",
+    key: "registerUser",
     element: <div>Register user</div>,
-    path: "register/user",
+    path: PublicRoutePath.RegisterUser,
   },
 ];
 
 export const dahsboardRoutes = [
   {
     name: "Начало",
+    key: "dashboard",
     element: <div>Dashboard</div>,
     path: "/",
   },
