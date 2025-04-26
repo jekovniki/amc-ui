@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import RegisterCompanyPage from "./register/company";
 import RegisterUserPage from "./register/user";
+import LoginPage from "./login";
 
 type AppRoute = {
   name: string;
@@ -13,13 +14,14 @@ export enum PublicRoutePath {
   Login = "/",
   RegisterCompany = "register/company",
   RegisterUser = "register/user",
+  ForgotPassword = "forgot-password",
 }
 
 export const publicRoutes: AppRoute[] = [
   {
     name: "Влез",
     key: "login",
-    element: <div>Login</div>,
+    element: <LoginPage />,
     path: PublicRoutePath.Login,
   },
   {
