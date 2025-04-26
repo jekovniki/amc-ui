@@ -88,6 +88,24 @@
       }
     }
   },
+  "login": {
+    "title": "Login",
+    "form": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email address"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "submit": "Login",
+      "links": {
+        "regiter": "Create account",
+        "forgotPassword": "Forgot password?"
+      }
+    }
+  },
   "errors": {
     "email": "Please enter a valid email",
     "accessLevel": "Please select access level",
