@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import RegisterCompanyPage from "./register/company";
 import RegisterUserPage from "./register/user";
 import LoginPage from "./login";
+import UnauthorizedPage from "./unauthorized";
 
 type AppRoute = {
   name: string;
@@ -15,10 +16,12 @@ export enum PublicRoutePath {
   RegisterCompany = "register/company",
   RegisterUser = "register/user",
   ForgotPassword = "forgot-password",
+  Unauthorized = "unauthorized",
+  Forbidden = "forbidden",
 }
 
 export enum PrivateRoutePath {
-  Dashboard = "dashboard/home",
+  Dashboard = "dashboard",
 }
 
 export const publicRoutes: AppRoute[] = [
@@ -39,6 +42,12 @@ export const publicRoutes: AppRoute[] = [
     key: "registerUser",
     element: <RegisterUserPage />,
     path: PublicRoutePath.RegisterUser,
+  },
+  {
+    name: "Липса на достъп",
+    key: "unauthorized",
+    element: <UnauthorizedPage />,
+    path: PublicRoutePath.Unauthorized,
   },
 ];
 

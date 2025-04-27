@@ -19,6 +19,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSignIn } from "@/features/auth/api/use-sign-in";
 import { apiErrorHandler } from "@/utils/errors";
 import LoadingOverlay from "@/containers/loading-overlay";
+import session from "@/features/auth/services/session";
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -49,7 +50,8 @@ const LoginPage = () => {
     setLoaderMessage(t("login.form.loading"));
     setError("");
     signIn.mutate(data, {
-      onSuccess: () => {
+      onSuccess: (response) => {
+        session.set(response.data.sessionData);
         navigate(PrivateRoutePath.Dashboard);
       },
       onError: (error) =>

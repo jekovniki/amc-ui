@@ -1,5 +1,9 @@
 import { Routes, Route } from "react-router-dom";
-import { publicRoutes, dahsboardRoutes } from "./pages/routes";
+import {
+  publicRoutes,
+  dahsboardRoutes,
+  PrivateRoutePath,
+} from "./pages/routes";
 import DashboardLayout from "./layouts/dashboard-layout";
 import PublicLayout from "./layouts/public-layout";
 import ReactQueryProvider from "./lib/react-query-provider";
@@ -18,7 +22,7 @@ function App() {
             />
           ))}
         </Route>
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route path={PrivateRoutePath.Dashboard} element={<DashboardLayout />}>
           {dahsboardRoutes.map((route) => (
             <Route
               key={route.key}
