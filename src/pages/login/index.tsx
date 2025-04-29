@@ -20,6 +20,7 @@ import { useSignIn } from "@/features/auth/api/use-sign-in";
 import { apiErrorHandler } from "@/utils/errors";
 import LoadingOverlay from "@/containers/loading-overlay";
 import session from "@/features/auth/services/session";
+import { navigateToDashboard } from "@/utils/navigation";
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -52,7 +53,8 @@ const LoginPage = () => {
     signIn.mutate(data, {
       onSuccess: (response) => {
         session.set(response.data.sessionData);
-        navigate(PrivateRoutePath.Dashboard);
+        const { companyId } = JSON.parse(atob(response.data.sessionData));
+        navigateToDashboard(navigate, PrivateRoutePath.Dashboard, companyId);
       },
       onError: (error) =>
         apiErrorHandler(error, setLoader, setError, setLoaderMessage, t),

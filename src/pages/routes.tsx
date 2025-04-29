@@ -1,8 +1,13 @@
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 import RegisterCompanyPage from "./register/company";
 import RegisterUserPage from "./register/user";
 import LoginPage from "./login";
 import UnauthorizedPage from "./unauthorized";
+import DashboardPage from "./dashboard";
+import DashboardFundPage from "./dashboard/fund";
+import DashboardTeamPage from "./dashboard/team";
+import session from "@/features/auth/services/session";
+import { Navigate } from "react-router-dom";
 
 type AppRoute = {
   name: string;
@@ -21,7 +26,9 @@ export enum PublicRoutePath {
 }
 
 export enum PrivateRoutePath {
-  Dashboard = "dashboard",
+  Dashboard = "home",
+  Funds = "fund",
+  Team = "team",
 }
 
 export const publicRoutes: AppRoute[] = [
@@ -55,7 +62,29 @@ export const dahsboardRoutes = [
   {
     name: "Начало",
     key: "dashboard",
-    element: <div>Dashboard</div>,
-    path: "/",
+    element: <DashboardPage />,
+    path: PrivateRoutePath.Dashboard,
+  },
+  {
+    name: "Фондове",
+    key: "fund",
+    element: <DashboardFundPage />,
+    path: PrivateRoutePath.Funds,
+  },
+  {
+    name: "Екип",
+    key: "team",
+    element: <DashboardTeamPage />,
+    path: PrivateRoutePath.Team,
   },
 ];
+
+export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
+  const userSession = session.get();
+
+  if (!userSession) {
+    return <Navigate to={PublicRoutePath.Unauthorized} />;
+  }
+
+  return children;
+};

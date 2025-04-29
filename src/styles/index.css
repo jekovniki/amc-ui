@@ -157,6 +157,10 @@ div[data-slot="sidebar"][data-state="collapsed"]
   transition: 0.4s;
 }
 
+div[data-slot="sidebar"] a svg {
+  transition: 0.4s;
+}
+
 .loader {
   width: 48px;
   height: 48px;

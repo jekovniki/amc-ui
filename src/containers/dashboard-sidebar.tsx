@@ -2,14 +2,23 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
   SidebarHeader,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { PrivateRoutePath } from "@/pages/routes";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import homeIcon from "../assets/home.svg";
+import walletIcon from "../assets/wallet.svg";
+import teamIcon from "../assets/team.svg";
+import { DashboardLink } from "@/components/dashboard-link";
 
-const DahsboardSidebar = () => {
+interface DashboardSidebarProps {
+  companyId: string;
+}
+
+const DahsboardSidebar = ({ companyId }: DashboardSidebarProps) => {
+  const { t } = useTranslation();
   return (
     <Sidebar variant="sidebar" collapsible="icon">
       <SidebarHeader className="flex items-center justify-center h-[73px] border-b-[1px]">
@@ -24,8 +33,21 @@ const DahsboardSidebar = () => {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup />
-        <SidebarGroup />
+        <DashboardLink
+          icon={homeIcon}
+          name={t("menu.main.home")}
+          href={`/${companyId}/${PrivateRoutePath.Dashboard}`}
+        />
+        <DashboardLink
+          icon={walletIcon}
+          name={t("menu.main.funds")}
+          href={`/${companyId}/${PrivateRoutePath.Funds}`}
+        />
+        <DashboardLink
+          icon={teamIcon}
+          name={t("menu.main.team")}
+          href={`/${companyId}/${PrivateRoutePath.Team}`}
+        />
       </SidebarContent>
       <SidebarFooter>
         <SidebarTrigger />

@@ -13,4 +13,5 @@ export type UserSessionData = {
   companyId: string;
   entities: string[];
   role: string;
+  logo?: string;
 };
