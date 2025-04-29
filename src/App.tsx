@@ -1,8 +1,9 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { publicRoutes, dahsboardRoutes, ProtectedRoute } from "./pages/routes";
+import { publicRoutes, dahsboardRoutes } from "./pages/routes";
 import DashboardLayout from "./layouts/dashboard-layout";
 import PublicLayout from "./layouts/public-layout";
 import ReactQueryProvider from "./lib/react-query-provider";
+import { ProtectedRoute } from "./components/protected-route";
 
 function App() {
   return (

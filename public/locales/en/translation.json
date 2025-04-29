@@ -132,5 +132,16 @@
     "title": "Unauthorized!",
     "description": "You don't have the necessary access to open this page. Please sign in to the system in order to access this page",
     "button": "Sign in"
+  },
+  "menu": {
+    "main": {
+      "home": "Home",
+      "funds": "Funds",
+      "team": "Team"
+    },
+    "user": {
+      "profile": "My profile",
+      "signOut": "Exit"
+    }
   }
 }

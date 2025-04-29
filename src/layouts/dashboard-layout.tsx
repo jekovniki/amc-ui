@@ -1,16 +1,35 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import DahsboardSidebar from "@/containers/dashboard-sidebar";
+import { useSignOut } from "@/features/auth/api/use-sign-out";
 import session from "@/features/auth/services/session";
-import { PublicRoutePath } from "@/pages/routes";
+import { PrivateRoutePath, PublicRoutePath } from "@/pages/routes";
 import { useEffect } from "react";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 
 const DashboardLayout = () => {
+  const { t } = useTranslation();
   const userSession = session.get();
   const { companyId } = useParams();
   const navigate = useNavigate();
-  console.log("userSession", userSession);
+  const signOut = useSignOut();
+
+  const handleSignOut = () => {
+    signOut.mutate(undefined, {
+      onSuccess: () => {
+        navigate(PublicRoutePath.Login);
+      },
+      onError: () => {
+        navigate(PublicRoutePath.Login);
+      },
+    });
+  };
 
   useEffect(() => {
     if (!userSession) {
@@ -38,10 +57,26 @@ const DashboardLayout = () => {
       <div className="w-full bg-[#FAFAFA]">
         <div className="flex items-center justify-between gap-4 h-[73px] bg-white shadow-md w-full px-4">
           <h1 className="text-[18px] text-[#0C2134]">Title</h1>
-          <Avatar className="cursor-pointer">
-            <AvatarImage src={userSession?.logo} />
-            <AvatarFallback>{userInitials}</AvatarFallback>
-          </Avatar>
+          <Popover>
+            <PopoverTrigger>
+              <Avatar className="cursor-pointer">
+                <AvatarImage src={userSession?.logo} />
+                <AvatarFallback>{userInitials}</AvatarFallback>
+              </Avatar>
+            </PopoverTrigger>
+            <PopoverContent className="mr-2">
+              <ul>
+                <li className="pb-2">
+                  <Link to={PrivateRoutePath.Profile}>
+                    {t("menu.user.profile")}
+                  </Link>
+                </li>
+                <li className="cursor-pointer" onClick={handleSignOut}>
+                  Sign out
+                </li>
+              </ul>
+            </PopoverContent>
+          </Popover>
         </div>
         <Outlet />
       </div>
