@@ -1,0 +1,38 @@
+import session from "@/features/auth/services/session";
+import { useTranslation } from "react-i18next";
+import welcomeImage from "../../../assets/welcome-icon.svg";
+import { useGetCompany } from "../api/use-get-company";
+
+export const CompanyWelcomeCard = () => {
+  const { t } = useTranslation();
+  const { data } = useGetCompany();
+  const sessionData = session.get();
+  const companyName = data?.data.name || "";
+  const companyUic = data?.data?.uic || "";
+  return (
+    <div className="bg-welcome-card flex justify-between">
+      <div className="pl-4 flex flex-col justify-center">
+        <h2 className="text-[#0c2134] text-[24px] font-thin mb-4">
+          {t("dashboard.title")},{" "}
+          <strong className="font-bolder">
+            {sessionData?.firstName || ""}
+          </strong>
+          !
+        </h2>
+        <p className="font-thin mb-2">{t("dashboard.text")}.</p>
+        <ul className="standard-ul">
+          <li className="font-thin">
+            <strong>{companyName}</strong>
+          </li>
+          <li className="font-thin">
+            {t("dashboard.subtext")}: <strong>{companyUic}</strong>
+          </li>
+        </ul>
+        <p className="font-thin mt-6 italic">{t("dashboard.message")}</p>
+      </div>
+      <div className="pr-4 h-[386px] flex justify-end items-end">
+        <img src={welcomeImage} alt={companyName} />
+      </div>
+    </div>
+  );
+};

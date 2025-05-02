@@ -130,6 +130,14 @@
   transition: 0.4s;
 }
 
+.bg-welcome-card {
+  background: linear-gradient(
+    148.05deg,
+    rgba(32, 56, 182, 0) 37.16%,
+    rgba(32, 56, 182, 0.15) 107.84%
+  );
+}
+
 .bg-primary-gradient-hover {
   background: linear-gradient(259.31deg, #2038b6 0%, #2038b6 96.68%);
 }
@@ -145,6 +153,11 @@
 
 .register-company-error-width {
   width: calc(100% - 180px);
+}
+
+.standard-ul {
+  list-style-type: disc;
+  padding-left: 20px;
 }
 
 /* Sidebar */
