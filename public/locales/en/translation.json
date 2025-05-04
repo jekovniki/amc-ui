@@ -134,10 +134,17 @@
     "button": "Sign in"
   },
   "dashboard": {
-    "title": "Welcome",
-    "text": "You have successfully signed in the admin dashboard",
-    "subtext": "UIC",
-    "message": "We wish you a productive session!"
+    "welcomeCard": {
+      "title": "Welcome",
+      "text": "You have successfully signed in the admin dashboard",
+      "subtext": "UIC",
+      "message": "We wish you a productive session!"
+    },
+    "entityContainer": {
+      "title": "Funds",
+      "button": "Add new",
+      "empty": "Add your funds using the button above this text."
+    }
   },
   "menu": {
     "main": {

@@ -22,14 +22,14 @@ const EntityListContainer = ({
   const handleSelectCard = (id: string) => {
     onSelectCard(id);
   };
-  console.log(entities);
+
   return (
     <>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-[18px] text-[#0c2134]">
-          {t("dashboard.fundContainer.title")}
+          {t("dashboard.entityContainer.title")}
         </h2>
-        <Button>+ {t("dashboard.fundContainer.button")}</Button>
+        <Button>+ {t("dashboard.entityContainer.button")}</Button>
       </div>
       <div className="h-[340px] overflow-auto">
         {isLoading ? (
@@ -51,7 +51,7 @@ const EntityListContainer = ({
             />
           ))
         ) : (
-          <div></div>
+          <div className="h-full flex items-center justify-center"></div>
         )}
       </div>
     </>
