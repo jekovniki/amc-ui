@@ -1,5 +1,5 @@
 import { CompanyWelcomeCard } from "@/features/company/components/company-welcome-card";
-import FundListContainer from "@/features/fund/containers/fund-list-container";
+import EntityListContainer from "@/features/entity/containers/entity-list-container";
 import { useState } from "react";
 
 const DashboardPage = () => {
@@ -11,7 +11,7 @@ const DashboardPage = () => {
         <CompanyWelcomeCard />
       </div>
       <div className="col-span-4">
-        <FundListContainer
+        <EntityListContainer
           selectedCard={selectedCard}
           onSelectCard={setSelectedCard}
         />

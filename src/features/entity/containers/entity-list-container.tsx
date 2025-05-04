@@ -2,20 +2,21 @@ import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { useGetCompanyEntities } from "../api/use-get-company-entities";
 import { getEntityNameByLanguage } from "../utils/entity-translation";
-import { FundPreviewCard } from "../components/fund-preview-card";
+import EntityPreviewCard from "../components/entity-preview-card";
 import { Dispatch, SetStateAction } from "react";
+import { Loader } from "@/components/loader";
 
-interface FundListContainerProps {
+interface EntityListContainerProps {
   selectedCard: string;
   onSelectCard: Dispatch<SetStateAction<string>>;
 }
 
-const FundListContainer = ({
+const EntityListContainer = ({
   selectedCard,
   onSelectCard,
-}: FundListContainerProps) => {
+}: EntityListContainerProps) => {
   const { t, i18n } = useTranslation();
-  const { data } = useGetCompanyEntities();
+  const { data, isLoading } = useGetCompanyEntities();
   const entities = data?.data;
 
   const handleSelectCard = (id: string) => {
@@ -31,9 +32,13 @@ const FundListContainer = ({
         <Button>+ {t("dashboard.fundContainer.button")}</Button>
       </div>
       <div className="h-[340px] overflow-auto">
-        {entities ? (
+        {isLoading ? (
+          <div className="flex items-center justify-center h-full">
+            <Loader />
+          </div>
+        ) : entities ? (
           entities.map((entity) => (
-            <FundPreviewCard
+            <EntityPreviewCard
               key={entity.id}
               name={entity.name}
               bottomLeftText={entity.uic}
@@ -53,4 +58,4 @@ const FundListContainer = ({
   );
 };
 
-export default FundListContainer;
+export default EntityListContainer;

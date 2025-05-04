@@ -1,6 +1,6 @@
 import { MouseEventHandler } from "react";
 
-interface FundPreviewCardProps {
+interface EntityPreviewCardProps {
   name: string;
   bottomLeftText: string;
   bottomRightText: string;
@@ -8,13 +8,13 @@ interface FundPreviewCardProps {
   onClick: MouseEventHandler<HTMLDivElement> | undefined;
 }
 
-export const FundPreviewCard = ({
+export const EntityPreviewCard = ({
   name,
   bottomLeftText,
   bottomRightText,
   isSelected,
   onClick,
-}: FundPreviewCardProps) => {
+}: EntityPreviewCardProps) => {
   const cardClasses = isSelected
     ? "bg-[#465BC8] text-white shadow-md p-4 mb-2 cursor-pointer transition-all hover:bg-[#3A4DA6]"
     : "bg-white text-[#0c2134] shadow-md p-4 mb-2 cursor-pointer transition-all hover:bg-[#465bc833]";
@@ -51,4 +51,4 @@ export const FundPreviewCard = ({
   );
 };
 
-export default FundPreviewCard;
+export default EntityPreviewCard;
