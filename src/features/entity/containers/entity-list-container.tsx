@@ -5,6 +5,7 @@ import { getEntityNameByLanguage } from "../utils/entity-translation";
 import EntityPreviewCard from "../components/entity-preview-card";
 import { Dispatch, SetStateAction } from "react";
 import { Loader } from "@/components/loader";
+import { DashboardTileHeader } from "@/components/dashboard-tile-header";
 
 interface EntityListContainerProps {
   selectedCard: string;
@@ -26,9 +27,9 @@ const EntityListContainer = ({
   return (
     <>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-[18px] text-[#0c2134]">
+        <DashboardTileHeader>
           {t("dashboard.entityContainer.title")}
-        </h2>
+        </DashboardTileHeader>
         <Button>+ {t("dashboard.entityContainer.button")}</Button>
       </div>
       <div className="h-[340px] overflow-auto">

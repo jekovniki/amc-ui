@@ -141,7 +141,7 @@
       "message": "We wish you a productive session!"
     },
     "entityContainer": {
-      "title": "Funds",
+      "title": "UCITS",
       "button": "Add new",
       "empty": "Add your funds using the button above this text."
     }

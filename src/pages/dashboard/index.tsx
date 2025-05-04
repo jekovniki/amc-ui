@@ -1,5 +1,6 @@
 import { CompanyWelcomeCard } from "@/features/company/components/company-welcome-card";
 import EntityListContainer from "@/features/entity/containers/entity-list-container";
+import ObligationWidgetContainer from "@/features/obligations/containers/obligation-widget-container";
 import { useState } from "react";
 
 const DashboardPage = () => {
@@ -15,6 +16,10 @@ const DashboardPage = () => {
           selectedCard={selectedCard}
           onSelectCard={setSelectedCard}
         />
+      </div>
+      <div className="col-span-8"></div>
+      <div className="col-span-4">
+        <ObligationWidgetContainer />
       </div>
     </div>
   );
