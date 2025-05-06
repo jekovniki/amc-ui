@@ -144,7 +144,16 @@
       "title": "UCITS",
       "button": "Add new",
       "empty": "Add your funds using the button above this text."
-    }
+    },
+    "obligationContainer": {
+      "title": "Incoming obligations",
+      "status": {
+        "today": "Today",
+        "tomorrow": "Tomorrow"
+      },
+      "link": "More"
+    },
+    "assetsLabel": "Wallet structure"
   },
   "menu": {
     "main": {

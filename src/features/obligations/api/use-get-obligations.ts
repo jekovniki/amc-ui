@@ -8,7 +8,7 @@ export function useGetObligations(status?: ObligationStatus) {
   if (status) {
     route += `?status=${status}`;
   }
-  return useQuery<{ data: Obligation }>({
+  return useQuery<{ data: Obligation[] }>({
     queryKey: [ObligationQueryKeys.Obligations],
     queryFn: () => api.get(route),
   });
