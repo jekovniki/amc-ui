@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { useGetCompanyEntities } from "../api/use-get-company-entities";
 import { getEntityNameByLanguage } from "../utils/entity-translation";
 import { EntityPreviewCard } from "../components/entity-preview-card";
-import { Loader } from "@/components/loader";
 import { DashboardTileHeader } from "@/components/dashboard-tile-header";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const EntityListContainer = () => {
   const { t, i18n } = useTranslation();
@@ -21,8 +21,10 @@ const EntityListContainer = () => {
       </div>
       <div className="h-[340px] overflow-auto">
         {isLoading ? (
-          <div className="flex items-center justify-center h-full">
-            <Loader />
+          <div>
+            <Skeleton className="w-full h-[108px] mb-2" />
+            <Skeleton className="w-full h-[108px] mb-2" />
+            <Skeleton className="w-full h-[108px] mb-2" />
           </div>
         ) : entities ? (
           entities.map((entity) => (
