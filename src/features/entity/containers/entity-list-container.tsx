@@ -2,27 +2,14 @@ import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { useGetCompanyEntities } from "../api/use-get-company-entities";
 import { getEntityNameByLanguage } from "../utils/entity-translation";
-import EntityPreviewCard from "../components/entity-preview-card";
-import { Dispatch, SetStateAction } from "react";
+import { EntityPreviewCard } from "../components/entity-preview-card";
 import { Loader } from "@/components/loader";
 import { DashboardTileHeader } from "@/components/dashboard-tile-header";
 
-interface EntityListContainerProps {
-  selectedCard: string;
-  onSelectCard: Dispatch<SetStateAction<string>>;
-}
-
-const EntityListContainer = ({
-  selectedCard,
-  onSelectCard,
-}: EntityListContainerProps) => {
+const EntityListContainer = () => {
   const { t, i18n } = useTranslation();
   const { data, isLoading } = useGetCompanyEntities();
   const entities = data?.data;
-
-  const handleSelectCard = (id: string) => {
-    onSelectCard(id);
-  };
 
   return (
     <>
@@ -41,14 +28,13 @@ const EntityListContainer = ({
           entities.map((entity) => (
             <EntityPreviewCard
               key={entity.id}
+              id={entity.id}
               name={entity.name}
               bottomLeftText={entity.uic}
               bottomRightText={getEntityNameByLanguage(
                 entity.entityType.name,
                 i18n.language
               )}
-              isSelected={entity.id === selectedCard}
-              onClick={() => handleSelectCard(entity.id)}
             />
           ))
         ) : (
