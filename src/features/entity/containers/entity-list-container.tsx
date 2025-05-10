@@ -53,7 +53,7 @@ const EntityListContainer = () => {
             <Skeleton className="w-full h-[108px] mb-2" />
             <Skeleton className="w-full h-[108px] mb-2" />
           </div>
-        ) : entities ? (
+        ) : entities?.length ? (
           entities.map((entity) => (
             <EntityPreviewCard
               key={entity.id}
@@ -67,7 +67,9 @@ const EntityListContainer = () => {
             />
           ))
         ) : (
-          <div className="h-full flex items-center justify-center"></div>
+          <div className="flex items-center justify-center h-full text-[#0C2134BF] text-[14px] font-light text-center">
+            {t("dashboard.entityContainer.empty")}
+          </div>
         )}
       </div>
     </>
