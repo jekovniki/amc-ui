@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/dialog";
 import { AddEntityForm } from "../components/add-entity-form";
 import { useState } from "react";
+import { AccessVisibility } from "@/features/auth/components/access-visibility";
+import { UserPermission } from "@/features/auth/types/permissions";
 
 const EntityListContainer = () => {
   const { t, i18n } = useTranslation();
@@ -30,21 +32,23 @@ const EntityListContainer = () => {
         <DashboardTileHeader>
           {t("dashboard.entityContainer.title")}
         </DashboardTileHeader>
-        <Dialog open={modalIsOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={handleFormVisibility}>
-              + {t("dashboard.entityContainer.button")}
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="wide-modal">
-            <DialogTitle className="pt-6 pb-2 px-4">
-              {t("dialog.entity.add.title")}
-            </DialogTitle>
-            <div className="bg-white border-t-[1px] md:rounded-b">
-              <AddEntityForm toggleFormVisibility={handleFormVisibility} />
-            </div>
-          </DialogContent>
-        </Dialog>
+        <AccessVisibility accessLevelRequired={UserPermission.entityCreate}>
+          <Dialog open={modalIsOpen}>
+            <DialogTrigger asChild>
+              <Button onClick={handleFormVisibility}>
+                + {t("dashboard.entityContainer.button")}
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="wide-modal">
+              <DialogTitle className="pt-6 pb-2 px-4">
+                {t("dialog.entity.add.title")}
+              </DialogTitle>
+              <div className="bg-white border-t-[1px] md:rounded-b">
+                <AddEntityForm toggleFormVisibility={handleFormVisibility} />
+              </div>
+            </DialogContent>
+          </Dialog>
+        </AccessVisibility>
       </div>
       <div className="h-[340px] overflow-auto">
         {isLoading ? (
