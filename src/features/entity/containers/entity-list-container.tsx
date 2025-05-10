@@ -5,6 +5,13 @@ import { getEntityNameByLanguage } from "../utils/entity-translation";
 import { EntityPreviewCard } from "../components/entity-preview-card";
 import { DashboardTileHeader } from "@/components/dashboard-tile-header";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { AddEntityForm } from "../components/add-entity-form";
 
 const EntityListContainer = () => {
   const { t, i18n } = useTranslation();
@@ -17,7 +24,19 @@ const EntityListContainer = () => {
         <DashboardTileHeader>
           {t("dashboard.entityContainer.title")}
         </DashboardTileHeader>
-        <Button>+ {t("dashboard.entityContainer.button")}</Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button>+ {t("dashboard.entityContainer.button")}</Button>
+          </DialogTrigger>
+          <DialogContent className="wide-modal">
+            <DialogTitle className="pt-6 pb-2 px-4">
+              {t("dialog.entity.add.title")}
+            </DialogTitle>
+            <div className="bg-white border-t-[1px] md:rounded-b">
+              <AddEntityForm />
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
       <div className="h-[340px] overflow-auto">
         {isLoading ? (

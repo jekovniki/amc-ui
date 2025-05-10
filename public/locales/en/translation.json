@@ -155,6 +155,33 @@
     },
     "assetsLabel": "Wallet structure"
   },
+  "dialog": {
+    "entity": {
+      "add": {
+        "title": "New entity",
+        "name": {
+          "label": "Name",
+          "placeholder": "Name"
+        },
+        "uic": {
+          "label": "UIC",
+          "placeholder": "Enter unique code"
+        },
+        "type": {
+          "label": "Type",
+          "placeholder": "Choose the type of the entity"
+        },
+        "lei": {
+          "label": "LEI",
+          "placeholder": "LEI code"
+        },
+        "buttons": {
+          "submit": "Add fund",
+          "cancel": "Cancel"
+        }
+      }
+    }
+  },
   "menu": {
     "main": {
       "home": "Home",
