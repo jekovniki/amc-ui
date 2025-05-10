@@ -40,7 +40,7 @@ export const queryErrorHandler = (error: Error, query: any) => {
 export const mutationErrorHandler = (
   error: Error,
   variables: unknown,
-  context: unknown,
+  _context: unknown,
   mutation: Mutation<unknown, unknown, unknown, unknown>
 ) => {
   errorHandler(error, undefined, mutation, variables);
