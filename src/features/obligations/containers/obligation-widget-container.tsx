@@ -21,7 +21,7 @@ const ObligationWidgetContainer = () => {
             <Skeleton className="w-full h-[104px] mb-2" />
             <Skeleton className="w-full h-[104px] mb-2" />
           </div>
-        ) : (
+        ) : obligationList.length ? (
           obligationList.map((obligation) => (
             <ObligationCard
               key={obligation.id}
@@ -30,6 +30,10 @@ const ObligationWidgetContainer = () => {
               dueDate={obligation.dueDateAt}
             />
           ))
+        ) : (
+          <div className="text-[#0C2134BF] text-[14px] font-light text-center">
+            {t("dashboard.obligationContainer.empty")}
+          </div>
         )}
       </div>
     </div>

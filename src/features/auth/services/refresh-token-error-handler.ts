@@ -25,8 +25,11 @@ const errorHandler = (
   const { status, data } = (error as AxiosError<IErrorResponse>).response!;
 
   if (status === 401) {
-    if (mutation) refreshTokenAndRetry(undefined, mutation, variables);
-    else refreshTokenAndRetry(query);
+    if (mutation) {
+      refreshTokenAndRetry(undefined, mutation, variables);
+    } else {
+      refreshTokenAndRetry(query);
+    }
   } else console.error(data?.message);
 };
 
