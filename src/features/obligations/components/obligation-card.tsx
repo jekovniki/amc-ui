@@ -29,6 +29,7 @@ export const ObligationCard = ({
   if (isTomorrow(dueDateObj)) {
     formattedDate = t("dashboard.obligationContainer.status.tomorrow");
     dateClassName = "obligation-warning-bg";
+    badgeVariant = "warning" as "default"; // couldn't find out how to add warning as an option in ts, so this is my hack
   }
   return (
     <div
