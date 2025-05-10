@@ -20,8 +20,7 @@ const session = {
 
 function base64ToJSON<T>(string: string): T {
   try {
-    const decodedString = atob(string);
-    return JSON.parse(decodedString) as T;
+    return JSON.parse(Buffer.from(string, "base64").toString("utf8")) as T;
   } catch (error) {
     console.error("Error decoding Base64 or parsing JSON:", error);
     throw error;
