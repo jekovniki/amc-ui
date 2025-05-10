@@ -11,6 +11,7 @@ import { ReactNode } from "react";
 
 interface SelectBoxProps {
   logo: ReactNode;
+  label: string;
   options: Array<{ label: string; value: string }>;
   defaultPlaceholder?: string;
   value?: string;
@@ -21,6 +22,7 @@ interface SelectBoxProps {
 export const SelectBox = ({
   logo,
   options,
+  label,
   defaultPlaceholder,
   value,
   onChange,
@@ -39,7 +41,7 @@ export const SelectBox = ({
             {logo}
           </div>
           <div className="absolute top-[6px] left-[62px] h-fulltext-sm text-[#0C2134]">
-            Ниво на достъп
+            {label}
           </div>
         </div>
         <SelectValue placeholder={defaultPlaceholder} />

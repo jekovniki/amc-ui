@@ -19,6 +19,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSignIn } from "@/features/auth/api/use-sign-in";
 import { apiErrorHandler } from "@/utils/errors";
 import LoadingOverlay from "@/containers/loading-overlay";
+import session from "@/features/auth/services/session";
+import { navigateToDashboard } from "@/utils/navigation";
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -49,8 +51,10 @@ const LoginPage = () => {
     setLoaderMessage(t("login.form.loading"));
     setError("");
     signIn.mutate(data, {
-      onSuccess: () => {
-        navigate(PrivateRoutePath.Dashboard);
+      onSuccess: (response) => {
+        session.set(response.data.sessionData);
+        const { companyId } = JSON.parse(atob(response.data.sessionData));
+        navigateToDashboard(navigate, PrivateRoutePath.Dashboard, companyId);
       },
       onError: (error) =>
         apiErrorHandler(error, setLoader, setError, setLoaderMessage, t),

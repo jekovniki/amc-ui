@@ -1,4 +1,13 @@
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import {
+  mutationErrorHandler,
+  queryErrorHandler,
+} from "@/features/auth/services/refresh-token-error-handler";
+import {
+  QueryClientProvider,
+  QueryClient,
+  QueryCache,
+  MutationCache,
+} from "@tanstack/react-query";
 import { useState } from "react";
 
 const ReactQueryProvider = ({ children }: { children: React.ReactNode }) => {
@@ -12,6 +21,12 @@ const ReactQueryProvider = ({ children }: { children: React.ReactNode }) => {
             staleTime: 1000 * 60 * 5,
           },
         },
+        queryCache: new QueryCache({
+          onError: queryErrorHandler,
+        }),
+        mutationCache: new MutationCache({
+          onError: mutationErrorHandler,
+        }),
       })
   );
 

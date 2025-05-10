@@ -2,6 +2,11 @@ import { ReactElement } from "react";
 import RegisterCompanyPage from "./register/company";
 import RegisterUserPage from "./register/user";
 import LoginPage from "./login";
+import UnauthorizedPage from "./unauthorized";
+import DashboardPage from "./dashboard";
+import DashboardFundPage from "./dashboard/fund";
+import DashboardTeamPage from "./dashboard/team";
+import DashboardProfilePage from "./dashboard/profile";
 
 type AppRoute = {
   name: string;
@@ -15,10 +20,15 @@ export enum PublicRoutePath {
   RegisterCompany = "register/company",
   RegisterUser = "register/user",
   ForgotPassword = "forgot-password",
+  Unauthorized = "unauthorized",
+  Forbidden = "forbidden",
 }
 
 export enum PrivateRoutePath {
-  Dashboard = "dashboard/home",
+  Dashboard = "home",
+  Funds = "fund",
+  Team = "team",
+  Profile = "my-profile",
 }
 
 export const publicRoutes: AppRoute[] = [
@@ -40,13 +50,37 @@ export const publicRoutes: AppRoute[] = [
     element: <RegisterUserPage />,
     path: PublicRoutePath.RegisterUser,
   },
+  {
+    name: "Липса на достъп",
+    key: "unauthorized",
+    element: <UnauthorizedPage />,
+    path: PublicRoutePath.Unauthorized,
+  },
 ];
 
 export const dahsboardRoutes = [
   {
     name: "Начало",
     key: "dashboard",
-    element: <div>Dashboard</div>,
-    path: "/",
+    element: <DashboardPage />,
+    path: PrivateRoutePath.Dashboard,
+  },
+  {
+    name: "Фондове",
+    key: "fund",
+    element: <DashboardFundPage />,
+    path: PrivateRoutePath.Funds,
+  },
+  {
+    name: "Екип",
+    key: "team",
+    element: <DashboardTeamPage />,
+    path: PrivateRoutePath.Team,
+  },
+  {
+    name: "Профил",
+    key: "profile",
+    element: <DashboardProfilePage />,
+    path: PrivateRoutePath.Profile,
   },
 ];

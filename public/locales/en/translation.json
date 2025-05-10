@@ -127,5 +127,70 @@
     "response": {
       "errors": {}
     }
+  },
+  "unauthorized": {
+    "title": "Unauthorized!",
+    "description": "You don't have the necessary access to open this page. Please sign in to the system in order to access this page",
+    "button": "Sign in"
+  },
+  "dashboard": {
+    "welcomeCard": {
+      "title": "Welcome",
+      "text": "You have successfully signed in the admin dashboard",
+      "subtext": "UIC",
+      "message": "We wish you a productive session!"
+    },
+    "entityContainer": {
+      "title": "UCITS",
+      "button": "Add new",
+      "empty": "Add your funds using the button above this text."
+    },
+    "obligationContainer": {
+      "title": "Incoming obligations",
+      "status": {
+        "today": "Today",
+        "tomorrow": "Tomorrow"
+      },
+      "link": "More"
+    },
+    "assetsLabel": "Wallet structure"
+  },
+  "dialog": {
+    "entity": {
+      "add": {
+        "title": "New entity",
+        "name": {
+          "label": "Name",
+          "placeholder": "Name"
+        },
+        "uic": {
+          "label": "UIC",
+          "placeholder": "Enter unique code"
+        },
+        "type": {
+          "label": "Type",
+          "placeholder": "Choose the type of the entity"
+        },
+        "lei": {
+          "label": "LEI",
+          "placeholder": "LEI code"
+        },
+        "buttons": {
+          "submit": "Add fund",
+          "cancel": "Cancel"
+        }
+      }
+    }
+  },
+  "menu": {
+    "main": {
+      "home": "Home",
+      "funds": "Funds",
+      "team": "Team"
+    },
+    "user": {
+      "profile": "My profile",
+      "signOut": "Exit"
+    }
   }
 }

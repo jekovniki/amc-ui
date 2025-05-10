@@ -117,6 +117,7 @@ export const AddCompanyEmployeeList = ({
                             value: item.id.toString(),
                           })
                         )}
+                        label={"Ниво на достъп"}
                         defaultPlaceholder="Изберете ниво на достъп"
                         error={!!fieldState.error}
                         {...field}
