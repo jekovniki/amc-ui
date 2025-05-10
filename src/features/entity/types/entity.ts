@@ -15,3 +15,10 @@ export type EntityType = {
   id: number;
   name: string;
 };
+
+export type AddEntityRequest = {
+  name: string;
+  uic: string;
+  lei?: string;
+  entityTypeId: number;
+};

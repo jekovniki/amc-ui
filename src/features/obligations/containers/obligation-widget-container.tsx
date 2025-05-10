@@ -8,7 +8,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 const ObligationWidgetContainer = () => {
   const { t } = useTranslation();
   const { data, isLoading } = useGetObligations(ObligationStatus.PENDING);
-  console.log("data : ", data);
   const obligationList = data?.data || [];
   return (
     <div>

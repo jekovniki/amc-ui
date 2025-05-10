@@ -12,11 +12,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { AddEntityForm } from "../components/add-entity-form";
+import { useState } from "react";
 
 const EntityListContainer = () => {
   const { t, i18n } = useTranslation();
   const { data, isLoading } = useGetCompanyEntities();
   const entities = data?.data;
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const handleFormVisibility = () => {
+    setModalIsOpen(!modalIsOpen);
+  };
 
   return (
     <>
@@ -24,16 +30,18 @@ const EntityListContainer = () => {
         <DashboardTileHeader>
           {t("dashboard.entityContainer.title")}
         </DashboardTileHeader>
-        <Dialog>
+        <Dialog open={modalIsOpen}>
           <DialogTrigger asChild>
-            <Button>+ {t("dashboard.entityContainer.button")}</Button>
+            <Button onClick={handleFormVisibility}>
+              + {t("dashboard.entityContainer.button")}
+            </Button>
           </DialogTrigger>
           <DialogContent className="wide-modal">
             <DialogTitle className="pt-6 pb-2 px-4">
               {t("dialog.entity.add.title")}
             </DialogTitle>
             <div className="bg-white border-t-[1px] md:rounded-b">
-              <AddEntityForm />
+              <AddEntityForm toggleFormVisibility={handleFormVisibility} />
             </div>
           </DialogContent>
         </Dialog>

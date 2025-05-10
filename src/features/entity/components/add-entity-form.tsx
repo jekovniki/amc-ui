@@ -18,14 +18,25 @@ import { SelectBox } from "@/components/select-box";
 import { Button } from "@/components/ui/button";
 import { useGetEntityTypeQueries } from "@/features/entity-type/api/use-get-entity-type-queries";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getTranslatedEntityType } from "@/features/entity-type/utils/entity-type";
+import { useAddCompanyEntity } from "../api/use-add-company-entity";
+import { useState } from "react";
+import LoadingOverlay from "@/containers/loading-overlay";
+import { getEntityNameByLanguage } from "../utils/entity-translation";
+import { fundApiErrorHandler } from "../utils/errors";
 
-export const AddEntityForm = () => {
+interface AddEntityFormProps {
+  toggleFormVisibility: () => void;
+}
+
+export const AddEntityForm = ({ toggleFormVisibility }: AddEntityFormProps) => {
   const { t, i18n } = useTranslation();
   const { data, isLoading } = useGetEntityTypeQueries();
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const addCompanyEntity = useAddCompanyEntity();
   const entityTypes = data?.data
     ? data.data.map((item) => ({
-        label: getTranslatedEntityType(item.name, i18n.language),
+        label: getEntityNameByLanguage(item.name, i18n.language),
         value: item.id.toString(),
       }))
     : [];
@@ -54,7 +65,21 @@ export const AddEntityForm = () => {
   });
 
   const onSubmit = (input: z.infer<typeof formSchema>) => {
-    console.log(input);
+    setLoading(true);
+    addCompanyEntity.mutate(
+      {
+        ...input,
+        entityTypeId: Number(input.entityTypeId),
+      },
+      {
+        onSuccess: () => {
+          setLoading(false);
+          toggleFormVisibility();
+        },
+        onError: (error) =>
+          fundApiErrorHandler(error, setLoading, setErrorMessage, t),
+      }
+    );
   };
   return (
     <Form {...form}>
@@ -145,9 +170,14 @@ export const AddEntityForm = () => {
         </div>
 
         <div className="border-t-[1px] p-6">
-          <div className="flex items-end justify-end mt-2">
+          <div className="flex items-center justify-between mt-2">
+            <div className="text-red-500 text-sm">{errorMessage}</div>
             <div className="flex gap-4">
-              <Button variant="secondary" type="button">
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={toggleFormVisibility}
+              >
                 {t("dialog.entity.add.buttons.cancel")}
               </Button>
               <Button type="submit">
@@ -156,6 +186,13 @@ export const AddEntityForm = () => {
             </div>
           </div>
         </div>
+        {loading ? (
+          <LoadingOverlay showLoader={loading}>
+            <div className="text-[14px]">Добавяне на дружеството</div>
+          </LoadingOverlay>
+        ) : (
+          ""
+        )}
       </form>
     </Form>
   );
