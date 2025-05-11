@@ -7,6 +7,7 @@ import DashboardPage from "./dashboard";
 import DashboardFundPage from "./dashboard/fund";
 import DashboardTeamPage from "./dashboard/team";
 import DashboardProfilePage from "./dashboard/profile";
+import DashboardFundOverviewPage from "./dashboard/fund/overview";
 
 type AppRoute = {
   name: string;
@@ -29,6 +30,10 @@ export enum PrivateRoutePath {
   Funds = "fund",
   Team = "team",
   Profile = "my-profile",
+}
+
+export enum PrivateFundRoutePath {
+  Overview = "overview",
 }
 
 export const publicRoutes: AppRoute[] = [
@@ -82,5 +87,14 @@ export const dahsboardRoutes = [
     key: "profile",
     element: <DashboardProfilePage />,
     path: PrivateRoutePath.Profile,
+  },
+];
+
+export const fundDashboardRoutes: AppRoute[] = [
+  {
+    name: "Фонд - Преглед",
+    key: "fund-overview",
+    element: <DashboardFundOverviewPage />,
+    path: PrivateFundRoutePath.Overview,
   },
 ];

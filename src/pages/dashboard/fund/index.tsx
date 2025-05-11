@@ -1,5 +1,5 @@
 const DashboardFundPage = () => {
-  return <div>Fund page</div>;
+  return <div>All Funds page</div>;
 };
 
 export default DashboardFundPage;
