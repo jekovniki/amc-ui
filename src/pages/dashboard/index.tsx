@@ -3,9 +3,11 @@ import EntityListContainer from "@/features/entity/containers/entity-list-contai
 import ObligationWidgetContainer from "@/features/obligations/containers/obligation-widget-container";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
+import { usePageTitle } from "@/hooks/use-page-title";
 
 const DashboardPage = () => {
   const { t } = useTranslation();
+  usePageTitle("Начало");
 
   const containerVariants = {
     hidden: { opacity: 0 },

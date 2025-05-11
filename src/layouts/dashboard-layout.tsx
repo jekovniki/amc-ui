@@ -6,9 +6,9 @@ import {
 } from "@/components/ui/popover";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import DahsboardSidebar from "@/containers/dashboard-sidebar";
+import { usePageTitleContext } from "@/context/PageTitleContext";
 import { useSignOut } from "@/features/auth/api/use-sign-out";
 import session from "@/features/auth/services/session";
-import { usePageTitle } from "@/hooks/use-page-title";
 import { PrivateRoutePath, PublicRoutePath } from "@/pages/routes";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,7 +20,7 @@ const DashboardLayout = () => {
   const { companyId } = useParams();
   const navigate = useNavigate();
   const signOut = useSignOut();
-  const [pageTitle] = usePageTitle();
+  const { pageTitle } = usePageTitleContext();
 
   const handleSignOut = () => {
     signOut.mutate(undefined, {

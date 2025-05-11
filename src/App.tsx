@@ -8,6 +8,7 @@ import DashboardLayout from "./layouts/dashboard-layout";
 import PublicLayout from "./layouts/public-layout";
 import ReactQueryProvider from "./lib/react-query-provider";
 import { ProtectedRoute } from "./components/protected-route";
+import { PageTitleProvider } from "./context/PageTitleContext";
 
 function App() {
   return (
@@ -27,7 +28,9 @@ function App() {
           path="/:companyId/"
           element={
             <ProtectedRoute>
-              <DashboardLayout />
+              <PageTitleProvider>
+                <DashboardLayout />
+              </PageTitleProvider>
             </ProtectedRoute>
           }
         >

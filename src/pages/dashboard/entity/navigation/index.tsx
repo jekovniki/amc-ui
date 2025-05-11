@@ -18,9 +18,8 @@ const DashboardEntityNavigationPage = () => {
   const { data, isLoading } = useGetEntity(fundId || "");
   const navigate = useNavigate();
   const fundData = data?.data || ({} as Entity);
-
-  usePageTitle(data?.data?.name);
-
+  console.log(fundData.name);
+  usePageTitle(fundData?.name);
   const pages = [
     {
       name: "main",

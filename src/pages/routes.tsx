@@ -7,7 +7,7 @@ import DashboardPage from "./dashboard";
 import DashboardTeamPage from "./dashboard/team";
 import DashboardProfilePage from "./dashboard/profile";
 import DashboardEntityPage from "./dashboard/entity";
-import DashboardEntityNavigationPage from "./dashboard/entity/overview";
+import DashboardEntityNavigationPage from "./dashboard/entity/navigation";
 
 type AppRoute = {
   name: string;
