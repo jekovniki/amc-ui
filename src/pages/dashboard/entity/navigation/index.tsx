@@ -11,6 +11,21 @@ import { PrivateRoutePath } from "@/pages/routes";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { usePageTitle } from "@/hooks/use-page-title";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.3,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+};
 
 const DashboardEntityNavigationPage = () => {
   const { t } = useTranslation();
@@ -56,8 +71,16 @@ const DashboardEntityNavigationPage = () => {
   };
   return (
     <div className="p-4 h-full flex items-start justify-center">
-      <div className="max-w-[800px] w-full grid grid-cols-6 gap-6">
-        <div className="col-span-6 flex flex-col items-center justify-center my-20">
+      <motion.div
+        className="max-w-[800px] w-full grid grid-cols-6 gap-6"
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+      >
+        <motion.div
+          className="col-span-6 flex flex-col items-center justify-center my-20"
+          variants={itemVariants}
+        >
           <EntityWalletIcon className="text-[#0C213440] mb-6" />
           {isLoading ? (
             <Skeleton className="h-[36px] w-[300px]" />
@@ -66,10 +89,11 @@ const DashboardEntityNavigationPage = () => {
               {fundData.name}
             </h2>
           )}
-        </div>
+        </motion.div>
         {pages.map(({ name, icon }) => (
-          <div
+          <motion.div
             key={name}
+            variants={itemVariants}
             className="group bg-white col-span-2 shadow-md hover:shadow-sm transition-all cursor-pointer rounded-[3px] min-h-[240px] flex gap-2 text-center items-center justify-center flex-col p-4"
             onClick={() => {
               handleClick(name);
@@ -82,9 +106,9 @@ const DashboardEntityNavigationPage = () => {
             <p className="text-[13px] text-[#0C213473]">
               {t(`entity.overview.${name}.description`)}
             </p>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };
