@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useGetCompanyEntities } from "../api/use-get-company-entities";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DefaultCarouselSlider } from "@/components/default-carousel-slider";
+import EntityWalletStructure from "@/features/wallets/containers/entity-wallet-structure";
 
 const EntityAssetListWidget = () => {
   const { t } = useTranslation();
@@ -16,12 +17,9 @@ const EntityAssetListWidget = () => {
         <DefaultCarouselSlider
           variant="full-width"
           items={entities?.map((entity) => ({
+            id: entity.id,
             name: entity.name,
-            content: (
-              <div className="bg-white rounded-md shadow-md hover:shadow-sm p-4">
-                {entity.name}
-              </div>
-            ),
+            content: <EntityWalletStructure id={entity.id} />,
           }))}
         />
       ) : (

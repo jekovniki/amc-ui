@@ -7,9 +7,18 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
+import { useQueryClient } from "@tanstack/react-query";
+import { WalletQueries } from "@/features/wallets/api/query-keys";
+
+/**
+ * @note : This got a bit out of hand! Know that currently it is tied to the WalletQueries.
+ *
+ * Refactor and abstract when you have time
+ */
 
 interface CarouselItemData {
   name: string;
+  id: string;
   content: ReactNode;
 }
 
@@ -27,12 +36,16 @@ export const DefaultCarouselSlider = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentTitle =
     items && items.length > 0 ? items[currentIndex]?.name : "Carousel";
+  const client = useQueryClient();
 
   useEffect(() => {
     if (!api) return;
 
     const handleSelect = () => {
       setCurrentIndex(api.selectedScrollSnap());
+      client.invalidateQueries({
+        queryKey: WalletQueries.Wallet(items[currentIndex].id),
+      });
     };
 
     api.on("select", handleSelect);
@@ -48,7 +61,9 @@ export const DefaultCarouselSlider = ({
     <div className={`${width} relative mt-6`}>
       <Carousel className={`${width}`} setApi={setApi}>
         <div className="flex justify-between items-center mb-4">
-          <h3 className="font-medium text-lg">{currentTitle}</h3>
+          <h3 className="text-[#0C2134] text-[18px] font-light">
+            {currentTitle}
+          </h3>
           <div className="flex space-x-2">
             <CarouselPrevious className="relative static transform-none h-8 w-8" />
             <CarouselNext className="relative static transform-none h-8 w-8" />
