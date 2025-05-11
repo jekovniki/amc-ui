@@ -1,3 +1,6 @@
+import { PrivateRoutePath } from "@/pages/routes";
+import { useNavigate, useParams } from "react-router-dom";
+
 interface EntityPreviewCardProps {
   id: string;
   name: string;
@@ -11,8 +14,10 @@ export const EntityPreviewCard = ({
   bottomLeftText,
   bottomRightText,
 }: EntityPreviewCardProps) => {
+  const { companyId } = useParams();
+  const navigate = useNavigate();
   const handleClick = () => {
-    console.log(id);
+    navigate(`/${companyId}/${PrivateRoutePath.Entity}/${id}`);
   };
 
   return (

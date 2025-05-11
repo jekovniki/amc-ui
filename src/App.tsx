@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import {
   publicRoutes,
   dahsboardRoutes,
-  fundDashboardRoutes,
+  entityDashboardRoutes,
 } from "./pages/routes";
 import DashboardLayout from "./layouts/dashboard-layout";
 import PublicLayout from "./layouts/public-layout";
@@ -33,7 +33,7 @@ function App() {
         >
           <Route index element={<Navigate to="home" replace />} />
           {dahsboardRoutes
-            .filter((route) => route.key !== "fund")
+            .filter((route) => route.key !== "entity")
             .map((route) => {
               const relativePath = route.path.split("/").pop();
               return (
@@ -45,7 +45,7 @@ function App() {
               );
             })}
           {dahsboardRoutes
-            .filter((route) => route.key === "fund")
+            .filter((route) => route.key === "entity")
             .map((route) => {
               const relativePath = route.path.split("/").pop();
               return (
@@ -58,7 +58,7 @@ function App() {
 
                   <Route path={`${relativePath}/:fundId`}>
                     <Route index element={<Navigate to="overview" replace />} />
-                    {fundDashboardRoutes.map((fundRoute) => {
+                    {entityDashboardRoutes.map((fundRoute) => {
                       const fundRelativePath = fundRoute.path.split("/").pop();
                       return (
                         <Route

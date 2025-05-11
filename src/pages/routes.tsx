@@ -4,10 +4,10 @@ import RegisterUserPage from "./register/user";
 import LoginPage from "./login";
 import UnauthorizedPage from "./unauthorized";
 import DashboardPage from "./dashboard";
-import DashboardFundPage from "./dashboard/fund";
 import DashboardTeamPage from "./dashboard/team";
 import DashboardProfilePage from "./dashboard/profile";
-import DashboardFundOverviewPage from "./dashboard/fund/overview";
+import DashboardEntityOverviewPage from "./dashboard/entity/overview";
+import DashboardEntityPage from "./dashboard/entity";
 
 type AppRoute = {
   name: string;
@@ -27,7 +27,7 @@ export enum PublicRoutePath {
 
 export enum PrivateRoutePath {
   Dashboard = "home",
-  Funds = "fund",
+  Entity = "entity",
   Team = "team",
   Profile = "my-profile",
 }
@@ -71,10 +71,10 @@ export const dahsboardRoutes = [
     path: PrivateRoutePath.Dashboard,
   },
   {
-    name: "Фондове",
-    key: "fund",
-    element: <DashboardFundPage />,
-    path: PrivateRoutePath.Funds,
+    name: "Субекти",
+    key: "entity",
+    element: <DashboardEntityPage />,
+    path: PrivateRoutePath.Entity,
   },
   {
     name: "Екип",
@@ -90,11 +90,11 @@ export const dahsboardRoutes = [
   },
 ];
 
-export const fundDashboardRoutes: AppRoute[] = [
+export const entityDashboardRoutes: AppRoute[] = [
   {
     name: "Фонд - Преглед",
-    key: "fund-overview",
-    element: <DashboardFundOverviewPage />,
+    key: "entity-overview",
+    element: <DashboardEntityOverviewPage />,
     path: PrivateFundRoutePath.Overview,
   },
 ];
