@@ -6,8 +6,8 @@ import UnauthorizedPage from "./unauthorized";
 import DashboardPage from "./dashboard";
 import DashboardTeamPage from "./dashboard/team";
 import DashboardProfilePage from "./dashboard/profile";
-import DashboardEntityOverviewPage from "./dashboard/entity/overview";
 import DashboardEntityPage from "./dashboard/entity";
+import DashboardEntityNavigationPage from "./dashboard/entity/overview";
 
 type AppRoute = {
   name: string;
@@ -93,8 +93,8 @@ export const dahsboardRoutes = [
 export const entityDashboardRoutes: AppRoute[] = [
   {
     name: "Фонд - Преглед",
-    key: "entity-overview",
-    element: <DashboardEntityOverviewPage />,
-    path: PrivateFundRoutePath.Overview,
+    key: "entity-nav",
+    element: <DashboardEntityNavigationPage />,
+    path: "",
   },
 ];

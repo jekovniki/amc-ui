@@ -57,7 +57,6 @@ function App() {
                   />
 
                   <Route path={`${relativePath}/:fundId`}>
-                    <Route index element={<Navigate to="overview" replace />} />
                     {entityDashboardRoutes.map((fundRoute) => {
                       const fundRelativePath = fundRoute.path.split("/").pop();
                       return (

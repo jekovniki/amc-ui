@@ -1,4 +1,4 @@
 export const EntityQueries = {
   Entities: ["entities"],
-  Entity: ["entity"],
+  Entity: (id: string) => ["entity", id],
 };

@@ -1,5 +1,7 @@
 import { PrivateRoutePath } from "@/pages/routes";
+import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
+import { EntityQueries } from "../api/query-keys";
 
 interface EntityPreviewCardProps {
   id: string;
@@ -16,7 +18,9 @@ export const EntityPreviewCard = ({
 }: EntityPreviewCardProps) => {
   const { companyId } = useParams();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const handleClick = () => {
+    queryClient.invalidateQueries({ queryKey: EntityQueries.Entity(id) });
     navigate(`/${companyId}/${PrivateRoutePath.Entity}/${id}`);
   };
 
