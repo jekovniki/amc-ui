@@ -153,7 +153,38 @@
       },
       "link": "More"
     },
-    "assetsLabel": "Wallet structure"
+    "assets": {
+      "title": "Wallet structure",
+      "noAssets": {
+        "title": "Wallet structure",
+        "description": "Currently no assets are added. Use the button bellow to add more assets",
+        "button": "Add"
+      }
+    }
+  },
+  "entity": {
+    "overview": {
+      "main": {
+        "title": "Преглед",
+        "description": "Общ преглед на наличната информация."
+      },
+      "assets": {
+        "title": "Активи",
+        "description": "Преглед, добавяне, промяна и търгуване на активите."
+      },
+      "restrictions": {
+        "title": "Ограничения",
+        "description": "Преглед и настройки на различните ограничения."
+      },
+      "obligation": {
+        "title": "Задължения",
+        "description": "Преглед, настройки и история на всички задължения."
+      },
+      "documents": {
+        "title": "Документи",
+        "description": "Преглед, настройки и история на всички документи ."
+      }
+    }
   },
   "dialog": {
     "entity": {
