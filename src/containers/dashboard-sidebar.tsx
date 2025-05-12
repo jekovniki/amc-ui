@@ -41,7 +41,7 @@ const DahsboardSidebar = ({ companyId }: DashboardSidebarProps) => {
         <DashboardLink
           icon={walletIcon}
           name={t("menu.main.funds")}
-          href={`/${companyId}/${PrivateRoutePath.Funds}`}
+          href={`/${companyId}/${PrivateRoutePath.Entity}`}
         />
         <DashboardLink
           icon={teamIcon}

@@ -1,11 +1,12 @@
 import { CompanyWelcomeCard } from "@/features/company/components/company-welcome-card";
 import EntityListContainer from "@/features/entity/containers/entity-list-container";
 import ObligationWidgetContainer from "@/features/obligations/containers/obligation-widget-container";
-import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
+import { usePageTitle } from "@/hooks/use-page-title";
+import EntityAssetListWidget from "@/features/entity/containers/entity-asset-list-widget";
 
 const DashboardPage = () => {
-  const { t } = useTranslation();
+  usePageTitle("Начало");
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -44,11 +45,7 @@ const DashboardPage = () => {
       </motion.div>
 
       <motion.div className="col-span-8" variants={itemVariants}>
-        <div className="bg-white rounded-md shadow-md min-h-[400px] flex items-center justify-center">
-          <div className="text-[#0C2134BF] text-[14px] font-light text-center">
-            {t("dashboard.entityContainer.empty")}
-          </div>
-        </div>
+        <EntityAssetListWidget />
       </motion.div>
 
       <motion.div className="col-span-4" variants={itemVariants}>
