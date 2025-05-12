@@ -11,7 +11,7 @@ const EntityWalletStructure = ({ id }: EntityWalletStructureProps) => {
   const { t } = useTranslation();
   const { data, isLoading } = useGetWalletStructureBy(id, "code");
   const allAssets = data?.data?.assets;
-  const assetOverview = data?.data?.overview;
+  //   const assetOverview = data?.data?.overview;
   console.log("id : ", id);
   console.log("allAssets : ", allAssets);
   console.log("allAssets.length : ", allAssets?.length);

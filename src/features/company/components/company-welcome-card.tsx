@@ -2,7 +2,6 @@ import session from "@/features/auth/services/session";
 import { useTranslation } from "react-i18next";
 import welcomeImage from "../../../assets/welcome-icon.svg";
 import { useGetCompany } from "../api/use-get-company";
-import { Loader } from "@/components/loader";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export const CompanyWelcomeCard = () => {
