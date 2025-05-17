@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useGetWalletStructureBy } from "../api/use-get-wallet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 
 interface EntityWalletStructureProps {
   id: string;
@@ -35,7 +36,22 @@ const EntityWalletStructure = ({ id }: EntityWalletStructureProps) => {
               allAssets?.map((asset) => (
                 <div className="w-full h-[40px] border-[#0000000D] rounded-md border-[2px] mb-2 flex items-center justify-between p-4">
                   <h5 className="text-[13px] font-light ">{asset.groupKey}</h5>
-                  <div></div>
+                  <div className="flex items-center gap-6">
+                    <Progress
+                      value={Number(asset.percentage)}
+                      className="w-[300px]"
+                    />
+                    <div className="flex items-center justify-end gap-2 min-w-[175px]">
+                      <div className="text-[13px] font-light flex gap-[2px]">
+                        {asset.totalValue}{" "}
+                        <span className="text-[#0C213473]">лв.</span>
+                      </div>
+                      <div className="text-[13px] font-light flex gap-[2px]">
+                        {asset.percentage}
+                        <span className="text-[#0C213473]">%</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ))
             ) : (
