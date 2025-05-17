@@ -151,6 +151,7 @@
         "today": "Today",
         "tomorrow": "Tomorrow"
       },
+      "button": "Add obligation",
       "link": "More"
     },
     "assets": {
@@ -208,6 +209,31 @@
         },
         "buttons": {
           "submit": "Add fund",
+          "cancel": "Cancel"
+        }
+      }
+    },
+    "obligation": {
+      "add": {
+        "title": "New obligation",
+        "name": {
+          "label": "Name",
+          "placeholder": "Name"
+        },
+        "dueDateAt": {
+          "label": "Due Date At",
+          "placeholder": ""
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Add description"
+        },
+        "entity": {
+          "label": "Entities",
+          "placeholder": "Select entity"
+        },
+        "buttons": {
+          "submit": "Add obligation",
           "cancel": "Cancel"
         }
       }

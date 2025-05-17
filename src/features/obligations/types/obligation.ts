@@ -11,6 +11,13 @@ export type Obligation = {
   entity: Omit<Entity, "entityType">;
 };
 
+export type AddObligationRequest = {
+  entityId: string;
+  name: string;
+  description?: string;
+  dueDateAt: string;
+};
+
 export enum ObligationStatus {
   PENDING = "PENDING",
   RESOLVED = "RESOLVED",

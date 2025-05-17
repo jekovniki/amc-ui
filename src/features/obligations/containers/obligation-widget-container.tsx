@@ -4,16 +4,53 @@ import { ObligationStatus } from "../types/obligation";
 import { useTranslation } from "react-i18next";
 import { ObligationCard } from "../components/obligation-card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AccessVisibility } from "@/features/auth/components/access-visibility";
+import { UserPermission } from "@/features/auth/types/permissions";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { AddObligationForm } from "../components/add-obligation-form";
 
 const ObligationWidgetContainer = () => {
   const { t } = useTranslation();
   const { data, isLoading } = useGetObligations(ObligationStatus.PENDING);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const obligationList = data?.data.slice().reverse() || [];
+
+  const handleFormVisibility = () => {
+    setModalIsOpen(!modalIsOpen);
+  };
   return (
     <div>
-      <DashboardTileHeader>
-        {t("dashboard.obligationContainer.title")}
-      </DashboardTileHeader>
+      <div className="flex items-center justify-between mb-4">
+        <DashboardTileHeader>
+          {t("dashboard.obligationContainer.title")}
+        </DashboardTileHeader>
+        <AccessVisibility accessLevelRequired={UserPermission.obligationCreate}>
+          <Dialog open={modalIsOpen}>
+            <DialogTrigger asChild>
+              <Button onClick={handleFormVisibility}>
+                + {t("dashboard.obligationContainer.button")}
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="wide-modal">
+              <DialogTitle className="pt-6 pb-2 px-4">
+                {t("dialog.entity.add.title")}
+              </DialogTitle>
+              <div className="bg-white border-t-[1px] md:rounded-b">
+                <AddObligationForm
+                  toggleFormVisibility={handleFormVisibility}
+                />
+              </div>
+            </DialogContent>
+          </Dialog>
+        </AccessVisibility>
+      </div>
       <div className="mt-4 flex flex-col gap-2">
         {isLoading ? (
           <div>
