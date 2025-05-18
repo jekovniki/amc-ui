@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { AddWalletStructureManual } from "../components/add-wallet-structure-manual";
 
 interface AddWalletStructureModalProps {
   toggleFormVisibility: () => void;
@@ -36,7 +37,7 @@ const AddWalletStructureModal = ({
             </p>
           </div>
         )}
-        {view === "manual" && <div></div>}
+        {view === "manual" && <AddWalletStructureManual />}
       </div>
       <div className="border-t-[1px] p-6 flex items-center justify-between gap-4">
         <Button
