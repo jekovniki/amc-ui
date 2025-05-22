@@ -50,7 +50,7 @@ const DahsboardSidebar = ({ companyId }: DashboardSidebarProps) => {
         <SidebarGroup>
           <div
             className={`flex items-center gap-4 cursor-pointer p-[5px] ${
-              isDropdownToggled ? "text-primary" : ""
+              isDropdownToggled ? "text-[#0a6dc8]" : ""
             }`}
             onClick={() => {
               setIsDropdownToggled(!isDropdownToggled);
