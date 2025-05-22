@@ -5,11 +5,17 @@ interface DashboardLinkProps {
   href: string;
   icon: string;
   name: string;
+  className?: string;
 }
 
-export const DashboardLink = ({ href, icon, name }: DashboardLinkProps) => {
+export const DashboardLink = ({
+  href,
+  icon,
+  name,
+  className,
+}: DashboardLinkProps) => {
   return (
-    <SidebarGroup>
+    <SidebarGroup className={className}>
       <NavLink
         to={href}
         className={({ isActive }) =>

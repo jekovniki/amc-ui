@@ -36,19 +36,19 @@ const DashboardPage = () => {
       initial="hidden"
       animate="visible"
     >
-      <motion.div className="col-span-8" variants={itemVariants}>
+      <motion.div className="col-span-12 lg:col-span-8" variants={itemVariants}>
         <CompanyWelcomeCard />
       </motion.div>
 
-      <motion.div className="col-span-4" variants={itemVariants}>
+      <motion.div className="col-span-12 lg:col-span-4" variants={itemVariants}>
         <EntityListContainer />
       </motion.div>
 
-      <motion.div className="col-span-8" variants={itemVariants}>
+      <motion.div className="col-span-12 lg:col-span-8" variants={itemVariants}>
         <EntityAssetListWidget />
       </motion.div>
 
-      <motion.div className="col-span-4" variants={itemVariants}>
+      <motion.div className="col-span-12 lg:col-span-4" variants={itemVariants}>
         <ObligationWidgetContainer />
       </motion.div>
     </motion.div>
