@@ -2,16 +2,20 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
   SidebarHeader,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { PrivateRoutePath } from "@/pages/routes";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import homeIcon from "../assets/home.svg";
 import walletIcon from "../assets/wallet.svg";
 import teamIcon from "../assets/team.svg";
 import { DashboardLink } from "@/components/dashboard-link";
+import { useState } from "react";
+import { useGetCompanyEntities } from "@/features/entity/api/use-get-company-entities";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface DashboardSidebarProps {
   companyId: string;
@@ -19,6 +23,11 @@ interface DashboardSidebarProps {
 
 const DahsboardSidebar = ({ companyId }: DashboardSidebarProps) => {
   const { t } = useTranslation();
+  const [isDropdownToggled, setIsDropdownToggled] = useState(true);
+  const { data, isLoading } = useGetCompanyEntities();
+
+  const companyEntities = data?.data || [];
+
   return (
     <Sidebar variant="sidebar" collapsible="icon">
       <SidebarHeader className="flex items-center justify-center h-[73px] border-b-[1px]">
@@ -32,20 +41,61 @@ const DahsboardSidebar = ({ companyId }: DashboardSidebarProps) => {
           </Link>
         </div>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="gap-0">
         <DashboardLink
           icon={homeIcon}
           name={t("menu.main.home")}
           href={`/${companyId}/${PrivateRoutePath.Dashboard}`}
         />
-        <DashboardLink
-          icon={walletIcon}
-          name={t("menu.main.funds")}
-          href={`/${companyId}/${PrivateRoutePath.Entity}`}
-        />
+        <SidebarGroup>
+          <div
+            className={`flex items-center gap-4 cursor-pointer p-[5px] ${
+              isDropdownToggled ? "text-primary" : ""
+            }`}
+            onClick={() => {
+              setIsDropdownToggled(!isDropdownToggled);
+            }}
+          >
+            <img
+              src={walletIcon}
+              alt={t("menu.main.funds")}
+              width={24}
+              height={24}
+            />
+            <span>{t("menu.main.funds")}</span>
+          </div>
+          <div
+            className={`${
+              isDropdownToggled
+                ? "pointer-events-auto pl-10 pr-2 h-auto"
+                : "h-[0px] opacity-0 pointer-events-none"
+            } transition-all pt-[5px]`}
+          >
+            {isLoading ? (
+              <>
+                <Skeleton className="h-[26px] mb-2" />
+                <Skeleton className="h-[26px] mb-2" />
+                <Skeleton className="h-[26px]" />
+              </>
+            ) : (
+              companyEntities.map((entity) => (
+                <NavLink
+                  key={entity.id}
+                  to={`/${companyId}/${PrivateRoutePath.Entity}/${entity.id}`}
+                  className={({ isActive }) =>
+                    `block p-[5px] ${isActive ? "text-primary" : ""}`
+                  }
+                >
+                  <span className="font-light text-[14px]">{entity.name}</span>
+                </NavLink>
+              ))
+            )}
+          </div>
+        </SidebarGroup>
         <DashboardLink
           icon={teamIcon}
           name={t("menu.main.team")}
+          className={`pt-[0px]`}
           href={`/${companyId}/${PrivateRoutePath.Team}`}
         />
       </SidebarContent>
