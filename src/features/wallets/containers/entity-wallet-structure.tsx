@@ -46,8 +46,11 @@ const EntityWalletStructure = ({ id }: EntityWalletStructureProps) => {
         ) : (
           <>
             {allAssets?.length ? (
-              allAssets?.map((asset) => (
-                <div className="w-full h-[40px] border-[#0000000D] rounded-md border-[2px] mb-2 flex items-center justify-between p-4">
+              allAssets?.map((asset, index) => (
+                <div
+                  key={index}
+                  className="w-full h-[40px] border-[#0000000D] rounded-md border-[2px] mb-2 flex items-center justify-between p-4"
+                >
                   <h5 className="text-[13px] font-light ">{asset.groupKey}</h5>
                   <div className="flex items-center gap-6">
                     <Progress

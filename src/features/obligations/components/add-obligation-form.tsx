@@ -14,12 +14,12 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
 import { useAddObligation } from "../api/use-add-obligation";
-import { WalletIcon } from "@/components/icons/wallet-icon";
 import { SelectBox } from "@/components/select-box";
 import { CompanyIcon } from "@/components/icons/company-icon";
 import { Button } from "@/components/ui/button";
 import LoadingOverlay from "@/containers/loading-overlay";
 import { Skeleton } from "@/components/ui/skeleton";
+import { DatePickerBox } from "@/components/datepicker-box";
 
 interface AddObligationFormProps {
   toggleFormVisibility: () => void;
@@ -99,7 +99,7 @@ export const AddObligationForm = ({
             )}
           />
           <div className="flex w-full gap-4">
-            <div className="basis-1/2">
+            {/* <div className="basis-1/2">
               <FormField
                 control={form.control}
                 name="dueDateAt"
@@ -113,6 +113,23 @@ export const AddObligationForm = ({
                         )}
                         logo={<WalletIcon />}
                         {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div> */}
+            <div className="basis-1/2">
+              <FormField
+                control={form.control}
+                name="dueDateAt"
+                render={() => (
+                  <FormItem>
+                    <FormControl>
+                      <DatePickerBox
+                        label={t("dialog.obligation.add.dueDateAt.label")}
+                        placeholder={new Date().toLocaleDateString()}
                       />
                     </FormControl>
                     <FormMessage />
