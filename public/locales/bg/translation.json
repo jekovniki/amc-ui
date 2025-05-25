@@ -194,7 +194,7 @@
         },
         "dueDateAt": {
           "label": "Крайна дата",
-          "placeholder": "Последният ден в който то може да бъде изпълнено"
+          "placeholder": ""
         },
         "description": {
           "label": "Описание",
