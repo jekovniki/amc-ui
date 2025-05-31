@@ -8,6 +8,7 @@ import { TextIcon } from "@/components/icons/text-icon";
 import { PriceTagIcon } from "@/components/icons/price-tag-icon";
 import { TrashIcon } from "@/components/icons/trash-icon";
 import { getTranslatedCurrency } from "../util/currency-translations";
+import { ChequeIcon } from "@/components/icons/cheque-icon";
 
 interface AddWalletStructureAssetsPreviewModalProps {
   open: boolean;
@@ -78,14 +79,14 @@ export const AddWalletStructureAssetsPreviewModal = ({
                         logo={<TextIcon />}
                         className="font-bold"
                         wrapperClassName="w-[25%] bg-white"
-                        value={item["Борсов код"]}
+                        defaultValue={item["Борсов код"]}
                       />
                       <InputBox
                         label="Наименование"
                         logo={<TextIcon />}
                         className="font-bold"
                         wrapperClassName="w-[25%] bg-white"
-                        value={item["Име на актива"]}
+                        defaultValue={item["Име на актива"]}
                       />
                       <InputBox
                         label={`Цена за брой (${getTranslatedCurrency(
@@ -94,14 +95,14 @@ export const AddWalletStructureAssetsPreviewModal = ({
                         logo={<PriceTagIcon />}
                         className="font-bold"
                         wrapperClassName="w-[25%] bg-white"
-                        value={item["Цена за един актив"]}
+                        defaultValue={item["Цена за един актив"]}
                       />
                       <InputBox
                         label={`Брой акции`}
-                        logo={<PriceTagIcon />}
+                        logo={<ChequeIcon />}
                         className="font-bold"
                         wrapperClassName="w-[25%] bg-white"
-                        value={item["Количество"]}
+                        defaultValue={item["Количество"]}
                       />
                     </div>
                     <div
