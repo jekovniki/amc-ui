@@ -203,6 +203,19 @@ div[role="dialog"] > button[type="button"] {
   display: none;
 }
 
+div[role="dialog"].w-custom-full {
+  width: 90vw;
+  max-width: 90vw;
+  padding-left: 0;
+  padding-right: 0;
+  gap: 0;
+}
+
+.w-custom-full .h-custom-wrap {
+  height: calc(90vh - 200px);
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
 /* Sidebar */
 
 div[data-slot="sidebar"][data-state="collapsed"]

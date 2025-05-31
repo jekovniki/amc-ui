@@ -121,6 +121,9 @@
       "number": "The password should contain a number",
       "special": "The password should contain at least one special symbol",
       "match": "The repeated password does not match the initial one"
+    },
+    "walletStructure": {
+      "corruptFile": "The file that you attached has a problem, please review it or connect with us and we will upload it for you."
     }
   },
   "api": {

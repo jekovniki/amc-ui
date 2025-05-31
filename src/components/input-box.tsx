@@ -7,11 +7,13 @@ interface InputBoxProps
   extends Omit<ComponentProps<"input">, "logo" | "label"> {
   label: string;
   logo: ReactNode;
+  wrapperClassName?: string;
 }
 
 export const InputBox = ({
   className,
   type: initialType,
+  wrapperClassName,
   logo,
   label,
   ...props
@@ -21,7 +23,7 @@ export const InputBox = ({
   const type = isPassword ? (showPassword ? "text" : "password") : initialType;
 
   return (
-    <div className="relative">
+    <div className={`relative ${wrapperClassName || ""}`}>
       <div className="absolute t-0 l-0 h-full w-[62px] flex items-center justify-center">
         {logo}
       </div>

@@ -11,7 +11,9 @@ const AddWalletStructureModal = ({
   toggleFormVisibility,
 }: AddWalletStructureModalProps) => {
   const { t } = useTranslation();
-  const [view, setView] = useState<"overview" | "manual" | "email">("overview");
+  const [view, setView] = useState<"overview" | "manual" | "email" | "assets">(
+    "overview"
+  );
 
   return (
     <>
