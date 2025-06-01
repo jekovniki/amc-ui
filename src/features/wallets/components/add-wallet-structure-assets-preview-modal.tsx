@@ -3,12 +3,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ImportWalletStructureAssets } from "../types/wallet-structure";
-import { InputBox } from "@/components/input-box";
-import { TextIcon } from "@/components/icons/text-icon";
-import { PriceTagIcon } from "@/components/icons/price-tag-icon";
-import { TrashIcon } from "@/components/icons/trash-icon";
-import { getTranslatedCurrency } from "../util/currency-translations";
-import { ChequeIcon } from "@/components/icons/cheque-icon";
+import { WalletStructureAsset } from "./wallet-structure-asset";
 
 interface AddWalletStructureAssetsPreviewModalProps {
   open: boolean;
@@ -63,53 +58,12 @@ export const AddWalletStructureAssetsPreviewModal = ({
               {excelData
                 ?.filter((item) => item["Вид актив"] === selectedAssetPreview)
                 ?.map((item, index) => (
-                  <div
-                    key={index}
-                    className="mb-4 flex gap-4 items-center px-4"
-                  >
-                    <div className="text-[#00000066] text-[13px] font-light">
-                      {index + 1}
-                    </div>
-                    <div className="outline-[1px] flex w-full">
-                      <InputBox
-                        label="Борсов код"
-                        logo={<TextIcon />}
-                        className="font-bold"
-                        wrapperClassName="w-[25%] bg-white"
-                        defaultValue={item["Борсов код"]}
-                      />
-                      <InputBox
-                        label="Наименование"
-                        logo={<TextIcon />}
-                        className="font-bold"
-                        wrapperClassName="w-[25%] bg-white"
-                        defaultValue={item["Име на актива"]}
-                      />
-                      <InputBox
-                        label={`Цена за брой (${getTranslatedCurrency(
-                          item["Валута"]
-                        )})`}
-                        logo={<PriceTagIcon />}
-                        className="font-bold"
-                        wrapperClassName="w-[25%] bg-white"
-                        defaultValue={item["Цена за един актив"]}
-                      />
-                      <InputBox
-                        label={`Брой акции`}
-                        logo={<ChequeIcon />}
-                        className="font-bold"
-                        wrapperClassName="w-[25%] bg-white"
-                        defaultValue={item["Количество"]}
-                      />
-                    </div>
-                    <div
-                      onClick={() =>
-                        handleDeleteItem(index, selectedAssetPreview)
-                      }
-                    >
-                      <TrashIcon />
-                    </div>
-                  </div>
+                  <WalletStructureAsset
+                    index={index}
+                    item={item}
+                    handleDeleteItem={handleDeleteItem}
+                    selectedAssetPreview={selectedAssetPreview}
+                  />
                 ))}
             </div>
             <div
