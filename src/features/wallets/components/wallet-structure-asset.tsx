@@ -31,7 +31,7 @@ export const WalletStructureAsset = ({
           label="Борсов код"
           logo={<TextIcon />}
           className="font-bold"
-          wrapperClassName="w-[25%] bg-white"
+          wrapperClassName="w-[15%] bg-white"
           defaultValue={item["Борсов код"]}
         />
         <InputBox
@@ -42,10 +42,17 @@ export const WalletStructureAsset = ({
           defaultValue={item["Име на актива"]}
         />
         <InputBox
+          label="ISIN"
+          logo={<TextIcon />}
+          className="font-bold"
+          wrapperClassName="w-[25%] bg-white"
+          defaultValue={item["ISIN код"]}
+        />
+        <InputBox
           label={`Цена за брой (${getTranslatedCurrency(item["Валута"])})`}
           logo={<PriceTagIcon />}
           className="font-bold"
-          wrapperClassName="w-[25%] bg-white"
+          wrapperClassName="w-[20%] bg-white"
           defaultValue={item["Цена за един актив"]}
         />
         <InputBox

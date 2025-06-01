@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ImportWalletStructureAssets } from "../types/wallet-structure";
@@ -22,7 +22,6 @@ export const AddWalletStructureAssetsPreviewModal = ({
   const assetTypes = [...new Set(excelData.map((asset) => asset["Вид актив"]))];
   const [selectedAssetPreview, setSelectedAssetPreview] =
     useState<string>("Акции");
-
   const handleDeleteItem = (indexToDelete: number, assetType: string) => {
     setExcelData((prevData) => {
       const itemsOfCurrentType = prevData.filter(
@@ -39,6 +38,7 @@ export const AddWalletStructureAssetsPreviewModal = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="h-[90vh] w-custom-full flex flex-col overflow-hidden">
+        <DialogTitle className="h-[0px]"></DialogTitle>
         <div className="flex justify-start border-b-[1px]">
           {assetTypes.map((assetType, index) => (
             <span
@@ -54,11 +54,12 @@ export const AddWalletStructureAssetsPreviewModal = ({
         </div>
         <div className="h-full">
           <div className="grid grid-cols-12">
-            <div className="col-span-9 pt-4 h-custom-wrap overflow-auto">
+            <div className="col-span-12 pt-4 h-custom-wrap overflow-auto">
               {excelData
                 ?.filter((item) => item["Вид актив"] === selectedAssetPreview)
                 ?.map((item, index) => (
                   <WalletStructureAsset
+                    key={index}
                     index={index}
                     item={item}
                     handleDeleteItem={handleDeleteItem}
@@ -66,12 +67,13 @@ export const AddWalletStructureAssetsPreviewModal = ({
                   />
                 ))}
             </div>
-            <div
+            {/** Implement later */}
+            {/* <div
               className="col-span-3 relative"
               style={{ boxShadow: "-4px 0 6px -1px rgba(0, 0, 0, 0.1)" }}
             >
               <h5 className="text-center py-4">Структура на портфейла</h5>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="border-t-[1px] px-6 pt-6 flex justify-end gap-4">

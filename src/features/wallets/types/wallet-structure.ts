@@ -10,6 +10,7 @@ export enum WalletStructureAssetKeys {
 export type ImportWalletStructureAssets = {
   "Име на актива": string;
   "Борсов код": string;
+  "ISIN код": string;
   Валута: string;
   "Вид актив": string;
   Количество: number;
