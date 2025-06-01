@@ -247,6 +247,7 @@
         "description": "Download our template, fill it with information and upload it here. If you decide you can send us your wallet in whatever format you want and we will upload it.",
         "buttons": {
           "download": "Download template",
+          "downloadExample": "Download exmaple template",
           "upload": "Upload file",
           "send": "Send us your structure"
         }

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import excelWalletUrl from "../../../assets/AMC_Manager_-_Wallet.xlsx?url";
+import excelWalletExampleUrl from "../../../assets/AMC_Manager_-_Wallet.xlsx?url";
 import { useRef, useState } from "react";
 import { useExcelToJson } from "@/hooks/use-excel-to-json";
 import { AddWalletStructureAssetsPreviewModal } from "./add-wallet-structure-assets-preview-modal";
@@ -20,6 +21,13 @@ export const AddWalletStructureManual = () => {
     const link = document.createElement("a");
     link.href = excelWalletUrl;
     link.download = "AMC_Manager_-_Wallet.xlsx";
+    link.click();
+  };
+
+  const downloadExampleTemplate = () => {
+    const link = document.createElement("a");
+    link.href = excelWalletExampleUrl;
+    link.download = "AMC_Manager_-_Wallet_Example.xlsx";
     link.click();
   };
 
@@ -69,9 +77,19 @@ export const AddWalletStructureManual = () => {
       <p className="text-[16px] text-center text-[#0C2134BF] mb-4">
         {t("dialog.wallet.add.manual.description")}
       </p>
-      <Button type="button" onClick={downloadTemplate}>
-        {t("dialog.wallet.add.manual.download")}
-      </Button>
+      <div className="flex gap-4">
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={downloadExampleTemplate}
+        >
+          {t("dialog.wallet.add.manual.downloadExample")}
+        </Button>
+        <Button type="button" onClick={downloadTemplate}>
+          {t("dialog.wallet.add.manual.download")}
+        </Button>
+      </div>
+
       {error ? <div className="text-sm text-red-500 my-4">{error}</div> : ""}
       <div
         className={`h-[150px] w-full flex items-center cursor-pointer justify-center rounded-md border-dashed border-2 mt-4 transition-colors ${

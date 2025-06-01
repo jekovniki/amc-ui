@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ImportWalletStructureAssets } from "../types/wallet-structure";
@@ -44,9 +44,6 @@ export const AddWalletStructureAssetsPreviewModal = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="h-[90vh] w-custom-full flex flex-col overflow-hidden">
-        <DialogTitle className="px-6 font-light mb-4">
-          {t("dialog.wallet.preview.title")}
-        </DialogTitle>
         <div className="flex justify-start border-b-[1px]">
           {assetTypes.map((assetType, index) => (
             <span
