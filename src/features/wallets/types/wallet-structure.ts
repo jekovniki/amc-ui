@@ -16,3 +16,10 @@ export type ImportWalletStructureAssets = {
   Количество: number;
   "Цена за един актив": number;
 };
+
+export enum WalletStructureFilter {
+  Code = "code",
+  ISIN = "isin",
+  Currency = "currency",
+  AssetType = "asset_type_id",
+}
