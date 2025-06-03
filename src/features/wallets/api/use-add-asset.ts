@@ -12,7 +12,7 @@ export function useAddAsset(entityId: string) {
 
   return useMutation<{ data: void }, Error, WalletAsset>({
     mutationFn: (input: WalletAsset) =>
-      api.post(`/api/v1/wallet/${entityId}`, input),
+      api.post(`/api/v1/wallet/${entityId}/asset`, input),
     onSuccess: () =>
       client.invalidateQueries(WalletQueries.Wallets as InvalidateQueryFilters),
   });

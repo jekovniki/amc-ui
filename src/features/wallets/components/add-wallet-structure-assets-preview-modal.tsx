@@ -10,6 +10,7 @@ import { WalletCurrency } from "../types/asset";
 import { useGetAssetTypes } from "../api/use-get-asset-types";
 import { getAssetTypeStructureByLanguage } from "../util/wallet-translations";
 import { useAddAssetType } from "../api/use-add-asset-type";
+import { toast } from "sonner";
 
 interface AddWalletStructureAssetsPreviewModalProps {
   open: boolean;
@@ -64,10 +65,16 @@ export const AddWalletStructureAssetsPreviewModal = ({
           {
             onSuccess: (response) => {
               console.log("response : ", response);
+              toast.success(
+                `Успешно създадохте вид актив : ${response.data.name}`
+              );
               addAssetToDatabase(item, response.data.id);
             },
             onError: (error) => {
-              console.error("error : ", error);
+              console.error(error);
+              toast.error(
+                `Не успяхме да добавим следният вид актив: ${item["Вид актив"]}. Моля прегледайте и активите към него и ги добавете ръчно. При проблем се свържете с нас`
+              );
             },
           }
         );
@@ -92,11 +99,16 @@ export const AddWalletStructureAssetsPreviewModal = ({
         name: item["Име на актива"],
       },
       {
-        onSuccess: (response) => {
-          console.log("response : ", response);
+        onSuccess: () => {
+          toast.success(
+            `Успешно създадохте актив с код : ${item["Борсов код"]}`
+          );
         },
         onError: (error) => {
           console.error(error);
+          toast.error(
+            `Не успяхме да добавим актив с код ${item["Борсов код"]}. Моля прегледайте портфейла и го добавете ръчно.`
+          );
         },
       }
     );
