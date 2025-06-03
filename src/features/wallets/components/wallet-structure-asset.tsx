@@ -4,7 +4,6 @@ import { ImportWalletStructureAssets } from "../types/wallet-structure";
 import { getTranslatedCurrency } from "../util/currency-translations";
 import { PriceTagIcon } from "@/components/icons/price-tag-icon";
 import { ChequeIcon } from "@/components/icons/cheque-icon";
-import { TrashIcon } from "@/components/icons/trash-icon";
 
 interface WalletStructureAssetProps {
   index: number;
@@ -16,8 +15,6 @@ interface WalletStructureAssetProps {
 export const WalletStructureAsset = ({
   index,
   item,
-  handleDeleteItem,
-  selectedAssetPreview,
 }: WalletStructureAssetProps) => {
   const randomNumber = Math.floor(Math.random() * (100000 - 1 + 1) + 1);
   return (
