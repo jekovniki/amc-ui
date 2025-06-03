@@ -23,7 +23,6 @@ const EntityWalletStructure = ({ id }: EntityWalletStructureProps) => {
   const { data, isLoading } = useGetWalletStructureBy(id, "code");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const allAssets = data?.data?.assets;
-  //   const assetOverview = data?.data?.overview;
 
   const handleFormVisibility = () => {
     setModalIsOpen(!modalIsOpen);
@@ -94,6 +93,7 @@ const EntityWalletStructure = ({ id }: EntityWalletStructureProps) => {
                       <div className="bg-white border-t-[1px] md:rounded-b">
                         <AddWalletStructureModal
                           toggleFormVisibility={handleFormVisibility}
+                          entityId={id}
                         />
                       </div>
                     </DialogContent>

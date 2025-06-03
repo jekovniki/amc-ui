@@ -33,7 +33,6 @@ const RegisterCompanyPage = () => {
   const [error, setError] = useState<string>("");
   const [loader, setLoader] = useState<boolean>(false);
   const [loaderMessage, setLoaderMessage] = useState<string>("");
-
   const addCompany = useAddCompany();
   const addUsers = useAddUserToCompany();
 

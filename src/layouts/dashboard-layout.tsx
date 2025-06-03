@@ -35,12 +35,12 @@ const DashboardLayout = () => {
 
   useEffect(() => {
     if (!userSession) {
-      navigate(PublicRoutePath.Unauthorized);
+      navigate(`/${PublicRoutePath.Unauthorized}`);
       return;
     }
 
     if (userSession.companyId !== companyId) {
-      navigate(PublicRoutePath.Unauthorized);
+      navigate(`/${PublicRoutePath.Unauthorized}`);
       return;
     }
   }, [userSession, companyId, navigate]);

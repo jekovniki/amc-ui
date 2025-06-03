@@ -4,12 +4,18 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ImportWalletStructureAssets } from "../types/wallet-structure";
 import { WalletStructureAsset } from "./wallet-structure-asset";
+import { useAddAsset } from "../api/use-add-asset";
+import { WalletPreviewAssetTypeTitle } from "./wallet-preview-asset-type-title";
+import { WalletCurrency } from "../types/asset";
+import { useGetAssetTypes } from "../api/use-get-asset-types";
+import { getAssetTypeStructureByLanguage } from "../util/wallet-translations";
 
 interface AddWalletStructureAssetsPreviewModalProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   excelData: ImportWalletStructureAssets[];
   setExcelData: Dispatch<SetStateAction<ImportWalletStructureAssets[]>>;
+  entityId: string;
 }
 
 export const AddWalletStructureAssetsPreviewModal = ({
@@ -17,11 +23,17 @@ export const AddWalletStructureAssetsPreviewModal = ({
   setOpen,
   excelData,
   setExcelData,
+  entityId,
 }: AddWalletStructureAssetsPreviewModalProps) => {
   const { t } = useTranslation();
-  const assetTypes = [...new Set(excelData.map((asset) => asset["Вид актив"]))];
+  const assetTypeTitles = [
+    ...new Set(excelData.map((asset) => asset["Вид актив"])),
+  ];
   const [selectedAssetPreview, setSelectedAssetPreview] =
     useState<string>("Акции");
+  const { data } = useGetAssetTypes();
+  const assetTypes = data?.data || [];
+  const addAsset = useAddAsset(entityId);
   const handleDeleteItem = (indexToDelete: number, assetType: string) => {
     setExcelData((prevData) => {
       const itemsOfCurrentType = prevData.filter(
@@ -35,21 +47,51 @@ export const AddWalletStructureAssetsPreviewModal = ({
     });
   };
 
+  const handleSubmit = () => {
+    for (const item of excelData) {
+      const assetType = assetTypes.find(
+        (type) =>
+          type.name === getAssetTypeStructureByLanguage(item["Вид актив"], "en")
+      );
+
+      if (!assetType) {
+        return;
+      }
+
+      addAsset.mutate(
+        {
+          isin: item["ISIN код"],
+          code: item["Борсов код"],
+          currency: item.Валута as WalletCurrency,
+          value: item["Цена за един актив"],
+          amount: item.Количество,
+          assetTypeId: assetType.id, // do not hardcode
+          name: item["Име на актива"],
+        },
+        {
+          onSuccess: (response) => {
+            console.log("response : ", response);
+          },
+          onError: (error) => {
+            console.error(error);
+          },
+        }
+      );
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="h-[90vh] w-custom-full flex flex-col overflow-hidden">
         <DialogTitle className="h-[0px]"></DialogTitle>
-        <div className="flex justify-start border-b-[1px]">
-          {assetTypes.map((assetType, index) => (
-            <span
-              key={index}
-              className={`block px-8 py-4  font-bold cursor-pointer hover:bg-primary/10 transition-colors ${
-                assetType === selectedAssetPreview ? "text-primary" : ""
-              }`}
-              onClick={() => setSelectedAssetPreview(assetType)}
-            >
-              {assetType}
-            </span>
+        <div className="flex gap-4 px-4 wrap justify-start border-b-[1px]">
+          {assetTypeTitles.map((title, index) => (
+            <WalletPreviewAssetTypeTitle
+              index={index}
+              assetType={title}
+              setSelectedAssetPreview={setSelectedAssetPreview}
+              selectedAssetPreview={selectedAssetPreview}
+            />
           ))}
         </div>
         <div className="h-full">
@@ -67,20 +109,13 @@ export const AddWalletStructureAssetsPreviewModal = ({
                   />
                 ))}
             </div>
-            {/** Implement later */}
-            {/* <div
-              className="col-span-3 relative"
-              style={{ boxShadow: "-4px 0 6px -1px rgba(0, 0, 0, 0.1)" }}
-            >
-              <h5 className="text-center py-4">Структура на портфейла</h5>
-            </div> */}
           </div>
         </div>
         <div className="border-t-[1px] px-6 pt-6 flex justify-end gap-4">
           <Button variant="secondary" onClick={() => setOpen(false)}>
             {t("dialog.wallet.preview.buttons.cancel")}
           </Button>
-          <Button onClick={() => setOpen(false)}>
+          <Button onClick={handleSubmit}>
             {t("dialog.wallet.preview.buttons.submit")}
           </Button>
         </div>

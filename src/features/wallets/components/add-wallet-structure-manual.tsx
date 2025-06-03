@@ -7,7 +7,13 @@ import { useExcelToJson } from "@/hooks/use-excel-to-json";
 import { AddWalletStructureAssetsPreviewModal } from "./add-wallet-structure-assets-preview-modal";
 import { ImportWalletStructureAssets } from "../types/wallet-structure";
 
-export const AddWalletStructureManual = () => {
+interface AddWalletStructureManualProps {
+  entityId: string;
+}
+
+export const AddWalletStructureManual = ({
+  entityId,
+}: AddWalletStructureManualProps) => {
   const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
@@ -118,6 +124,7 @@ export const AddWalletStructureManual = () => {
         setOpen={setOpenPreview}
         excelData={excelData}
         setExcelData={setExcelData}
+        entityId={entityId}
       />
     </div>
   );
