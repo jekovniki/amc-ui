@@ -9,6 +9,7 @@ import { WalletPreviewAssetTypeTitle } from "./wallet-preview-asset-type-title";
 import { WalletCurrency } from "../types/asset";
 import { useGetAssetTypes } from "../api/use-get-asset-types";
 import { getAssetTypeStructureByLanguage } from "../util/wallet-translations";
+import { useAddAssetType } from "../api/use-add-asset-type";
 
 interface AddWalletStructureAssetsPreviewModalProps {
   open: boolean;
@@ -34,6 +35,7 @@ export const AddWalletStructureAssetsPreviewModal = ({
   const { data } = useGetAssetTypes();
   const assetTypes = data?.data || [];
   const addAsset = useAddAsset(entityId);
+  const addAssetType = useAddAssetType();
   const handleDeleteItem = (indexToDelete: number, assetType: string) => {
     setExcelData((prevData) => {
       const itemsOfCurrentType = prevData.filter(
@@ -55,30 +57,50 @@ export const AddWalletStructureAssetsPreviewModal = ({
       );
 
       if (!assetType) {
-        return;
+        addAssetType.mutate(
+          {
+            name: item["Вид актив"],
+          },
+          {
+            onSuccess: (response) => {
+              console.log("response : ", response);
+              addAssetToDatabase(item, response.data.id);
+            },
+            onError: (error) => {
+              console.error("error : ", error);
+            },
+          }
+        );
+      } else {
+        addAssetToDatabase(item, assetType.id);
       }
-
-      addAsset.mutate(
-        {
-          isin: item["ISIN код"],
-          code: item["Борсов код"],
-          currency: item.Валута as WalletCurrency,
-          value: item["Цена за един актив"],
-          amount: item.Количество,
-          assetTypeId: assetType.id, // do not hardcode
-          name: item["Име на актива"],
-        },
-        {
-          onSuccess: (response) => {
-            console.log("response : ", response);
-          },
-          onError: (error) => {
-            console.error(error);
-          },
-        }
-      );
     }
   };
+
+  function addAssetToDatabase(
+    item: ImportWalletStructureAssets,
+    assetTypeId: number
+  ) {
+    addAsset.mutate(
+      {
+        isin: item["ISIN код"],
+        code: item["Борсов код"],
+        currency: item.Валута as WalletCurrency,
+        value: item["Цена за един актив"],
+        amount: item.Количество,
+        assetTypeId: assetTypeId, // do not hardcode
+        name: item["Име на актива"],
+      },
+      {
+        onSuccess: (response) => {
+          console.log("response : ", response);
+        },
+        onError: (error) => {
+          console.error(error);
+        },
+      }
+    );
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -87,6 +109,7 @@ export const AddWalletStructureAssetsPreviewModal = ({
         <div className="flex gap-4 px-4 wrap justify-start border-b-[1px]">
           {assetTypeTitles.map((title, index) => (
             <WalletPreviewAssetTypeTitle
+              key={index}
               index={index}
               assetType={title}
               setSelectedAssetPreview={setSelectedAssetPreview}

@@ -31,12 +31,14 @@ export const WalletStructureAsset = ({
           label="Борсов код"
           logo={<TextIcon />}
           className="font-bold"
+          disabled={true}
           wrapperClassName="w-[15%] bg-white"
           defaultValue={item["Борсов код"]}
         />
         <InputBox
           label="Наименование"
           logo={<TextIcon />}
+          disabled={true}
           className="font-bold"
           wrapperClassName="w-[25%] bg-white"
           defaultValue={item["Име на актива"]}
@@ -44,6 +46,7 @@ export const WalletStructureAsset = ({
         <InputBox
           label="ISIN"
           logo={<TextIcon />}
+          disabled={true}
           className="font-bold"
           wrapperClassName="w-[25%] bg-white"
           defaultValue={item["ISIN код"]}
@@ -51,21 +54,23 @@ export const WalletStructureAsset = ({
         <InputBox
           label={`Цена за брой (${getTranslatedCurrency(item["Валута"])})`}
           logo={<PriceTagIcon />}
+          disabled={true}
           className="font-bold"
           wrapperClassName="w-[20%] bg-white"
           defaultValue={item["Цена за един актив"]}
         />
         <InputBox
           label={`Брой акции`}
+          disabled={true}
           logo={<ChequeIcon />}
           className="font-bold"
           wrapperClassName="w-[25%] bg-white"
           defaultValue={item["Количество"]}
         />
       </div>
-      <div onClick={() => handleDeleteItem(index, selectedAssetPreview)}>
+      {/* <div onClick={() => handleDeleteItem(index, selectedAssetPreview)}>
         <TrashIcon />
-      </div>
+      </div> */}
     </div>
   );
 };
