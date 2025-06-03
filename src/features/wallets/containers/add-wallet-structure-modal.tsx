@@ -5,13 +5,17 @@ import { AddWalletStructureManual } from "../components/add-wallet-structure-man
 
 interface AddWalletStructureModalProps {
   toggleFormVisibility: () => void;
+  entityId: string;
 }
 
 const AddWalletStructureModal = ({
   toggleFormVisibility,
+  entityId,
 }: AddWalletStructureModalProps) => {
   const { t } = useTranslation();
-  const [view, setView] = useState<"overview" | "manual" | "email">("overview");
+  const [view, setView] = useState<"overview" | "manual" | "email" | "assets">(
+    "overview"
+  );
 
   return (
     <>
@@ -37,7 +41,7 @@ const AddWalletStructureModal = ({
             </p>
           </div>
         )}
-        {view === "manual" && <AddWalletStructureManual />}
+        {view === "manual" && <AddWalletStructureManual entityId={entityId} />}
       </div>
       <div className="border-t-[1px] p-6 flex items-center justify-between gap-4">
         <Button

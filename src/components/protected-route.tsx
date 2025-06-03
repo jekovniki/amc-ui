@@ -7,7 +7,7 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const userSession = session.get();
 
   if (!userSession) {
-    return <Navigate to={PublicRoutePath.Unauthorized} />;
+    return <Navigate to={`/${PublicRoutePath.Unauthorized}`} />;
   }
 
   return children;

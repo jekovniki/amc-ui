@@ -9,6 +9,7 @@ import PublicLayout from "./layouts/public-layout";
 import ReactQueryProvider from "./lib/react-query-provider";
 import { ProtectedRoute } from "./components/protected-route";
 import { PageTitleProvider } from "./context/PageTitleContext";
+import { Toaster } from "./components/ui/sonner";
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
             })}
         </Route>
       </Routes>
+      <Toaster />
     </ReactQueryProvider>
   );
 }
