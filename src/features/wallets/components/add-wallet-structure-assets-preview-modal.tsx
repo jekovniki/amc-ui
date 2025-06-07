@@ -58,26 +58,28 @@ export const AddWalletStructureAssetsPreviewModal = ({
       );
 
       if (!assetType) {
-        addAssetType.mutate(
-          {
-            name: item["Вид актив"],
-          },
-          {
-            onSuccess: (response) => {
-              console.log("response : ", response);
-              toast.success(
-                `Успешно създадохте вид актив : ${response.data.name}`
-              );
-              addAssetToDatabase(item, response.data.id);
+        if (item["Вид актив"]) {
+          addAssetType.mutate(
+            {
+              name: item["Вид актив"],
             },
-            onError: (error) => {
-              console.error(error);
-              toast.error(
-                `Не успяхме да добавим следният вид актив: ${item["Вид актив"]}. Моля прегледайте и активите към него и ги добавете ръчно. При проблем се свържете с нас`
-              );
-            },
-          }
-        );
+            {
+              onSuccess: (response) => {
+                console.log("response : ", response);
+                toast.success(
+                  `Успешно създадохте вид актив : ${response.data.name}`
+                );
+                addAssetToDatabase(item, response.data.id);
+              },
+              onError: (error) => {
+                console.error(error);
+                toast.error(
+                  `Не успяхме да добавим следният вид актив: ${item["Вид актив"]}. Моля прегледайте и активите към него и ги добавете ръчно. При проблем се свържете с нас`
+                );
+              },
+            }
+          );
+        }
       } else {
         addAssetToDatabase(item, assetType.id);
       }
@@ -88,6 +90,7 @@ export const AddWalletStructureAssetsPreviewModal = ({
     item: ImportWalletStructureAssets,
     assetTypeId: number
   ) {
+    console.log("item : ", item);
     addAsset.mutate(
       {
         isin: item["ISIN код"],
