@@ -74,7 +74,7 @@ const ObligationWidgetContainer = () => {
           obligationList.map((obligation) => (
             <ObligationCard
               key={obligation.id}
-              obligationName={obligation.name}
+              obligation={obligation}
               entityName={obligation.entity.name}
               dueDate={obligation.dueDateAt}
             />
