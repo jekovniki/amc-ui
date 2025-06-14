@@ -20,7 +20,19 @@ const ObligationWidgetContainer = () => {
   const { t } = useTranslation();
   const { data, isLoading } = useGetObligations(ObligationStatus.PENDING);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const obligationList = data?.data.slice().reverse() || [];
+  const obligationList =
+    data?.data
+      .filter((obligation) => {
+        const today = new Date();
+        const dueDate = new Date(obligation.dueDateAt);
+
+        today.setHours(0, 0, 0, 0);
+        dueDate.setHours(0, 0, 0, 0);
+
+        return dueDate >= today;
+      })
+      .slice()
+      .reverse() || [];
 
   const handleFormVisibility = () => {
     setModalIsOpen(!modalIsOpen);

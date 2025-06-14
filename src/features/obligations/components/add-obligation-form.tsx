@@ -124,12 +124,13 @@ export const AddObligationForm = ({
               <FormField
                 control={form.control}
                 name="dueDateAt"
-                render={() => (
+                render={({ field }) => (
                   <FormItem>
                     <FormControl>
                       <DatePickerBox
                         label={t("dialog.obligation.add.dueDateAt.label")}
                         placeholder={new Date().toLocaleDateString()}
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
