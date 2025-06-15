@@ -99,37 +99,17 @@ export const AddObligationForm = ({
             )}
           />
           <div className="flex w-full gap-4">
-            {/* <div className="basis-1/2">
+            <div className="basis-1/2">
               <FormField
                 control={form.control}
                 name="dueDateAt"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <InputBox
-                        label={t("dialog.obligation.add.dueDateAt.label")}
-                        placeholder={t(
-                          "dialog.obligation.add.dueDateAt.placeholder"
-                        )}
-                        logo={<WalletIcon />}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div> */}
-            <div className="basis-1/2">
-              <FormField
-                control={form.control}
-                name="dueDateAt"
-                render={() => (
-                  <FormItem>
-                    <FormControl>
                       <DatePickerBox
                         label={t("dialog.obligation.add.dueDateAt.label")}
                         placeholder={new Date().toLocaleDateString()}
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
