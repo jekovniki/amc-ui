@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { useGetPresignedUrl } from "@/features/file/api/use-get-presigned-url";
 import { MIME } from "@/types/generic";
 import { useUploadFileWithUrl } from "@/features/file/api/use-upload-file-with-url";
-import { Loader2, Upload, X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 
 interface InputBoxProps
   extends Omit<
@@ -13,7 +13,7 @@ interface InputBoxProps
   label: string;
   logo: ReactNode;
   logoPlaceholder: string;
-  onFileUpload?: (fileUrl: string, fileName: string) => void;
+  onFileUpload?: (fileName: string) => void;
   onError?: (error: string) => void;
   value?: string; // Current file URL
   maxSizeInMB?: number;
@@ -87,12 +87,15 @@ export const FileBox = ({
         onSuccess: (response) => {
           uploadFileRequest.mutate(
             {
-              presignedUrl: response.data,
+              request: {
+                presignedUrl: response.data,
+                file: file,
+              },
               method: "put",
             },
             {
               onSuccess: () => {
-                //
+                onFileUpload?.(file.name);
               },
               onError: (error) => {
                 console.error("error : ", error);
@@ -123,7 +126,7 @@ export const FileBox = ({
       URL.revokeObjectURL(previewUrl);
     }
     setPreviewUrl("");
-    onFileUpload?.("", "");
+    onFileUpload?.("");
   };
 
   const handleClick = () => {
@@ -153,17 +156,6 @@ export const FileBox = ({
             />
             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
               <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleClick();
-                  }}
-                  className="p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
-                  disabled={isPending}
-                >
-                  <Upload className="w-4 h-4 text-white" />
-                </button>
                 <button
                   type="button"
                   onClick={(e) => {

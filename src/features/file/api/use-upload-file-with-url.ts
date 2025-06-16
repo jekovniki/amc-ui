@@ -9,6 +9,9 @@ const apiWithoutCredentials = axios.create({
 export function useUploadFileWithUrl() {
   return useMutation<{ url: string }, Error, UploadFileWithUrlRequest>({
     mutationFn: (input: UploadFileWithUrlRequest) =>
-      apiWithoutCredentials[input.method](input.presignedUrl),
+      apiWithoutCredentials[input.method](
+        input.request.presignedUrl,
+        input.request.file
+      ),
   });
 }

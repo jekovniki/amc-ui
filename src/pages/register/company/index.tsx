@@ -26,6 +26,7 @@ import { Link } from "react-router-dom";
 import { PublicRoutePath } from "@/pages/routes";
 import { apiErrorHandler } from "@/utils/errors";
 import LoadingOverlay from "@/containers/loading-overlay";
+import { useGetFileURLByFilename } from "@/features/file/api/use-get-file-url-by-filename";
 
 const RegisterCompanyPage = () => {
   const { t } = useTranslation();
@@ -33,6 +34,17 @@ const RegisterCompanyPage = () => {
   const [error, setError] = useState<string>("");
   const [loader, setLoader] = useState<boolean>(false);
   const [loaderMessage, setLoaderMessage] = useState<string>("");
+  const [logoFileName, setLogoFileName] = useState<string>("");
+  const { data: fileUrl } = useGetFileURLByFilename(
+    logoFileName,
+    !!logoFileName
+  );
+
+  const handleFileUpload = (fileName: string) => {
+    if (fileName) {
+      setLogoFileName(fileName); // This will trigger the useGetFileURLByFilename hook
+    }
+  };
   const addCompany = useAddCompany();
   const addUsers = useAddUserToCompany();
 
@@ -85,7 +97,7 @@ const RegisterCompanyPage = () => {
       {
         name: data.name,
         uic: data.uic,
-        logo: "",
+        logo: fileUrl?.data,
       },
       {
         onSuccess: () => {
@@ -149,6 +161,8 @@ const RegisterCompanyPage = () => {
                     label={t("register.company.form.logo.label")}
                     className="w-[132px] h-[132px]"
                     logoPlaceholder="150 x 150"
+                    folder="logos"
+                    onFileUpload={handleFileUpload}
                   />
                 </div>
                 <div className="w-full">

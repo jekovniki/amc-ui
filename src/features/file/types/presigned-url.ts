@@ -7,6 +7,9 @@ export type GetPresignedUrlRequest = {
 };
 
 export type UploadFileWithUrlRequest = {
-  presignedUrl: string;
+  request: {
+    presignedUrl: string;
+    file: File;
+  };
   method: "put" | "post";
 };
