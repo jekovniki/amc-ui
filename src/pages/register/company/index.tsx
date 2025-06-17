@@ -38,7 +38,8 @@ const RegisterCompanyPage = () => {
   const [isCompanyCreated, setIsCompanyCreated] = useState<boolean>(false);
   const { data: fileUrl } = useGetFileURLByFilename(
     logoFileName,
-    !!logoFileName
+    !!logoFileName,
+    "logos"
   );
 
   const handleFileUpload = (fileName: string) => {
