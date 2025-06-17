@@ -16,6 +16,7 @@ import { DashboardLink } from "@/components/dashboard-link";
 import { useState } from "react";
 import { useGetCompanyEntities } from "@/features/entity/api/use-get-company-entities";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useGetCompany } from "@/features/company/api/use-get-company";
 
 interface DashboardSidebarProps {
   companyId: string;
@@ -25,6 +26,10 @@ const DahsboardSidebar = ({ companyId }: DashboardSidebarProps) => {
   const { t } = useTranslation();
   const [isDropdownToggled, setIsDropdownToggled] = useState(true);
   const { data, isLoading } = useGetCompanyEntities();
+  const companyResponse = useGetCompany();
+
+  const logo = companyResponse?.data?.data?.logo;
+  const name = companyResponse?.data?.data?.name;
 
   const companyEntities = data?.data || [];
 
@@ -33,11 +38,23 @@ const DahsboardSidebar = ({ companyId }: DashboardSidebarProps) => {
       <SidebarHeader className="flex items-center justify-center h-[73px] border-b-[1px]">
         <div>
           <Link to={PrivateRoutePath.Dashboard}>
-            <span className="font-black text-[24px] text-primary">УД</span>
-            &nbsp;
-            <span className="text-[24px] font-thin text-[#0C2134]">
-              Мениджър
-            </span>
+            {companyResponse.isLoading ? (
+              <Skeleton className="h-[60px] w-[245px]" />
+            ) : logo ? (
+              <img
+                src={logo}
+                alt={name}
+                className="h-full w-full max-h-[60px] max-w-[245px]"
+              />
+            ) : (
+              <>
+                <span className="font-black text-[24px] text-primary">УД</span>
+                &nbsp;
+                <span className="text-[24px] font-thin text-[#0C2134]">
+                  Мениджър
+                </span>
+              </>
+            )}
           </Link>
         </div>
       </SidebarHeader>

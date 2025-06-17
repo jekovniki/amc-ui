@@ -106,6 +106,27 @@ const RegisterCompanyPage = () => {
           onSuccess: () => {
             setIsCompanyCreated(true);
             setLoaderMessage(t("register.company.form.loading.steps.2"));
+            addUsers.mutate(
+              {
+                users: allUsers.map((user) => ({
+                  email: user.email,
+                  role_id: user.accessLevel.id,
+                })),
+              },
+              {
+                onSuccess: () => {
+                  setLoaderMessage(t("register.company.form.loading.steps.3"));
+                },
+                onError: (error) =>
+                  apiErrorHandler(
+                    error,
+                    setLoader,
+                    setError,
+                    setLoaderMessage,
+                    t
+                  ),
+              }
+            );
           },
           onError: (error) =>
             apiErrorHandler(error, setLoader, setError, setLoaderMessage, t),
