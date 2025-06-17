@@ -23,6 +23,8 @@ import { useState } from "react";
 import LoadingOverlay from "@/containers/loading-overlay";
 import { getEntityNameByLanguage } from "../utils/entity-translation";
 import { fundApiErrorHandler } from "../utils/errors";
+import { useNavigate } from "react-router-dom";
+import { PrivateRoutePath } from "@/pages/routes";
 
 interface AddEntityFormProps {
   toggleFormVisibility: () => void;
@@ -34,6 +36,7 @@ export const AddEntityForm = ({ toggleFormVisibility }: AddEntityFormProps) => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const addCompanyEntity = useAddCompanyEntity();
+  const navigate = useNavigate();
   const entityTypes = data?.data
     ? data.data.map((item) => ({
         label: getEntityNameByLanguage(item.name, i18n.language),
@@ -72,9 +75,12 @@ export const AddEntityForm = ({ toggleFormVisibility }: AddEntityFormProps) => {
         entityTypeId: Number(input.entityTypeId),
       },
       {
-        onSuccess: () => {
+        onSuccess: (response) => {
           setLoading(false);
           toggleFormVisibility();
+          navigate(
+            `/${response.data.company.id}/${PrivateRoutePath.Entity}/${response.data.id}`
+          );
         },
         onError: (error) =>
           fundApiErrorHandler(error, setLoading, setErrorMessage, t),
