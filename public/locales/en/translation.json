@@ -214,6 +214,18 @@
           "submit": "Add fund",
           "cancel": "Cancel"
         }
+      },
+      "navigate": {
+        "title": "Welcome to AMC Manager",
+        "description": {
+          "first": "Thank you for registering in our platform.",
+          "second": "A company profile has currently been created, but to fully benefit from the system's functionalities, you can continue by adding an entity/fund to the company.",
+          "third": "Choose whether you want to explore the platform yourself or use our guidance."
+        },
+        "buttons": {
+          "continue": "Create a fund/entity",
+          "cancel": "Cancel and continue independently"
+        }
       }
     },
     "obligation": {

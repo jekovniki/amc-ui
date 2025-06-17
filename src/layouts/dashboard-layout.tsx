@@ -9,6 +9,7 @@ import DahsboardSidebar from "@/containers/dashboard-sidebar";
 import { usePageTitleContext } from "@/context/PageTitleContext";
 import { useSignOut } from "@/features/auth/api/use-sign-out";
 import session from "@/features/auth/services/session";
+import OverlayAddEntity from "@/features/entity/containers/overlay-add-entity";
 import { PrivateRoutePath, PublicRoutePath } from "@/pages/routes";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -82,6 +83,7 @@ const DashboardLayout = () => {
         </div>
         <Outlet />
       </div>
+      <OverlayAddEntity />
     </SidebarProvider>
   );
 };
