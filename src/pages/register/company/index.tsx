@@ -26,6 +26,7 @@ import { Link } from "react-router-dom";
 import { PublicRoutePath } from "@/pages/routes";
 import { apiErrorHandler } from "@/utils/errors";
 import LoadingOverlay from "@/containers/loading-overlay";
+import { useGetFileURLByFilename } from "@/features/file/api/use-get-file-url-by-filename";
 
 const RegisterCompanyPage = () => {
   const { t } = useTranslation();
@@ -33,6 +34,19 @@ const RegisterCompanyPage = () => {
   const [error, setError] = useState<string>("");
   const [loader, setLoader] = useState<boolean>(false);
   const [loaderMessage, setLoaderMessage] = useState<string>("");
+  const [logoFileName, setLogoFileName] = useState<string>("");
+  const [isCompanyCreated, setIsCompanyCreated] = useState<boolean>(false);
+  const { data: fileUrl } = useGetFileURLByFilename(
+    logoFileName,
+    !!logoFileName,
+    "logos"
+  );
+
+  const handleFileUpload = (fileName: string) => {
+    if (fileName) {
+      setLogoFileName(fileName); // This will trigger the useGetFileURLByFilename hook
+    }
+  };
   const addCompany = useAddCompany();
   const addUsers = useAddUserToCompany();
 
@@ -81,41 +95,60 @@ const RegisterCompanyPage = () => {
     setLoader(true);
     setLoaderMessage(t("register.company.form.loading.steps.1"));
 
-    addCompany.mutate(
-      {
-        name: data.name,
-        uic: data.uic,
-        logo: "",
-      },
-      {
-        onSuccess: () => {
-          setLoaderMessage(t("register.company.form.loading.steps.2"));
-          addUsers.mutate(
-            {
-              users: allUsers.map((user) => ({
-                email: user.email,
-                role_id: user.accessLevel.id,
-              })),
-            },
-            {
-              onSuccess: () => {
-                setLoaderMessage(t("register.company.form.loading.steps.3"));
-              },
-              onError: (error) =>
-                apiErrorHandler(
-                  error,
-                  setLoader,
-                  setError,
-                  setLoaderMessage,
-                  t
-                ),
-            }
-          );
+    if (!isCompanyCreated) {
+      addCompany.mutate(
+        {
+          name: data.name,
+          uic: data.uic,
+          logo: fileUrl?.data,
         },
-        onError: (error) =>
-          apiErrorHandler(error, setLoader, setError, setLoaderMessage, t),
-      }
-    );
+        {
+          onSuccess: () => {
+            setIsCompanyCreated(true);
+            setLoaderMessage(t("register.company.form.loading.steps.2"));
+            addUsers.mutate(
+              {
+                users: allUsers.map((user) => ({
+                  email: user.email,
+                  role_id: user.accessLevel.id,
+                })),
+              },
+              {
+                onSuccess: () => {
+                  setLoaderMessage(t("register.company.form.loading.steps.3"));
+                },
+                onError: (error) =>
+                  apiErrorHandler(
+                    error,
+                    setLoader,
+                    setError,
+                    setLoaderMessage,
+                    t
+                  ),
+              }
+            );
+          },
+          onError: (error) =>
+            apiErrorHandler(error, setLoader, setError, setLoaderMessage, t),
+        }
+      );
+    } else {
+      addUsers.mutate(
+        {
+          users: allUsers.map((user) => ({
+            email: user.email,
+            role_id: user.accessLevel.id,
+          })),
+        },
+        {
+          onSuccess: () => {
+            setLoaderMessage(t("register.company.form.loading.steps.3"));
+          },
+          onError: (error) =>
+            apiErrorHandler(error, setLoader, setError, setLoaderMessage, t),
+        }
+      );
+    }
   };
 
   return (
@@ -149,6 +182,8 @@ const RegisterCompanyPage = () => {
                     label={t("register.company.form.logo.label")}
                     className="w-[132px] h-[132px]"
                     logoPlaceholder="150 x 150"
+                    folder="logos"
+                    onFileUpload={handleFileUpload}
                   />
                 </div>
                 <div className="w-full">
