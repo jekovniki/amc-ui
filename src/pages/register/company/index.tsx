@@ -35,6 +35,7 @@ const RegisterCompanyPage = () => {
   const [loader, setLoader] = useState<boolean>(false);
   const [loaderMessage, setLoaderMessage] = useState<string>("");
   const [logoFileName, setLogoFileName] = useState<string>("");
+  const [isCompanyCreated, setIsCompanyCreated] = useState<boolean>(false);
   const { data: fileUrl } = useGetFileURLByFilename(
     logoFileName,
     !!logoFileName
@@ -93,41 +94,39 @@ const RegisterCompanyPage = () => {
     setLoader(true);
     setLoaderMessage(t("register.company.form.loading.steps.1"));
 
-    addCompany.mutate(
-      {
-        name: data.name,
-        uic: data.uic,
-        logo: fileUrl?.data,
-      },
-      {
-        onSuccess: () => {
-          setLoaderMessage(t("register.company.form.loading.steps.2"));
-          addUsers.mutate(
-            {
-              users: allUsers.map((user) => ({
-                email: user.email,
-                role_id: user.accessLevel.id,
-              })),
-            },
-            {
-              onSuccess: () => {
-                setLoaderMessage(t("register.company.form.loading.steps.3"));
-              },
-              onError: (error) =>
-                apiErrorHandler(
-                  error,
-                  setLoader,
-                  setError,
-                  setLoaderMessage,
-                  t
-                ),
-            }
-          );
+    if (!isCompanyCreated) {
+      addCompany.mutate(
+        {
+          name: data.name,
+          uic: data.uic,
+          logo: fileUrl?.data,
         },
-        onError: (error) =>
-          apiErrorHandler(error, setLoader, setError, setLoaderMessage, t),
-      }
-    );
+        {
+          onSuccess: () => {
+            setIsCompanyCreated(true);
+            setLoaderMessage(t("register.company.form.loading.steps.2"));
+          },
+          onError: (error) =>
+            apiErrorHandler(error, setLoader, setError, setLoaderMessage, t),
+        }
+      );
+    } else {
+      addUsers.mutate(
+        {
+          users: allUsers.map((user) => ({
+            email: user.email,
+            role_id: user.accessLevel.id,
+          })),
+        },
+        {
+          onSuccess: () => {
+            setLoaderMessage(t("register.company.form.loading.steps.3"));
+          },
+          onError: (error) =>
+            apiErrorHandler(error, setLoader, setError, setLoaderMessage, t),
+        }
+      );
+    }
   };
 
   return (
