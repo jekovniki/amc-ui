@@ -40,14 +40,15 @@ export const FileBox = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const validateFile = (file: File): string[] => {
+    onError?.("");
     const errors: string[] = [];
 
     // Check file type
     if (acceptedTypes && !acceptedTypes.includes(file.type)) {
       errors.push(
-        `File type ${
+        `Типа файл ${
           file.type
-        } is not supported. Allowed types: ${acceptedTypes.join(", ")}`
+        } не се поддържа. Позволените файлове са: ${acceptedTypes.join(", ")}`
       );
     }
 
@@ -55,14 +56,16 @@ export const FileBox = ({
     if (maxSizeInMB) {
       const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
       if (file.size > maxSizeInBytes) {
-        errors.push(`File size exceeds ${maxSizeInMB}MB limit`);
+        errors.push(`Максималният размер файл е ${maxSizeInMB}MB`);
       }
     }
 
     // Check filename
     const invalidChars = /[^a-zA-Z0-9._-]/;
     if (invalidChars.test(file.name)) {
-      errors.push("Filename contains invalid characters");
+      errors.push(
+        "името на файла НЕ трябва да съдържа празни места (напр. company logo.jpg)"
+      );
     }
 
     return errors;

@@ -42,6 +42,10 @@ const RegisterCompanyPage = () => {
     "logos"
   );
 
+  const handleError = (error: string) => {
+    setError(error);
+  };
+
   const handleFileUpload = (fileName: string) => {
     if (fileName) {
       setLogoFileName(fileName); // This will trigger the useGetFileURLByFilename hook
@@ -184,6 +188,7 @@ const RegisterCompanyPage = () => {
                     logoPlaceholder="150 x 150"
                     folder="logos"
                     onFileUpload={handleFileUpload}
+                    onError={handleError}
                   />
                 </div>
                 <div className="w-full">
