@@ -146,7 +146,7 @@ const AddWalletStructure = ({
             <>
               <div className="flex items-start gap-4">
                 <Info size={24} color="#0C2134BF" />
-                <p className="text-[#0C2134BF] text-[12px] font-light mb-2">
+                <p className="text-[#0C2134BF] text-[13px] font-light mb-2">
                   <span
                     className="text-primary underline hover:no-underline cursor-pointer"
                     onClick={downloadTemplate}
@@ -214,12 +214,32 @@ const AddWalletStructure = ({
             </>
           )}
           {tab === StructureTabs.Automatic && (
-            <div className="flex items-start gap-4">
-              <div>
-                <Info size={24} color="#0C2134BF" />
+            <>
+              <div className="flex items-start gap-4">
+                <div>
+                  <Info size={24} color="#0C2134BF" />
+                </div>
+                <div>
+                  <p className="text-[#0C2134BF] text-[13px] font-light mb-2">
+                    {t("dialog.wallet.tab.automatic.description")}{" "}
+                    <a
+                      href={`mailto:${
+                        import.meta.env.VITE_WALLET_UPLOAD_EMAIL
+                      }`}
+                      className="font-bold"
+                    >
+                      {import.meta.env.VITE_WALLET_UPLOAD_EMAIL}
+                    </a>
+                  </p>
+                  <p className="text-[#0C2134BF] text-[13px] font-light mb-2">
+                    1.&nbsp;{t("dialog.wallet.tab.automatic.partTwo")}
+                  </p>
+                  <p className="text-[#0C2134BF] text-[13px] font-light">
+                    2.&nbsp;{t("dialog.wallet.tab.automatic.final")}
+                  </p>
+                </div>
               </div>
-              <div className="text-[#0C2134BF] text-[12px] font-light"></div>
-            </div>
+            </>
           )}
         </div>
         <div className="bg-white border-t-[1px] md:rounded-b p-6 flex items-center justify-end gap-4">
