@@ -187,6 +187,10 @@
       "documents": {
         "title": "Документи",
         "description": "Преглед, настройки и история на всички документи ."
+      },
+      "notifications": {
+        "noAssets": "Add the structure of the funds wallet.",
+        "noRestrictions": "Add the funds restrictions."
       }
     }
   },
@@ -275,6 +279,11 @@
     "user": {
       "profile": "My profile",
       "signOut": "Exit"
+    }
+  },
+  "commonComponents": {
+    "dangerBox": {
+      "hide": "Hide"
     }
   }
 }
