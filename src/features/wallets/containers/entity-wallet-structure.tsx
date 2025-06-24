@@ -90,7 +90,7 @@ const EntityWalletStructure = ({ id }: EntityWalletStructureProps) => {
                   <AccessVisibility
                     accessLevelRequired={UserPermission.assetCreate}
                   >
-                    <AddWalletStructure triggerType="button" />
+                    <AddWalletStructure triggerType="button" entityId={id} />
                   </AccessVisibility>
                 </div>
               )}
