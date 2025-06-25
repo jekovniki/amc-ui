@@ -61,7 +61,11 @@ export const ObligationCard = ({
         </div>
       </DialogTrigger>
       <DialogContent className="wide-modal">
-        <ObligationControlForm obligation={obligation} />
+        <ObligationControlForm
+          obligation={obligation}
+          open={open}
+          setOpen={setOpen}
+        />
       </DialogContent>
     </Dialog>
   );

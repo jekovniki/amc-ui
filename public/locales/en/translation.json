@@ -255,6 +255,13 @@
           "submit": "Add obligation",
           "cancel": "Cancel"
         }
+      },
+      "preview": {
+        "buttons": {
+          "delete": "Deleete",
+          "cancel": "Cancel",
+          "done": "Mark as done"
+        }
       }
     },
     "wallet": {
