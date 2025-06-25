@@ -257,10 +257,22 @@
         }
       },
       "preview": {
+        "tabs": {
+          "preview": "Preview",
+          "edit": "Edit"
+        },
         "buttons": {
-          "delete": "Deleete",
+          "delete": "Delete",
           "cancel": "Cancel",
           "done": "Mark as done"
+        }
+      },
+      "delete": {
+        "title": "Delete obligation",
+        "description": "Are you sure you want to delete the obligation?",
+        "buttons": {
+          "submit": "Delete",
+          "cancel": "Cancel"
         }
       }
     },
