@@ -2,7 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ImportWalletStructureAssets } from "../types/wallet-structure";
+import {
+  ImportWalletStructureAssets,
+  ImportWalletStructureOther,
+} from "../types/wallet-structure";
 import { WalletStructureAsset } from "./wallet-structure-asset";
 import { useAddAsset } from "../api/use-add-asset";
 import { WalletPreviewAssetTypeTitle } from "./wallet-preview-asset-type-title";
@@ -11,25 +14,30 @@ import { useGetAssetTypes } from "../api/use-get-asset-types";
 import { getAssetTypeStructureByLanguage } from "../util/wallet-translations";
 import { useAddAssetType } from "../api/use-add-asset-type";
 import { toast } from "sonner";
+import { WalletStructureOther } from "./wallet-structure-other";
 
 interface AddWalletStructureAssetsPreviewModalProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  excelData: ImportWalletStructureAssets[];
-  setExcelData: Dispatch<SetStateAction<ImportWalletStructureAssets[]>>;
+  excelAssetData: ImportWalletStructureAssets[];
+  setExcelAssetData: Dispatch<SetStateAction<ImportWalletStructureAssets[]>>;
+  excelOtherData: ImportWalletStructureOther[];
+  setExcelOtherData: Dispatch<SetStateAction<ImportWalletStructureOther[]>>;
+
   entityId: string;
 }
 
 export const AddWalletStructureAssetsPreviewModal = ({
   open,
   setOpen,
-  excelData,
-  setExcelData,
+  excelAssetData,
+  excelOtherData,
   entityId,
 }: AddWalletStructureAssetsPreviewModalProps) => {
   const { t } = useTranslation();
+  const allAssets = [...excelAssetData, ...excelOtherData];
   const assetTypeTitles = [
-    ...new Set(excelData.map((asset) => asset["Вид актив"])),
+    ...new Set(allAssets.map((asset) => asset["Вид актив"])),
   ];
   const [selectedAssetPreview, setSelectedAssetPreview] =
     useState<string>("Акции");
@@ -37,21 +45,9 @@ export const AddWalletStructureAssetsPreviewModal = ({
   const assetTypes = data?.data || [];
   const addAsset = useAddAsset(entityId);
   const addAssetType = useAddAssetType();
-  const handleDeleteItem = (indexToDelete: number, assetType: string) => {
-    setExcelData((prevData) => {
-      const itemsOfCurrentType = prevData.filter(
-        (item) => item["Вид актив"] === assetType
-      );
-
-      const itemToDelete = itemsOfCurrentType[indexToDelete];
-      const actualIndex = prevData.findIndex((item) => item === itemToDelete);
-
-      return prevData.filter((_, index) => index !== actualIndex);
-    });
-  };
 
   const handleSubmit = () => {
-    for (const item of excelData) {
+    for (const item of allAssets) {
       const assetType = assetTypes.find(
         (type) =>
           type.name === getAssetTypeStructureByLanguage(item["Вид актив"], "en")
@@ -87,34 +83,59 @@ export const AddWalletStructureAssetsPreviewModal = ({
   };
 
   function addAssetToDatabase(
-    item: ImportWalletStructureAssets,
+    item: ImportWalletStructureAssets | ImportWalletStructureOther,
     assetTypeId: number
   ) {
     console.log("item : ", item);
-    addAsset.mutate(
-      {
-        isin: item["ISIN код"],
-        code: item["Борсов код"],
-        currency: item.Валута as WalletCurrency,
-        value: item["Цена за един актив"],
-        amount: item.Количество,
-        assetTypeId: assetTypeId, // do not hardcode
-        name: item["Име на актива"],
-      },
-      {
-        onSuccess: () => {
-          toast.success(
-            `Успешно създадохте актив с код : ${item["Борсов код"]}`
-          );
+    if ("ISIN код" in item) {
+      addAsset.mutate(
+        {
+          isin: item["ISIN код"],
+          code: item["Борсов код"],
+          currency: item.Валута as WalletCurrency,
+          value: item["Цена за един актив"],
+          amount: item.Количество,
+          assetTypeId: assetTypeId, // do not hardcode
+          name: item["Име на актива"],
         },
-        onError: (error) => {
-          console.error(error);
-          toast.error(
-            `Не успяхме да добавим актив с код ${item["Борсов код"]}. Моля прегледайте портфейла и го добавете ръчно.`
-          );
+        {
+          onSuccess: () => {
+            toast.success(
+              `Успешно създадохте актив с код : ${item["Борсов код"]}`
+            );
+          },
+          onError: (error) => {
+            console.error(error);
+            toast.error(
+              `Не успяхме да добавим актив с код ${item["Борсов код"]}. Моля прегледайте портфейла и го добавете ръчно.`
+            );
+          },
+        }
+      );
+    } else {
+      addAsset.mutate(
+        {
+          isin: "-",
+          code: "-",
+          currency: item.Валута as WalletCurrency,
+          value: item["Парична стойност"],
+          amount: 1,
+          assetTypeId: assetTypeId, // do not hardcode
+          name: item["Име на актива"],
         },
-      }
-    );
+        {
+          onSuccess: () => {
+            toast.success(`Успешно създадохте актив ${item["Име на актива"]}`);
+          },
+          onError: (error) => {
+            console.error(error);
+            toast.error(
+              `Не успяхме да добавим актив ${item["Име на актива"]}. Моля прегледайте портфейла и го добавете ръчно.`
+            );
+          },
+        }
+      );
+    }
   }
 
   return (
@@ -135,17 +156,27 @@ export const AddWalletStructureAssetsPreviewModal = ({
         <div className="h-full">
           <div className="grid grid-cols-12">
             <div className="col-span-12 pt-4 h-custom-wrap overflow-auto">
-              {excelData
+              {allAssets
                 ?.filter((item) => item["Вид актив"] === selectedAssetPreview)
-                ?.map((item, index) => (
-                  <WalletStructureAsset
-                    key={index}
-                    index={index}
-                    item={item}
-                    handleDeleteItem={handleDeleteItem}
-                    selectedAssetPreview={selectedAssetPreview}
-                  />
-                ))}
+                ?.map((item, index) =>
+                  "Борсов код" in item ? (
+                    <WalletStructureAsset
+                      key={index}
+                      index={index}
+                      item={item}
+                      handleDeleteItem={() => {}}
+                      selectedAssetPreview={selectedAssetPreview}
+                    />
+                  ) : (
+                    <WalletStructureOther
+                      key={index}
+                      index={index}
+                      item={item}
+                      handleDeleteItem={() => {}}
+                      selectedAssetPreview={selectedAssetPreview}
+                    />
+                  )
+                )}
             </div>
           </div>
         </div>

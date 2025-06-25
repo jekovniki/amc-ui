@@ -1,3 +1,9 @@
+import {
+  ExcelSheetTabs,
+  ImportWalletStructure,
+  ImportWalletStructureAssets,
+  ImportWalletStructureOther,
+} from "@/features/wallets/types/wallet-structure";
 import { useState, useCallback } from "react";
 import * as XLSX from "xlsx";
 
@@ -5,48 +11,8 @@ export const useExcelToJson = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const convertExcelToJSON = useCallback(async (file: File): Promise<any[]> => {
-    setIsLoading(true);
-    setError(null);
-
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.onload = (event) => {
-        try {
-          const data = event.target?.result;
-          const workbook = XLSX.read(data, { type: "binary" });
-
-          const firstSheetName = workbook.SheetNames[0];
-          const worksheet = workbook.Sheets[firstSheetName];
-
-          const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-          setIsLoading(false);
-          resolve(jsonData);
-        } catch (error) {
-          setIsLoading(false);
-          setError(
-            error instanceof Error
-              ? error.message
-              : "Failed to convert Excel to JSON"
-          );
-          reject(error);
-        }
-      };
-
-      reader.onerror = () => {
-        setIsLoading(false);
-        setError("Failed to read file");
-        reject(new Error("Failed to read file"));
-      };
-
-      reader.readAsBinaryString(file);
-    });
-  }, []);
-
   const convertExcelToJsonWithKeys = useCallback(
-    async (file: File): Promise<any[]> => {
+    async (file: File): Promise<ImportWalletStructure> => {
       setIsLoading(true);
       setError(null);
 
@@ -57,14 +23,22 @@ export const useExcelToJson = () => {
           try {
             const data = event.target?.result;
             const workbook = XLSX.read(data, { type: "binary" });
+            const securitiesWorksheet =
+              workbook.Sheets[ExcelSheetTabs.Securities];
+            const otherWorksheet = workbook.Sheets[ExcelSheetTabs.Other];
 
-            const firstSheetName = workbook.SheetNames[0];
-            const worksheet = workbook.Sheets[firstSheetName];
-
-            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+            const securitiesJSONData = XLSX.utils.sheet_to_json(
+              securitiesWorksheet
+            ) as ImportWalletStructureAssets[];
+            const otherJSONData = XLSX.utils.sheet_to_json(
+              otherWorksheet
+            ) as ImportWalletStructureOther[];
 
             setIsLoading(false);
-            resolve(jsonData);
+            resolve({
+              securities: securitiesJSONData,
+              other: otherJSONData,
+            });
           } catch (error) {
             setIsLoading(false);
             setError(
@@ -88,7 +62,6 @@ export const useExcelToJson = () => {
   );
 
   return {
-    convertExcelToJSON,
     convertExcelToJsonWithKeys,
     isLoading,
     error,

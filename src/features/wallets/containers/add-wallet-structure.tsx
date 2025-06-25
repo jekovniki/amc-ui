@@ -10,7 +10,10 @@ import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import excelWalletUrl from "../../../assets/AMC_Manager_-_Wallet.xlsx?url";
 import excelWalletExampleUrl from "../../../assets/AMC_Manager_-_Wallet.xlsx?url";
-import { ImportWalletStructureAssets } from "../types/wallet-structure";
+import {
+  ImportWalletStructureAssets,
+  ImportWalletStructureOther,
+} from "../types/wallet-structure";
 import { AddWalletStructureAssetsPreviewModal } from "../components/add-wallet-structure-assets-preview-modal";
 import { useExcelToJson } from "@/hooks/use-excel-to-json";
 
@@ -32,7 +35,12 @@ const AddWalletStructure = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
   const [openPreview, setOpenPreview] = useState(false);
-  const [excelData, setExcelData] = useState<ImportWalletStructureAssets[]>([]);
+  const [excelAssetData, setExcelAssetData] = useState<
+    ImportWalletStructureAssets[]
+  >([]);
+  const [excelOtherData, setExcelOtherData] = useState<
+    ImportWalletStructureOther[]
+  >([]);
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<StructureTabs>(StructureTabs.Manual);
   const [error, setError] = useState("");
@@ -59,9 +67,14 @@ const AddWalletStructure = ({
 
   const handleFileUpload = async (file: File) => {
     const jsonData = await convertExcelToJsonWithKeys(file);
-    if (jsonData.length) {
+    if (jsonData.securities.length || jsonData.other.length) {
+      if (jsonData.securities.length) {
+        setExcelAssetData(jsonData.securities);
+      }
+      if (jsonData.other.length) {
+        setExcelOtherData(jsonData.other);
+      }
       setOpenPreview(true);
-      setExcelData(jsonData);
     } else {
       setError(t("errors.walletStructure.corruptFile"));
     }
@@ -187,8 +200,10 @@ const AddWalletStructure = ({
                 <AddWalletStructureAssetsPreviewModal
                   open={openPreview}
                   setOpen={setOpenPreview}
-                  excelData={excelData}
-                  setExcelData={setExcelData}
+                  excelAssetData={excelAssetData}
+                  setExcelAssetData={setExcelAssetData}
+                  excelOtherData={excelOtherData}
+                  setExcelOtherData={setExcelOtherData}
                   entityId={entityId}
                 />
               </div>
