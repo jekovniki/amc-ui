@@ -115,9 +115,12 @@ const AddWalletStructure = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {triggerType === "link" ? (
-          <Button onClick={handleFormVisibility}>
-            {t("dashboard.assets.noAssets.button")}
-          </Button>
+          <span
+            onClick={handleFormVisibility}
+            className="text-primary text-sm cursor-pointer"
+          >
+            {t("dashboard.assets.noAssets.link")}
+          </span>
         ) : (
           <Button onClick={handleFormVisibility}>
             {t("dashboard.assets.noAssets.button")}

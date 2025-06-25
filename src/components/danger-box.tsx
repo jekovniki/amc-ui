@@ -18,8 +18,11 @@ export const DangerBox = ({ title, children }: DangerBoxProps) => {
       </div>
       <div className="flex items-center gap-[5px]">
         <div>{children}</div>
-        <div className="text-[14px]">/</div>
-        <div onClick={() => setIsOpen(false)}>
+        <div className="text-[13px]">/</div>
+        <div
+          onClick={() => setIsOpen(false)}
+          className="text-sm text-red-500 cursor-pointer"
+        >
           {t("commonComponents.dangerBox.hide")}
         </div>
       </div>

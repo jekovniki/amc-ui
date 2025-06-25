@@ -15,6 +15,7 @@ import { motion } from "framer-motion";
 import { useGetWalletStructureBy } from "@/features/wallets/api/use-get-wallet";
 import { WalletStructureFilter } from "@/features/wallets/types/wallet-structure";
 import { DangerBox } from "@/components/danger-box";
+import AddWalletStructure from "@/features/wallets/containers/add-wallet-structure";
 
 const containerVariants = {
   hidden: {},
@@ -106,7 +107,7 @@ const DashboardEntityNavigationPage = () => {
             <div className="my-10"></div>
           ) : (
             <DangerBox title={t("entity.overview.notifications.noAssets")}>
-              hi
+              <AddWalletStructure triggerType="link" entityId={fundId || ""} />
             </DangerBox>
           )}
         </motion.div>
