@@ -19,6 +19,8 @@ import { SelectBox } from "@/components/select-box";
 import { CompanyIcon } from "@/components/icons/company-icon";
 import { TextIcon } from "@/components/icons/text-icon";
 import { Button } from "@/components/ui/button";
+import { useEditObligation } from "../api/use-edit-obligation";
+import { toast } from "sonner";
 
 interface ObligationControlFormProps {
   obligation: Obligation;
@@ -33,6 +35,7 @@ export const ObligationControlFormEdit = ({
 }: ObligationControlFormProps) => {
   const { t } = useTranslation();
   const { data, isLoading } = useGetCompanyEntities();
+  const updateObligation = useEditObligation();
   const entityOptions = data?.data
     ? data.data.map((item) => ({
         label: item.name,
@@ -48,7 +51,7 @@ export const ObligationControlFormEdit = ({
     dueDateAt: z.string().min(1, {
       message: t("errors.required"),
     }),
-    entityId: z.string().uuid({
+    newEntityId: z.string().uuid({
       message: t("errors.required"),
     }),
   });
@@ -59,24 +62,24 @@ export const ObligationControlFormEdit = ({
       name: obligation.name,
       description: obligation.description,
       dueDateAt: obligation.dueDateAt,
-      entityId: obligation.entity.id,
+      newEntityId: obligation.entity.id,
     },
   });
 
   const onSubmit = (input: z.infer<typeof formSchema>) => {
-    console.log("input : ", input);
-    // setLoading(true);
-    // addObligation.mutate(input, {
-    //   onSuccess: () => {
-    //     setLoading(false);
-    //     toggleFormVisibility();
-    //   },
-    //   onError: (error) => {
-    //     console.error(error);
-    //     setErrorMessage(t("errors.unknown"));
-    //   },
-    // });
-    // toggleFormVisibility();
+    updateObligation.mutate(
+      { ...input, id: obligation.id },
+      {
+        onSuccess: () => {
+          toast.success(`Успешно обновихте задължението`);
+          setOpen(!open);
+        },
+        onError: (error) => {
+          console.error(error);
+          toast.error("Възникна грешка докато обновявахме задължението.");
+        },
+      }
+    );
   };
   return (
     <Form {...form}>
@@ -124,7 +127,7 @@ export const ObligationControlFormEdit = ({
               ) : (
                 <FormField
                   control={form.control}
-                  name="entityId"
+                  name="newEntityId"
                   render={({ field, fieldState }) => (
                     <FormItem>
                       <FormControl>
