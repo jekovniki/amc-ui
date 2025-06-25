@@ -44,7 +44,7 @@ export const AddObligationForm = ({
     name: z.string().min(1, {
       message: t("errors.required"),
     }),
-    destription: z.string().optional(),
+    description: z.string().optional(),
     dueDateAt: z.string().min(1, {
       message: t("errors.required"),
     }),
@@ -57,7 +57,7 @@ export const AddObligationForm = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      destription: "",
+      description: "",
       dueDateAt: "",
     },
   });
@@ -147,7 +147,7 @@ export const AddObligationForm = ({
           </div>
           <FormField
             control={form.control}
-            name="destription"
+            name="description"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
