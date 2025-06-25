@@ -18,6 +18,15 @@ export type AddObligationRequest = {
   dueDateAt: string;
 };
 
+export type EditObligationRequest = {
+  id: string;
+  name?: string;
+  description?: string;
+  dueDateAt?: string;
+  status?: ObligationStatus;
+  newEntityId?: string;
+};
+
 export enum ObligationStatus {
   PENDING = "PENDING",
   RESOLVED = "RESOLVED",

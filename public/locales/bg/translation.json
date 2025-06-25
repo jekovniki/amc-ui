@@ -226,10 +226,32 @@
         }
       },
       "preview": {
+        "tabs": {
+          "preview": "Преглед",
+          "edit": "Редактирай"
+        },
+        "content": {
+          "description": "Описание",
+          "dueDate": "Крайна дата",
+          "entity": "Субект"
+        },
         "buttons": {
           "delete": "Изтрий",
           "cancel": "Отмени",
           "done": "Маркирай като готово"
+        }
+      },
+      "edit": {
+        "buttons": {
+          "update": "Обнови"
+        }
+      },
+      "delete": {
+        "title": "Изтрий задължението",
+        "description": "Наистина ли искате да изтриете задължението?",
+        "buttons": {
+          "submit": "Изтрий",
+          "cancel": "Отмени"
         }
       }
     },

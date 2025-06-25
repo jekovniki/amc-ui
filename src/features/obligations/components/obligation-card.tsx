@@ -2,15 +2,27 @@ import { useTranslation } from "react-i18next";
 import { format, isToday, isTomorrow } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useState } from "react";
-import { ObligationControlForm } from "./obligation-control-form";
 import { Obligation } from "../types/obligation";
+import { ObligationControlFormPreview } from "./obligation-control-form-preview";
+import { ObligationControlFormEdit } from "./obligation-control-form-edit";
 
 interface ObligationCardProps {
   obligation: Obligation;
   entityName: string;
   dueDate: string;
+}
+
+enum ObligationTabs {
+  Preview = "preview",
+  Edit = "edit",
 }
 
 export const ObligationCard = ({
@@ -21,6 +33,7 @@ export const ObligationCard = ({
   const { t } = useTranslation();
   const dueDateObj = new Date(dueDate);
   const [open, setOpen] = useState(false);
+  const [tab, setTab] = useState<ObligationTabs>(ObligationTabs.Preview);
 
   let formattedDate = format(dueDateObj, "dd.MM");
   let dateClassName = "obligation-info-bg";
@@ -61,11 +74,48 @@ export const ObligationCard = ({
         </div>
       </DialogTrigger>
       <DialogContent className="wide-modal">
-        <ObligationControlForm
-          obligation={obligation}
-          open={open}
-          setOpen={setOpen}
-        />
+        <DialogTitle className="pt-6 pb-2 px-4">{obligation.name}</DialogTitle>
+        <div className="bg-white border-t-[1px] border-b-[1px] md:rounded-b flex items-center justify-start">
+          <div
+            className={`py-4 px-6 transition-all border-b-2 text-[#0C2134] text-sm ${
+              tab === ObligationTabs.Preview
+                ? "bg-[#2038B612] border-primary font-bold"
+                : "bg-transparent cursor-pointer hover:bg-[#2038B612] border-transparent font-light"
+            }`}
+            onClick={() => {
+              setTab(ObligationTabs.Preview);
+            }}
+          >
+            {t("dialog.obligation.preview.tabs.preview")}
+          </div>
+          <div
+            className={`py-4 px-6 transition-all border-b-2 text-[#0C2134] text-sm ${
+              tab === ObligationTabs.Edit
+                ? "bg-[#2038B612] border-primary font-bold"
+                : "bg-transparent cursor-pointer hover:bg-[#2038B612] border-transparent font-light"
+            }`}
+            onClick={() => {
+              setTab(ObligationTabs.Edit);
+            }}
+          >
+            {t("dialog.obligation.preview.tabs.edit")}
+          </div>
+        </div>
+        <DialogDescription className="hidden"></DialogDescription>
+        {tab === ObligationTabs.Preview && (
+          <ObligationControlFormPreview
+            obligation={obligation}
+            open={open}
+            setOpen={setOpen}
+          />
+        )}
+        {tab === ObligationTabs.Edit && (
+          <ObligationControlFormEdit
+            obligation={obligation}
+            open={open}
+            setOpen={setOpen}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );
