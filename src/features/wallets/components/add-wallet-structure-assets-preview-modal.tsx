@@ -35,6 +35,10 @@ export const AddWalletStructureAssetsPreviewModal = ({
   entityId,
 }: AddWalletStructureAssetsPreviewModalProps) => {
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(false);
+  const [insertedCount, setInsertedCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+
   const allAssets = [...excelAssetData, ...excelOtherData];
   const assetTypeTitles = [
     ...new Set(allAssets.map((asset) => asset["Вид актив"])),
@@ -47,6 +51,10 @@ export const AddWalletStructureAssetsPreviewModal = ({
   const addAssetType = useAddAssetType();
 
   const handleSubmit = () => {
+    setIsLoading(true);
+    setInsertedCount(0);
+    setTotalCount(allAssets.length);
+
     for (const item of allAssets) {
       const assetType = assetTypes.find(
         (type) =>
@@ -55,7 +63,7 @@ export const AddWalletStructureAssetsPreviewModal = ({
 
       if (!assetType) {
         if (item["Вид актив"]) {
-          addAssetType.mutate(
+          addAssetType.mutateAsync(
             {
               name: item["Вид актив"],
             },
@@ -86,7 +94,7 @@ export const AddWalletStructureAssetsPreviewModal = ({
     assetTypeId: number
   ) {
     if ("ISIN код" in item) {
-      addAsset.mutate(
+      addAsset.mutateAsync(
         {
           isin: item["ISIN код"],
           code: item["Борсов код"],
@@ -101,17 +109,19 @@ export const AddWalletStructureAssetsPreviewModal = ({
             toast.success(
               `Успешно създадохте актив с код : ${item["Борсов код"]}`
             );
+            setInsertedCount(insertedCount + 1);
           },
           onError: (error) => {
             console.error(error);
             toast.error(
               `Не успяхме да добавим актив с код ${item["Борсов код"]}. Моля прегледайте портфейла и го добавете ръчно.`
             );
+            setInsertedCount(insertedCount + 1);
           },
         }
       );
     } else {
-      addAsset.mutate(
+      addAsset.mutateAsync(
         {
           isin: "-",
           code: "-",
@@ -124,9 +134,12 @@ export const AddWalletStructureAssetsPreviewModal = ({
         {
           onSuccess: () => {
             toast.success(`Успешно създадохте актив ${item["Име на актива"]}`);
+            setInsertedCount(insertedCount + 1);
           },
           onError: (error) => {
             console.error(error);
+            setInsertedCount(insertedCount + 1);
+
             toast.error(
               `Не успяхме да добавим актив ${item["Име на актива"]}. Моля прегледайте портфейла и го добавете ръчно.`
             );
@@ -140,6 +153,34 @@ export const AddWalletStructureAssetsPreviewModal = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="h-[90vh] w-custom-full flex flex-col overflow-hidden">
         <DialogTitle className="h-[0px]"></DialogTitle>
+        {isLoading && (
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-8 flex flex-col items-center gap-4 min-w-[300px]">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+              <div className="text-center">
+                <p className="text-lg font-medium">
+                  {t(
+                    "dialog.wallet.preview.loading.title",
+                    "Добавяне на активи..."
+                  )}
+                </p>
+                <p className="text-sm text-gray-600 mt-2">
+                  {insertedCount} от {totalCount} активи добавени
+                </p>
+                <div className="w-full bg-gray-200 rounded-full h-2 mt-3">
+                  <div
+                    className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                    style={{
+                      width: `${
+                        totalCount > 0 ? (insertedCount / totalCount) * 100 : 0
+                      }%`,
+                    }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="flex gap-4 px-4 wrap justify-start border-b-[1px]">
           {assetTypeTitles.map((title, index) => (
             <WalletPreviewAssetTypeTitle
