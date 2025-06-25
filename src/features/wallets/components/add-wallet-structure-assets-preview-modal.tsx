@@ -61,7 +61,6 @@ export const AddWalletStructureAssetsPreviewModal = ({
             },
             {
               onSuccess: (response) => {
-                console.log("response : ", response);
                 toast.success(
                   `Успешно създадохте вид актив : ${response.data.name}`
                 );
@@ -86,7 +85,6 @@ export const AddWalletStructureAssetsPreviewModal = ({
     item: ImportWalletStructureAssets | ImportWalletStructureOther,
     assetTypeId: number
   ) {
-    console.log("item : ", item);
     if ("ISIN код" in item) {
       addAsset.mutate(
         {
