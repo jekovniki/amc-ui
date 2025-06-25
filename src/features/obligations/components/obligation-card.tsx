@@ -75,7 +75,6 @@ export const ObligationCard = ({
       </DialogTrigger>
       <DialogContent className="wide-modal">
         <DialogTitle className="pt-6 pb-2 px-4">{obligation.name}</DialogTitle>
-        <DialogDescription className="none"></DialogDescription>
         <div className="bg-white border-t-[1px] border-b-[1px] md:rounded-b flex items-center justify-start">
           <div
             className={`py-4 px-6 transition-all border-b-2 text-[#0C2134] text-sm ${
@@ -102,6 +101,7 @@ export const ObligationCard = ({
             {t("dialog.obligation.preview.tabs.edit")}
           </div>
         </div>
+        <DialogDescription className="hidden"></DialogDescription>
         {tab === ObligationTabs.Preview && (
           <ObligationControlFormPreview
             obligation={obligation}

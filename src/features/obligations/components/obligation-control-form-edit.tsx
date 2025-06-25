@@ -81,7 +81,7 @@ export const ObligationControlFormEdit = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="flex flex-col gap-4 p-4">
+        <div className="flex flex-col gap-4 px-4 pb-4">
           <FormField
             control={form.control}
             name="name"
@@ -175,7 +175,7 @@ export const ObligationControlFormEdit = ({
             {t("dialog.obligation.preview.buttons.cancel")}
           </Button>
           <Button type="submit">
-            {t("dialog.obligation.preview.buttons.done")}
+            {t("dialog.obligation.edit.buttons.update")}
           </Button>
         </div>
       </form>

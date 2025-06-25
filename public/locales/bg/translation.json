@@ -230,10 +230,20 @@
           "preview": "Преглед",
           "edit": "Редактирай"
         },
+        "content": {
+          "description": "Описание",
+          "dueDate": "Крайна дата",
+          "entity": "Субект"
+        },
         "buttons": {
           "delete": "Изтрий",
           "cancel": "Отмени",
           "done": "Маркирай като готово"
+        }
+      },
+      "edit": {
+        "buttons": {
+          "update": "Обнови"
         }
       },
       "delete": {
