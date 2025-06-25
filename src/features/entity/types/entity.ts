@@ -9,6 +9,9 @@ export type Entity = {
   entityType: EntityType;
   createdAt: string;
   updatedAt: string;
+  company: {
+    id: string;
+  };
 };
 
 export type EntityType = {

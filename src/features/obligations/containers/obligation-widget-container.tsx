@@ -15,10 +15,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { AddObligationForm } from "../components/add-obligation-form";
+import { useGetCompanyEntities } from "@/features/entity/api/use-get-company-entities";
 
 const ObligationWidgetContainer = () => {
   const { t } = useTranslation();
   const { data, isLoading } = useGetObligations(ObligationStatus.PENDING);
+  const entityResponse = useGetCompanyEntities();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const obligationList =
     data?.data
@@ -34,6 +36,8 @@ const ObligationWidgetContainer = () => {
       .slice()
       .reverse() || [];
 
+  const entities = entityResponse.data?.data || [];
+
   const handleFormVisibility = () => {
     setModalIsOpen(!modalIsOpen);
   };
@@ -43,25 +47,31 @@ const ObligationWidgetContainer = () => {
         <DashboardTileHeader>
           {t("dashboard.obligationContainer.title")}
         </DashboardTileHeader>
-        <AccessVisibility accessLevelRequired={UserPermission.obligationCreate}>
-          <Dialog open={modalIsOpen}>
-            <DialogTrigger asChild>
-              <Button onClick={handleFormVisibility}>
-                + {t("dashboard.obligationContainer.button")}
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="wide-modal">
-              <DialogTitle className="pt-6 pb-2 px-4">
-                {t("dialog.entity.add.title")}
-              </DialogTitle>
-              <div className="bg-white border-t-[1px] md:rounded-b">
-                <AddObligationForm
-                  toggleFormVisibility={handleFormVisibility}
-                />
-              </div>
-            </DialogContent>
-          </Dialog>
-        </AccessVisibility>
+        {entities.length ? (
+          <AccessVisibility
+            accessLevelRequired={UserPermission.obligationCreate}
+          >
+            <Dialog open={modalIsOpen}>
+              <DialogTrigger asChild>
+                <Button onClick={handleFormVisibility}>
+                  + {t("dashboard.obligationContainer.button")}
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="wide-modal">
+                <DialogTitle className="pt-6 pb-2 px-4">
+                  {t("dialog.entity.add.title")}
+                </DialogTitle>
+                <div className="bg-white border-t-[1px] md:rounded-b">
+                  <AddObligationForm
+                    toggleFormVisibility={handleFormVisibility}
+                  />
+                </div>
+              </DialogContent>
+            </Dialog>
+          </AccessVisibility>
+        ) : (
+          ""
+        )}
       </div>
       <div className="mt-4 flex flex-col gap-2">
         {isLoading ? (
@@ -79,9 +89,13 @@ const ObligationWidgetContainer = () => {
               dueDate={obligation.dueDateAt}
             />
           ))
-        ) : (
-          <div className="text-[#0C2134BF] text-[14px] font-light text-center">
+        ) : entities?.length ? (
+          <div className="bg-white h-[108px] text-[#0C2134BF] text-[14px] font-light shadow-md px-4 mb-2 transition-all flex items-center justify-center">
             {t("dashboard.obligationContainer.empty")}
+          </div>
+        ) : (
+          <div className="bg-white h-[108px] text-[#0C2134BF] text-[14px] font-light shadow-md px-4 mb-2 transition-all flex items-center justify-center">
+            {t("dashboard.entityContainer.empty")}
           </div>
         )}
       </div>

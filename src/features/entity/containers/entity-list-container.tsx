@@ -33,7 +33,7 @@ const EntityListContainer = () => {
           {t("dashboard.entityContainer.title")}
         </DashboardTileHeader>
         <AccessVisibility accessLevelRequired={UserPermission.entityCreate}>
-          <Dialog open={modalIsOpen}>
+          <Dialog open={modalIsOpen} onOpenChange={setModalIsOpen}>
             <DialogTrigger asChild>
               <Button onClick={handleFormVisibility}>
                 + {t("dashboard.entityContainer.button")}
@@ -71,7 +71,7 @@ const EntityListContainer = () => {
             />
           ))
         ) : (
-          <div className="flex items-center justify-center h-full text-[#0C2134BF] text-[14px] font-light text-center">
+          <div className="bg-white h-[108px] text-[#0C2134BF] text-[14px] font-light shadow-md px-4 mb-2 transition-all flex items-center justify-center">
             {t("dashboard.entityContainer.empty")}
           </div>
         )}

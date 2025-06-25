@@ -59,7 +59,7 @@ const processFailedQueue = () => {
   failedQueue = [];
 };
 
-const refreshTokenAndRetry = async (
+export const refreshTokenAndRetry = async (
   query?: Query,
   mutation?: Mutation<unknown, unknown, unknown, unknown>,
   variables?: unknown

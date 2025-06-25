@@ -1,21 +1,13 @@
 import { useTranslation } from "react-i18next";
 import { useGetWalletStructureBy } from "../api/use-get-wallet";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { AccessVisibility } from "@/features/auth/components/access-visibility";
 import { UserPermission } from "@/features/auth/types/permissions";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import AddWalletStructureModal from "./add-wallet-structure-modal";
-import { useState } from "react";
 import { WalletStructureFilter } from "../types/wallet-structure";
 import { useGetAssetTypes } from "../api/use-get-asset-types";
 import { getAssetTypeStructureByLanguage } from "../util/wallet-translations";
+import AddWalletStructure from "./add-wallet-structure";
 
 interface EntityWalletStructureProps {
   id: string;
@@ -27,14 +19,9 @@ const EntityWalletStructure = ({ id }: EntityWalletStructureProps) => {
     id,
     WalletStructureFilter.AssetType
   );
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const allAssets = data?.data?.assets;
   const assetTypesRequest = useGetAssetTypes();
   const allAssetTypes = assetTypesRequest.data?.data;
-  console.log("allAssets : ", allAssets);
-  const handleFormVisibility = () => {
-    setModalIsOpen(!modalIsOpen);
-  };
 
   const combinedTotal = allAssets?.reduce(
     (sum, item) => sum + parseFloat(item.totalValue),
@@ -103,24 +90,7 @@ const EntityWalletStructure = ({ id }: EntityWalletStructureProps) => {
                   <AccessVisibility
                     accessLevelRequired={UserPermission.assetCreate}
                   >
-                    <Dialog open={modalIsOpen}>
-                      <DialogTrigger asChild>
-                        <Button onClick={handleFormVisibility}>
-                          {t("dashboard.assets.noAssets.button")}
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="wide-modal">
-                        <DialogTitle className="pt-6 pb-2 px-4 text-center">
-                          {t("dialog.wallet.add.title")}
-                        </DialogTitle>
-                        <div className="bg-white border-t-[1px] md:rounded-b">
-                          <AddWalletStructureModal
-                            toggleFormVisibility={handleFormVisibility}
-                            entityId={id}
-                          />
-                        </div>
-                      </DialogContent>
-                    </Dialog>
+                    <AddWalletStructure triggerType="button" entityId={id} />
                   </AccessVisibility>
                 </div>
               )}

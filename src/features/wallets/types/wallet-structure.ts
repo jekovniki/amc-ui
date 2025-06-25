@@ -7,6 +7,11 @@ export enum WalletStructureAssetKeys {
   price = "Цена за аедин актив",
 }
 
+export type ImportWalletStructure = {
+  securities: ImportWalletStructureAssets[];
+  other: ImportWalletStructureOther[];
+};
+
 export type ImportWalletStructureAssets = {
   "Име на актива": string;
   "Борсов код": string;
@@ -23,3 +28,15 @@ export enum WalletStructureFilter {
   Currency = "currency",
   AssetType = "asset_type_id",
 }
+
+export enum ExcelSheetTabs {
+  Securities = "Ценни книжа",
+  Other = "Други",
+}
+
+export type ImportWalletStructureOther = {
+  "Име на актива": string;
+  Валута: string;
+  "Парична стойност": number;
+  "Вид актив": string;
+};

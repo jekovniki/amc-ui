@@ -12,6 +12,10 @@ import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { usePageTitle } from "@/hooks/use-page-title";
 import { motion } from "framer-motion";
+import { useGetWalletStructureBy } from "@/features/wallets/api/use-get-wallet";
+import { WalletStructureFilter } from "@/features/wallets/types/wallet-structure";
+import { DangerBox } from "@/components/danger-box";
+import AddWalletStructure from "@/features/wallets/containers/add-wallet-structure";
 
 const containerVariants = {
   hidden: {},
@@ -32,6 +36,12 @@ const DashboardEntityNavigationPage = () => {
   const { fundId, companyId } = useParams();
   const { data, isLoading } = useGetEntity(fundId || "");
   const navigate = useNavigate();
+  const walletStructure = useGetWalletStructureBy(
+    fundId || "",
+    WalletStructureFilter.AssetType
+  );
+  console.log("walletStructure : ", walletStructure);
+  const hasAssets = walletStructure.data?.data?.assets?.length;
   const fundData = data?.data || ({} as Entity);
   usePageTitle(fundData?.name);
   const pages = [
@@ -78,7 +88,7 @@ const DashboardEntityNavigationPage = () => {
         animate="show"
       >
         <motion.div
-          className="col-span-6 flex flex-col items-center justify-center my-20"
+          className="col-span-6 flex flex-col items-center justify-center mt-20"
           variants={itemVariants}
         >
           <EntityWalletIcon className="text-[#0C213440] mb-6" />
@@ -90,6 +100,18 @@ const DashboardEntityNavigationPage = () => {
             </h2>
           )}
         </motion.div>
+        <motion.div className="col-span-6 gap-6 w-full">
+          {walletStructure.isLoading ? (
+            <Skeleton className="h-[60px] w--full" />
+          ) : hasAssets ? (
+            <div className="my-10"></div>
+          ) : (
+            <DangerBox title={t("entity.overview.notifications.noAssets")}>
+              <AddWalletStructure triggerType="link" entityId={fundId || ""} />
+            </DangerBox>
+          )}
+        </motion.div>
+
         {pages.map(({ name, icon }) => (
           <motion.div
             key={name}

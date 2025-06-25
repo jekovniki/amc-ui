@@ -17,6 +17,15 @@ import { useState } from "react";
 import { useGetCompanyEntities } from "@/features/entity/api/use-get-company-entities";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetCompany } from "@/features/company/api/use-get-company";
+import { AccessVisibility } from "@/features/auth/components/access-visibility";
+import { UserPermission } from "@/features/auth/types/permissions";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { AddEntityForm } from "@/features/entity/components/add-entity-form";
 
 interface DashboardSidebarProps {
   companyId: string;
@@ -27,6 +36,11 @@ const DahsboardSidebar = ({ companyId }: DashboardSidebarProps) => {
   const [isDropdownToggled, setIsDropdownToggled] = useState(true);
   const { data, isLoading } = useGetCompanyEntities();
   const companyResponse = useGetCompany();
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleFormVisibility = () => {
+    setModalOpen(!isModalOpen);
+  };
 
   const logo = companyResponse?.data?.data?.logo;
   const name = companyResponse?.data?.data?.name;
@@ -107,6 +121,25 @@ const DahsboardSidebar = ({ companyId }: DashboardSidebarProps) => {
                 </NavLink>
               ))
             )}
+            <AccessVisibility accessLevelRequired={UserPermission.entityCreate}>
+              <Dialog open={isModalOpen} onOpenChange={setModalOpen}>
+                <DialogTrigger asChild>
+                  <span className="font-light text-[14px] p-[5px] cursor-pointer transition-all hover:text-primary">
+                    + {t("dashboard.entityContainer.button")}
+                  </span>
+                </DialogTrigger>
+                <DialogContent className="wide-modal">
+                  <DialogTitle className="pt-6 pb-2 px-4">
+                    {t("dialog.entity.add.title")}
+                  </DialogTitle>
+                  <div className="bg-white border-t-[1px] md:rounded-b">
+                    <AddEntityForm
+                      toggleFormVisibility={handleFormVisibility}
+                    />
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </AccessVisibility>
           </div>
         </SidebarGroup>
         <DashboardLink

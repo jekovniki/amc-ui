@@ -187,6 +187,10 @@
       "documents": {
         "title": "Документи",
         "description": "Преглед, настройки и история на всички документи ."
+      },
+      "notifications": {
+        "noAssets": "Add the structure of the funds wallet.",
+        "noRestrictions": "Add the funds restrictions."
       }
     }
   },
@@ -214,6 +218,18 @@
           "submit": "Add fund",
           "cancel": "Cancel"
         }
+      },
+      "navigate": {
+        "title": "Welcome to AMC Manager",
+        "description": {
+          "first": "Thank you for registering in our platform.",
+          "second": "A company profile has currently been created, but to fully benefit from the system's functionalities, you can continue by adding an entity/fund to the company.",
+          "third": "Choose whether you want to explore the platform yourself or use our guidance."
+        },
+        "buttons": {
+          "continue": "Create a fund/entity",
+          "cancel": "Cancel and continue independently"
+        }
       }
     },
     "obligation": {
@@ -239,6 +255,13 @@
           "submit": "Add obligation",
           "cancel": "Cancel"
         }
+      },
+      "preview": {
+        "buttons": {
+          "delete": "Deleete",
+          "cancel": "Cancel",
+          "done": "Mark as done"
+        }
       }
     },
     "wallet": {
@@ -263,6 +286,11 @@
     "user": {
       "profile": "My profile",
       "signOut": "Exit"
+    }
+  },
+  "commonComponents": {
+    "dangerBox": {
+      "hide": "Hide"
     }
   }
 }
