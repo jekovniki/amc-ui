@@ -9,7 +9,7 @@ import { Info } from "lucide-react";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import excelWalletUrl from "../../../assets/AMC_Manager_-_Wallet.xlsx?url";
-import excelWalletExampleUrl from "../../../assets/AMC_Manager_-_Wallet.xlsx?url";
+import excelWalletExampleUrl from "../../../assets/AMC_Manager_-_Wallet_Example.xlsx?url";
 import {
   ImportWalletStructureAssets,
   ImportWalletStructureOther,
