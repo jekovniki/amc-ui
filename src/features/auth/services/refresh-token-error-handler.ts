@@ -75,7 +75,7 @@ export const refreshTokenAndRetry = async (
   } catch {
     if (!isRedirecting) {
       isRedirecting = true;
-      window.location.href = PublicRoutePath.Unauthorized;
+      window.location.href = `/${PublicRoutePath.Unauthorized}`;
     }
   }
 };
