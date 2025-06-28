@@ -74,12 +74,12 @@ export const useExcelToJson = () => {
           try {
             const data = event.target?.result;
             const workbook = XLSX.read(data, { type: "binary" });
-            const rulesWorksheet = workbook.Sheets[0];
+
+            const rulesWorksheet = workbook.Sheets["Ограничения"];
 
             const rulesJSONData = XLSX.utils.sheet_to_json(
               rulesWorksheet
             ) as ImportRulesStructure[];
-
             setIsLoading(false);
             resolve(rulesJSONData);
           } catch (error) {
