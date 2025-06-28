@@ -16,6 +16,7 @@ import { useGetWalletStructureBy } from "@/features/wallets/api/use-get-wallet";
 import { WalletStructureFilter } from "@/features/wallets/types/wallet-structure";
 import { DangerBox } from "@/components/danger-box";
 import AddWalletStructure from "@/features/wallets/containers/add-wallet-structure";
+import { useGetRule } from "@/features/wallets/api/rules/use-get-rules";
 
 const containerVariants = {
   hidden: {},
@@ -40,8 +41,10 @@ const DashboardEntityNavigationPage = () => {
     fundId || "",
     WalletStructureFilter.AssetType
   );
-  console.log("walletStructure : ", walletStructure);
+  const rulesResonse = useGetRule(fundId || "");
+  const hasRules = rulesResonse?.data?.data?.length;
   const hasAssets = walletStructure.data?.data?.assets?.length;
+
   const fundData = data?.data || ({} as Entity);
   usePageTitle(fundData?.name);
   const pages = [
@@ -101,14 +104,38 @@ const DashboardEntityNavigationPage = () => {
           )}
         </motion.div>
         <motion.div className="col-span-6 gap-6 w-full">
-          {walletStructure.isLoading ? (
-            <Skeleton className="h-[60px] w--full" />
-          ) : hasAssets ? (
-            <div className="my-10"></div>
+          {walletStructure.isLoading || rulesResonse.isLoading ? (
+            <Skeleton className="h-[60px] w-full" />
           ) : (
-            <DangerBox title={t("entity.overview.notifications.noAssets")}>
-              <AddWalletStructure triggerType="link" entityId={fundId || ""} />
-            </DangerBox>
+            <>
+              {hasAssets && hasRules ? <div className="my-10"></div> : ""}
+              {!hasAssets ? (
+                <div className={!hasAssets ? `mb-4` : ""}>
+                  <DangerBox
+                    title={t("entity.overview.notifications.noAssets")}
+                  >
+                    <AddWalletStructure
+                      triggerType="link"
+                      entityId={fundId || ""}
+                    />
+                  </DangerBox>
+                </div>
+              ) : (
+                ""
+              )}
+              {!hasRules ? (
+                <DangerBox
+                  title={t("entity.overview.notifications.noRestrictions")}
+                >
+                  <AddWalletStructure
+                    triggerType="link"
+                    entityId={fundId || ""}
+                  />
+                </DangerBox>
+              ) : (
+                ""
+              )}
+            </>
           )}
         </motion.div>
 

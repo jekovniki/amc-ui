@@ -2,118 +2,36 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Info } from "lucide-react";
-import { useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import excelWalletUrl from "../../../assets/AMC_Manager_-_Wallet.xlsx?url";
-import excelWalletExampleUrl from "../../../assets/AMC_Manager_-_Wallet_Example.xlsx?url";
-import {
-  ImportWalletStructureAssets,
-  ImportWalletStructureOther,
-} from "../types/wallet-structure";
-import { AddWalletStructureAssetsPreviewModal } from "../components/add-wallet-structure-assets-preview-modal";
-import { useExcelToJson } from "@/hooks/use-excel-to-json";
 import { useDragAndDrop } from "@/hooks/use-drag-and-drop";
-
-interface AddWalletStructureProps {
-  triggerType: "button" | "link";
-  entityId: string;
-}
+import { Info } from "lucide-react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 enum StructureTabs {
   Manual = "manual",
   Automatic = "automatic",
 }
 
-const AddWalletStructure = ({
-  triggerType,
-  entityId,
-}: AddWalletStructureProps) => {
+const AddRulesByExcel = () => {
   const { t } = useTranslation();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [openPreview, setOpenPreview] = useState(false);
-  const [excelAssetData, setExcelAssetData] = useState<
-    ImportWalletStructureAssets[]
-  >([]);
-  const [excelOtherData, setExcelOtherData] = useState<
-    ImportWalletStructureOther[]
-  >([]);
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<StructureTabs>(StructureTabs.Manual);
-  const [error, setError] = useState("");
-
-  const { convertExcelToJsonWithKeys } = useExcelToJson();
-
-  const handleFormVisibility = () => {
-    setOpen(!open);
-  };
-
-  const downloadTemplate = () => {
-    const link = document.createElement("a");
-    link.href = excelWalletUrl;
-    link.download = "AMC_Manager_-_Wallet.xlsx";
-    link.click();
-  };
-
-  const downloadExampleTemplate = () => {
-    const link = document.createElement("a");
-    link.href = excelWalletExampleUrl;
-    link.download = "AMC_Manager_-_Wallet_Example.xlsx";
-    link.click();
-  };
-
-  const handleFileUpload = async (file: File) => {
-    const jsonData = await convertExcelToJsonWithKeys(file);
-    if (jsonData.securities.length || jsonData.other.length) {
-      if (jsonData.securities.length) {
-        setExcelAssetData(jsonData.securities);
-      }
-      if (jsonData.other.length) {
-        setExcelOtherData(jsonData.other);
-      }
-      setOpenPreview(true);
-    } else {
-      setError(t("errors.walletStructure.corruptFile"));
-    }
-  };
 
   const { isDragOver, handleDragOver, handleDragLeave, handleDrop } =
     useDragAndDrop({ onFileUpload: handleFileUpload });
 
-  const handleClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      handleFileUpload(file);
-    }
-  };
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        {triggerType === "link" ? (
-          <span
-            onClick={handleFormVisibility}
-            className="text-primary text-sm cursor-pointer"
-          >
-            {t("dashboard.assets.noAssets.link")}
-          </span>
-        ) : (
-          <Button onClick={handleFormVisibility}>
-            {t("dashboard.assets.noAssets.button")}
-          </Button>
-        )}
-      </DialogTrigger>
+      <DialogTrigger asChild></DialogTrigger>
       <DialogContent className="wide-modal">
         <DialogTitle className="pt-6 pb-2 px-4">
-          {t("dialog.wallet.add.title")}
+          {t("dialog.rules.add.title")}
         </DialogTitle>
+        <DialogDescription className="hidden"></DialogDescription>
         <div className="bg-white border-t-[1px] border-b-[1px] md:rounded-b flex items-center justify-center">
           <div
             className={`py-4 px-6 transition-all border-b-2 text-[#0C2134] text-sm ${
@@ -244,7 +162,7 @@ const AddWalletStructure = ({
           )}
         </div>
         <div className="bg-white border-t-[1px] md:rounded-b p-6 flex items-center justify-end gap-4">
-          <Button variant="outline" onClick={handleFormVisibility}>
+          <Button variant="outline" onClick={() => setOpen(!open)}>
             {t("dialog.wallet.tab.manual.buttons.cancel")}
           </Button>
           {tab === StructureTabs.Manual && (
@@ -258,4 +176,4 @@ const AddWalletStructure = ({
   );
 };
 
-export default AddWalletStructure;
+export default AddRulesByExcel;
