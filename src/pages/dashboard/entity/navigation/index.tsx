@@ -17,6 +17,7 @@ import { WalletStructureFilter } from "@/features/wallets/types/wallet-structure
 import { DangerBox } from "@/components/danger-box";
 import AddWalletStructure from "@/features/wallets/containers/add-wallet-structure";
 import { useGetRule } from "@/features/wallets/api/rules/use-get-rules";
+import AddRulesByExcel from "@/features/wallets/containers/add-rules-by-excel";
 
 const containerVariants = {
   hidden: {},
@@ -127,10 +128,7 @@ const DashboardEntityNavigationPage = () => {
                 <DangerBox
                   title={t("entity.overview.notifications.noRestrictions")}
                 >
-                  <AddWalletStructure
-                    triggerType="link"
-                    entityId={fundId || ""}
-                  />
+                  <AddRulesByExcel triggerType="link" entityId={fundId || ""} />
                 </DangerBox>
               ) : (
                 ""

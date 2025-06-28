@@ -22,6 +22,14 @@ export type ImportWalletStructureAssets = {
   "Цена за един актив": number;
 };
 
+export type ImportRulesStructure = {
+  "Име на ограничението": string;
+  "Минимална стойност": string;
+  "Максимална стойност": string;
+  "Тип стойност": RulesValueType;
+  "Ниво на ограничение": RulesTypeOfRestriction;
+};
+
 export enum WalletStructureFilter {
   Code = "code",
   ISIN = "isin",
@@ -32,6 +40,20 @@ export enum WalletStructureFilter {
 export enum ExcelSheetTabs {
   Securities = "Ценни книжа",
   Other = "Други",
+}
+
+export enum RulesValueType {
+  Percentage = "%",
+  EURO = "EUR",
+  BGN = "BGN",
+  USD = "USD",
+}
+
+export enum RulesTypeOfRestriction {
+  All = "Всички",
+  Asset = "Актив",
+  TypeOfAsset = "Вид актив",
+  Group = "Група",
 }
 
 export type ImportWalletStructureOther = {

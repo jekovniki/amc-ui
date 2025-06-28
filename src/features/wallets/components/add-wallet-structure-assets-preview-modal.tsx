@@ -1,5 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -23,7 +28,6 @@ interface AddWalletStructureAssetsPreviewModalProps {
   setExcelAssetData: Dispatch<SetStateAction<ImportWalletStructureAssets[]>>;
   excelOtherData: ImportWalletStructureOther[];
   setExcelOtherData: Dispatch<SetStateAction<ImportWalletStructureOther[]>>;
-
   entityId: string;
 }
 
@@ -152,7 +156,8 @@ export const AddWalletStructureAssetsPreviewModal = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="h-[90vh] w-custom-full flex flex-col overflow-hidden">
-        <DialogTitle className="h-[0px]"></DialogTitle>
+        <DialogTitle className="hidden"></DialogTitle>
+        <DialogDescription className="hidden"></DialogDescription>
         {isLoading && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-8 flex flex-col items-center gap-4 min-w-[300px]">

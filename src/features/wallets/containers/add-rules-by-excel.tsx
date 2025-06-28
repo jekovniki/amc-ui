@@ -7,26 +7,90 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useDragAndDrop } from "@/hooks/use-drag-and-drop";
+import { useExcelToJson } from "@/hooks/use-excel-to-json";
 import { Info } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import excelRulesUrl from "../../../assets/AMC_Manager_-_Rules.xlsx?url";
+import excelRulesExampleUrl from "../../../assets/AMC_Manager_-_Rules_Example.xlsx?url";
+import { ImportRulesStructure } from "../types/wallet-structure";
+import { AddRulesStructurePreview } from "../components/rules/add-rules-structure-preview";
 
 enum StructureTabs {
   Manual = "manual",
   Automatic = "automatic",
 }
 
-const AddRulesByExcel = () => {
+interface AddRulesByExcelProps {
+  triggerType: "button" | "link";
+  entityId: string;
+}
+
+const AddRulesByExcel = ({ entityId, triggerType }: AddRulesByExcelProps) => {
   const { t } = useTranslation();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<StructureTabs>(StructureTabs.Manual);
+  const [error, setError] = useState("");
+  const [openPreview, setOpenPreview] = useState(false);
+  const [excelData, setExcelData] = useState<ImportRulesStructure[]>([]);
+
+  const { convertExcelToJsonRules } = useExcelToJson();
+
+  const downloadTemplate = () => {
+    const link = document.createElement("a");
+    link.href = excelRulesUrl;
+    link.download = "AMC_Manager_-_Rules.xlsx";
+    link.click();
+  };
+
+  const downloadExampleTemplate = () => {
+    const link = document.createElement("a");
+    link.href = excelRulesExampleUrl;
+    link.download = "AMC_Manager_-_Rules_Example.xlsx";
+    link.click();
+  };
+
+  const handleFileUpload = async (file: File) => {
+    const jsonData = await convertExcelToJsonRules(file);
+    if (jsonData.length) {
+      setExcelData(jsonData);
+      setOpenPreview(true);
+    } else {
+      setError(t("errors.walletStructure.corruptFile"));
+    }
+  };
 
   const { isDragOver, handleDragOver, handleDragLeave, handleDrop } =
     useDragAndDrop({ onFileUpload: handleFileUpload });
 
+  const handleClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      handleFileUpload(file);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild></DialogTrigger>
+      <DialogTrigger asChild>
+        {triggerType === "link" ? (
+          <span
+            onClick={() => setOpen(!open)}
+            className="text-primary text-sm cursor-pointer"
+          >
+            {t("dashboard.assets.noRestrictions.link")}
+          </span>
+        ) : (
+          <Button onClick={() => setOpen(!open)}>
+            {t("dashboard.assets.noRestrictions.button")}
+          </Button>
+        )}
+      </DialogTrigger>
       <DialogContent className="wide-modal">
         <DialogTitle className="pt-6 pb-2 px-4">
           {t("dialog.rules.add.title")}
@@ -43,7 +107,7 @@ const AddRulesByExcel = () => {
               setTab(StructureTabs.Manual);
             }}
           >
-            {t("dialog.wallet.tab.manual.title")}
+            {t("dialog.rules.tab.manual.title")}
           </div>
           <div
             className={`py-4 px-6 transition-all border-b-2 text-[#0C2134] text-sm ${
@@ -55,7 +119,7 @@ const AddRulesByExcel = () => {
               setTab(StructureTabs.Automatic);
             }}
           >
-            {t("dialog.wallet.tab.automatic.title")}
+            {t("dialog.rules.tab.automatic.title")}
           </div>
         </div>
         <div className="px-6 pb-2 pt-2">
@@ -68,9 +132,9 @@ const AddRulesByExcel = () => {
                     className="text-primary underline hover:no-underline cursor-pointer"
                     onClick={downloadTemplate}
                   >
-                    {t("dialog.wallet.tab.manual.description.link")}
+                    {t("dialog.rules.tab.manual.description.link")}
                   </span>
-                  {t("dialog.wallet.tab.manual.description.text")}
+                  {t("dialog.rules.tab.manual.description.text")}
                 </p>
               </div>
               <div>
@@ -91,7 +155,7 @@ const AddRulesByExcel = () => {
                   onDrop={handleDrop}
                 >
                   <p className="text-[14px] text-center text-[#0C2134BF] mb-4">
-                    {t("dialog.wallet.add.manual.upload")}
+                    {t("dialog.rules.add.manual.upload")}
                   </p>
                 </div>
                 <input
@@ -101,32 +165,28 @@ const AddRulesByExcel = () => {
                   onChange={handleFileChange}
                   accept=".xlsx,.xls"
                 />
-                <AddWalletStructureAssetsPreviewModal
+                <AddRulesStructurePreview
                   open={openPreview}
                   setOpen={setOpenPreview}
-                  excelAssetData={excelAssetData}
-                  setExcelAssetData={setExcelAssetData}
-                  excelOtherData={excelOtherData}
-                  setExcelOtherData={setExcelOtherData}
+                  rules={excelData}
                   entityId={entityId}
                 />
               </div>
               <div className="mt-4">
                 <p className="text-[#0C2134BF] text-[12px] font-light">
                   1.&nbsp;
-                  {t("dialog.wallet.tab.manual.description.notes.one")}
+                  {t("dialog.rules.tab.manual.description.notes.one")}
                 </p>
-                <p className="text-[#0C2134BF] text-[12px] font-light">
+                <p
+                  className="text-[#0C2134BF] text-[12px] font-light"
+                  onClick={downloadExampleTemplate}
+                >
                   2.&nbsp;
-                  {t("dialog.wallet.tab.manual.description.notes.two")}
-                </p>
-                <p className="text-[#0C2134BF] text-[12px] font-light">
-                  3.&nbsp;
                   <span
-                    className="text-primary underline hover:no-underline cursor-pointer"
                     onClick={downloadExampleTemplate}
+                    className="text-primary underline hover:no-underline cursor-pointer"
                   >
-                    {t("dialog.wallet.tab.manual.description.notes.three")}
+                    {t("dialog.rules.tab.manual.description.notes.two")}
                   </span>
                 </p>
               </div>
@@ -140,7 +200,7 @@ const AddRulesByExcel = () => {
                 </div>
                 <div>
                   <p className="text-[#0C2134BF] text-[13px] font-light mb-2">
-                    {t("dialog.wallet.tab.automatic.description")}{" "}
+                    {t("dialog.rules.tab.automatic.description")}{" "}
                     <a
                       href={`mailto:${
                         import.meta.env.VITE_WALLET_UPLOAD_EMAIL
@@ -151,10 +211,10 @@ const AddRulesByExcel = () => {
                     </a>
                   </p>
                   <p className="text-[#0C2134BF] text-[13px] font-light mb-2">
-                    1.&nbsp;{t("dialog.wallet.tab.automatic.partTwo")}
+                    1.&nbsp;{t("dialog.rules.tab.automatic.partTwo")}
                   </p>
                   <p className="text-[#0C2134BF] text-[13px] font-light">
-                    2.&nbsp;{t("dialog.wallet.tab.automatic.final")}
+                    2.&nbsp;{t("dialog.rules.tab.automatic.final")}
                   </p>
                 </div>
               </div>
@@ -163,12 +223,10 @@ const AddRulesByExcel = () => {
         </div>
         <div className="bg-white border-t-[1px] md:rounded-b p-6 flex items-center justify-end gap-4">
           <Button variant="outline" onClick={() => setOpen(!open)}>
-            {t("dialog.wallet.tab.manual.buttons.cancel")}
+            {t("dialog.rules.tab.manual.buttons.cancel")}
           </Button>
           {tab === StructureTabs.Manual && (
-            <Button disabled>
-              {t("dialog.wallet.tab.manual.buttons.add")}
-            </Button>
+            <Button disabled>{t("dialog.rules.tab.manual.buttons.add")}</Button>
           )}
         </div>
       </DialogContent>

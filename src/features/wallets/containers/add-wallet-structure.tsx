@@ -45,7 +45,7 @@ const AddWalletStructure = ({
   const [tab, setTab] = useState<StructureTabs>(StructureTabs.Manual);
   const [error, setError] = useState("");
 
-  const { convertExcelToJsonWithKeys } = useExcelToJson();
+  const { convertExcelToJsonWalletStructure } = useExcelToJson();
 
   const handleFormVisibility = () => {
     setOpen(!open);
@@ -66,7 +66,7 @@ const AddWalletStructure = ({
   };
 
   const handleFileUpload = async (file: File) => {
-    const jsonData = await convertExcelToJsonWithKeys(file);
+    const jsonData = await convertExcelToJsonWalletStructure(file);
     if (jsonData.securities.length || jsonData.other.length) {
       if (jsonData.securities.length) {
         setExcelAssetData(jsonData.securities);
