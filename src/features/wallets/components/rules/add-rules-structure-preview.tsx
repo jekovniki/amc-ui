@@ -34,6 +34,11 @@ export const AddRulesStructurePreview = ({
       <DialogContent className="h-[90vh] w-custom-full flex flex-col overflow-hidden">
         <DialogTitle className="hidden"></DialogTitle>
         <DialogDescription className="hidden"></DialogDescription>
+        <div className="flex gap-4 px-4 pb-6 wrap justify-start border-b-[1px]">
+          <h2 className="font-bold text-xl leading-none group-hover:text-primary/40 transition-colors">
+            {t("dialog.rules.preview.title")}
+          </h2>
+        </div>
         <div className="h-full">
           <div className="grid grid-cols-12">
             <div className="col-span-12 pt-4 h-custom-wrap overflow-auto">
