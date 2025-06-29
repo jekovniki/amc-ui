@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { ImportRulesStructure } from "../../types/wallet-structure";
+import { ImportRulesStructure } from "../../types/rules";
 import {
   Dialog,
   DialogContent,
@@ -9,6 +9,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { RuleStructureItem } from "./rule-structure-item";
+import { useAddRule } from "../../api/rules/use-add-rules";
+import { getTranslatedRuleType } from "../../util/rule-translations";
+import { toast } from "sonner";
 
 interface AddRulesStructurePreviewProps {
   open: boolean;
@@ -24,11 +27,35 @@ export const AddRulesStructurePreview = ({
   entityId,
 }: AddRulesStructurePreviewProps) => {
   const { t } = useTranslation();
-  console.log("rules : ", rules);
-  console.log("entityId : ", entityId);
+  const addRule = useAddRule(entityId);
+
   const handleSubmit = () => {
-    console.log("submit");
+    for (const rule of rules) {
+      addRule.mutate(
+        {
+          name: rule["Име на ограничението"],
+          minLimit: Number(rule["Минимална стойност"]),
+          maxLimit: Number(rule["Максимална стойност"]),
+          type: getTranslatedRuleType(rule["Ниво на ограничение"]),
+          typeValue: rule["Тип стойност"],
+        },
+        {
+          onSuccess: () => {
+            toast.success(
+              `Успешно създадохте правилото: ${rule["Име на ограничението"]}`
+            );
+          },
+          onError: (error) => {
+            console.error(error);
+            toast.error(
+              `Не успяхме да добавим правилото: ${rule["Име на ограничението"]}. Моля прегледайте добавете го ръчно. При проблем се свържете с нас`
+            );
+          },
+        }
+      );
+    }
   };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="h-[90vh] w-custom-full flex flex-col overflow-hidden">
