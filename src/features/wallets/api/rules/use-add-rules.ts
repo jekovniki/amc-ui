@@ -14,6 +14,6 @@ export function useAddRule(entityId: string) {
     mutationFn: (input: AddRuleRequest) =>
       api.post(`/api/v1/wallet/${entityId}/rules`, input),
     onSuccess: () =>
-      client.invalidateQueries(WalletQueries.Wallets as InvalidateQueryFilters),
+      client.invalidateQueries(WalletQueries.Rules as InvalidateQueryFilters),
   });
 }
