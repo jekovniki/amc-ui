@@ -13,8 +13,8 @@ import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import excelRulesUrl from "../../../assets/AMC_Manager_-_Rules.xlsx?url";
 import excelRulesExampleUrl from "../../../assets/AMC_Manager_-_Rules_Example.xlsx?url";
-import { ImportRulesStructure } from "../types/wallet-structure";
 import { AddRulesStructurePreview } from "../components/rules/add-rules-structure-preview";
+import { ImportRulesStructure } from "../types/rules";
 
 enum StructureTabs {
   Manual = "manual",

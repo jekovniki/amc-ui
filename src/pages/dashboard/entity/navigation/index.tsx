@@ -18,6 +18,8 @@ import { DangerBox } from "@/components/danger-box";
 import AddWalletStructure from "@/features/wallets/containers/add-wallet-structure";
 import { useGetRule } from "@/features/wallets/api/rules/use-get-rules";
 import AddRulesByExcel from "@/features/wallets/containers/add-rules-by-excel";
+import { InvalidateQueryFilters, useQueryClient } from "@tanstack/react-query";
+import { WalletQueries } from "@/features/wallets/api/query-keys";
 
 const containerVariants = {
   hidden: {},
@@ -37,6 +39,7 @@ const DashboardEntityNavigationPage = () => {
   const { t } = useTranslation();
   const { fundId, companyId } = useParams();
   const { data, isLoading } = useGetEntity(fundId || "");
+  const client = useQueryClient();
   const navigate = useNavigate();
   const walletStructure = useGetWalletStructureBy(
     fundId || "",
@@ -82,6 +85,7 @@ const DashboardEntityNavigationPage = () => {
   ];
   const handleClick = (name: string) => {
     navigate(`/${companyId}/${PrivateRoutePath.Entity}/${fundId}/${name}`);
+    client.invalidateQueries(WalletQueries.Rules as InvalidateQueryFilters);
   };
   return (
     <div className="p-4 h-full flex items-start justify-center">
@@ -113,6 +117,7 @@ const DashboardEntityNavigationPage = () => {
               {!hasAssets ? (
                 <div className={!hasAssets ? `mb-4` : ""}>
                   <DangerBox
+                    key={`${fundId}-structure`}
                     title={t("entity.overview.notifications.noAssets")}
                   >
                     <AddWalletStructure
@@ -126,6 +131,7 @@ const DashboardEntityNavigationPage = () => {
               )}
               {!hasRules ? (
                 <DangerBox
+                  key={`${fundId}-rule`}
                   title={t("entity.overview.notifications.noRestrictions")}
                 >
                   <AddRulesByExcel triggerType="link" entityId={fundId || ""} />
