@@ -8,6 +8,10 @@ import DashboardTeamPage from "./dashboard/team";
 import DashboardProfilePage from "./dashboard/profile";
 import DashboardEntityPage from "./dashboard/entity";
 import DashboardEntityNavigationPage from "./dashboard/entity/navigation";
+import DashboardEntityOverviewPage from "./dashboard/entity/preview";
+import DashboardEntityAssetsPage from "./dashboard/entity/assets";
+import DashboardEntityObligationsPage from "./dashboard/entity/obligations";
+import DashboardEntityRestrictionsPage from "./dashboard/entity/restrictions";
 
 type AppRoute = {
   name: string;
@@ -34,6 +38,9 @@ export enum PrivateRoutePath {
 
 export enum PrivateFundRoutePath {
   Overview = "overview",
+  Assets = "assets",
+  Restrictions = "restrictions",
+  Obligations = "obligations",
 }
 
 export const publicRoutes: AppRoute[] = [
@@ -96,5 +103,29 @@ export const entityDashboardRoutes: AppRoute[] = [
     key: "entity-nav",
     element: <DashboardEntityNavigationPage />,
     path: "",
+  },
+  {
+    name: "Фонд - Преглед",
+    key: "entity-preview",
+    element: <DashboardEntityOverviewPage />,
+    path: PrivateFundRoutePath.Overview,
+  },
+  {
+    name: "Фонд - Активи",
+    key: "entity-assets",
+    element: <DashboardEntityAssetsPage />,
+    path: PrivateFundRoutePath.Assets,
+  },
+  {
+    name: "Фонд - Задължения",
+    key: "entity-obligations",
+    element: <DashboardEntityObligationsPage />,
+    path: PrivateFundRoutePath.Obligations,
+  },
+  {
+    name: "Фонд - Ограничения",
+    key: "entity-restrictions",
+    element: <DashboardEntityRestrictionsPage />,
+    path: PrivateFundRoutePath.Restrictions,
   },
 ];

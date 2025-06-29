@@ -7,7 +7,7 @@ import { EntityWalletIcon } from "@/components/icons/entity-wallet-icon";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetEntity } from "@/features/entity/api/use-get-entity";
 import { Entity } from "@/features/entity/types/entity";
-import { PrivateRoutePath } from "@/pages/routes";
+import { PrivateFundRoutePath, PrivateRoutePath } from "@/pages/routes";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { usePageTitle } from "@/hooks/use-page-title";
@@ -53,25 +53,25 @@ const DashboardEntityNavigationPage = () => {
   usePageTitle(fundData?.name);
   const pages = [
     {
-      name: "main",
+      name: PrivateFundRoutePath.Overview,
       icon: (
         <EntityChartIcon className="text-[#0C213480] group-hover:text-primary transition-colors duration-200" />
       ),
     },
     {
-      name: "assets",
+      name: PrivateFundRoutePath.Assets,
       icon: (
         <EntityDatabaseIcon className="text-[#0C213480] group-hover:text-primary transition-colors duration-200" />
       ),
     },
     {
-      name: "restrictions",
+      name: PrivateFundRoutePath.Restrictions,
       icon: (
         <EntityBarChartIcon className="text-[#0C213480] group-hover:text-primary transition-colors duration-200" />
       ),
     },
     {
-      name: "obligation",
+      name: PrivateFundRoutePath.Obligations,
       icon: (
         <EntityBillIcon className="text-[#0C213480] group-hover:text-primary transition-colors duration-200" />
       ),

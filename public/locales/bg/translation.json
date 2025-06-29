@@ -167,6 +167,18 @@
       }
     }
   },
+  "preview": {
+    "title": "Преглед"
+  },
+  "assets": {
+    "title": "Активи"
+  },
+  "restrictions": {
+    "title": "Ограничения"
+  },
+  "obligations": {
+    "title": "Задължения"
+  },
   "dialog": {
     "entity": {
       "add": {
@@ -390,7 +402,7 @@
   },
   "entity": {
     "overview": {
-      "main": {
+      "overview": {
         "title": "Преглед",
         "description": "Общ преглед на наличната информация."
       },
@@ -402,7 +414,7 @@
         "title": "Ограничения",
         "description": "Преглед и настройки на различните ограничения."
       },
-      "obligation": {
+      "obligations": {
         "title": "Задължения",
         "description": "Преглед, настройки и история на всички задължения."
       },

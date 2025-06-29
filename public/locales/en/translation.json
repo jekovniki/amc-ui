@@ -168,7 +168,7 @@
   },
   "entity": {
     "overview": {
-      "main": {
+      "overview": {
         "title": "Преглед",
         "description": "Общ преглед на наличната информация."
       },
@@ -180,7 +180,7 @@
         "title": "Ограничения",
         "description": "Преглед и настройки на различните ограничения."
       },
-      "obligation": {
+      "obligations": {
         "title": "Задължения",
         "description": "Преглед, настройки и история на всички задължения."
       },
@@ -193,6 +193,18 @@
         "noRestrictions": "Add the funds restrictions."
       }
     }
+  },
+  "preview": {
+    "title": "Overview"
+  },
+  "assets": {
+    "title": "Assets"
+  },
+  "restrictions": {
+    "title": "Restrictions"
+  },
+  "obligations": {
+    "title": "Obligations"
   },
   "dialog": {
     "entity": {
