@@ -1,5 +1,5 @@
 import { InputBox } from "@/components/input-box";
-import { ImportRulesStructure } from "../../types/wallet-structure";
+import { ImportRulesStructure } from "../../types/rules";
 import { TextIcon } from "@/components/icons/text-icon";
 import { PriceTagIcon } from "@/components/icons/price-tag-icon";
 import { ChequeIcon } from "@/components/icons/cheque-icon";

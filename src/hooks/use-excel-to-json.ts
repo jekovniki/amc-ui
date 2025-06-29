@@ -1,6 +1,6 @@
+import { ImportRulesStructure } from "@/features/wallets/types/rules";
 import {
   ExcelSheetTabs,
-  ImportRulesStructure,
   ImportWalletStructure,
   ImportWalletStructureAssets,
   ImportWalletStructureOther,
