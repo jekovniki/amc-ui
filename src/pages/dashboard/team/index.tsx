@@ -16,7 +16,10 @@ const DashboardTeamPage = () => {
         </>
       ) : (
         data?.data?.map((user) => (
-          <div className="col-span-6 lg:col-span-4 user-select-none aspect-square shadow-md hover:shadow-sm transition-all bg-white flex flex-col items-center justify-center">
+          <div
+            key={user.id}
+            className="col-span-6 lg:col-span-4 user-select-none aspect-square shadow-md hover:shadow-sm transition-all bg-white flex flex-col items-center justify-center"
+          >
             <h3 className="text-[18px] font-semibold">
               {user.firstName} {user.lastName}
             </h3>

@@ -150,7 +150,7 @@ const DahsboardSidebar = ({ companyId }: DashboardSidebarProps) => {
         />
       </SidebarContent>
       <SidebarFooter>
-        <SidebarTrigger />
+        <SidebarTrigger onClick={() => setIsDropdownToggled(false)} />
       </SidebarFooter>
     </Sidebar>
   );
